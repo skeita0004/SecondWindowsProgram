@@ -1,7 +1,8 @@
 #pragma once
-#include <d3d11.h>
+//#include <d3d11.h>
 #include <string>
 #include "Direct3D.h"
+
 class Texture
 {
 public:

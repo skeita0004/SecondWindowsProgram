@@ -2,6 +2,7 @@
 #include "Direct3D.h"
 #include <DirectXMath.h>
 #include "Texture.h"
+#include <vector>
 
 using namespace DirectX;
 
@@ -11,16 +12,11 @@ struct CONSTANT_BUFFER
 	XMMATRIX	matWVP;
 };
 
-struct VERTEX
-{
-	XMVECTOR position;
-	XMVECTOR uv;
-};
-
 class Quad
 {
 public:
 	Quad();
+	Quad(XMFLOAT4 _pos, float _size, std::vector<VERTEX> _vertices);
 	~Quad();
 	HRESULT Initialize();
 	void Draw(const XMMATRIX& _worldMatrix);
@@ -32,4 +28,8 @@ private:
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
 	Texture* pTexture_;
+
+	float size_;
+	XMFLOAT4 position_;
+	std::vector<VERTEX> vertices_;
 };

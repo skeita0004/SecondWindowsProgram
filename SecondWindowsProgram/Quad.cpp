@@ -2,10 +2,30 @@
 #include <cassert>
 #include "Camera.h"
 
+namespace
+{
+	const VERTEX DEFAULT_VERTICES[] =
+	{
+		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
+	};
+}
+
 Quad::Quad() :
+	Quad({ 0.0f, 0.0f, 0.0f, 0.0f }, 1.0f, DEFAULT_VERTICES)
+{
+}
+
+Quad::Quad(XMFLOAT4 _pos, float _size, std::vector<VERTEX> _vertices) :
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr)
+	pConstantBuffer_(nullptr),
+	pTexture_(nullptr),
+	size_(_size),
+	position_({0, 0, 0, 0}),
+	vertices_(_vertices)
 {
 }
 
@@ -23,47 +43,32 @@ HRESULT Quad::Initialize()
 	// 頂点情報
 	VERTEX vertices[] =
 	{
-		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
+		// {{pos},{uv}}
+		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
 	};
 
-	// 頂点情報
-	//XMVECTOR vertices[] =
+	VERTEX vertices2[] =
 	{
-		//XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),	// 四角形の頂点（左上）
-		//XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f),	// 四角形の頂点（右上）
-		//XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（右下）
-		//XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（左下）		
-	};
-
-	//XMFLOAT4 vertices2[] =
-	//{
-	//	{-4.0f,   2.0f, 0.0f, 0.0f},
-	//	{ 3.3f,  2.99f, 0.0f, 0.0f},
-	//	{ 5.0f,  -5.0f, 0.0f, 0.0f},
-	//	{-3.1f, -1.02f, 0.0f, 0.0f}
-	//};
-
-	XMFLOAT4 vertices2[] =
-	{
-		{-1.0f, 1.0f, 0.0f, 0.0f},
-		{1.0f, 1.0f, 0.0f, 0.0f},
-		{1.0f, -1.0f, 0.0f, 0.0f},
-		{-1.0f, -1.0f, 0.0f, 0.0f}
+		// {{pos},{uv}}
+		XMVectorSet(-size_,  size_, -size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+		XMVectorSet(size_,   size_, -size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+		XMVectorSet(size_,  -size_, -size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+		XMVectorSet(-size_, -size_, -size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
 	};
 
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = sizeof(vertices2);
+	bd_vertex.ByteWidth = vertices_.size();
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = vertices2;
+	data_vertex.pSysMem = vertices_.data();
 
 	hResult = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hResult))
@@ -107,7 +112,7 @@ HRESULT Quad::Initialize()
 	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 
 	pTexture_ = new Texture();
-	pTexture_->Load("Assets/velvia.jpg");
+	pTexture_->Load("Assets/velvia.png");
 
 	return hResult;
 }

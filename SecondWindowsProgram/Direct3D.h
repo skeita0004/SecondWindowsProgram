@@ -27,6 +27,13 @@ void SafeDelete(PTYPE * _ptr)
 }
 
 
+struct VERTEX
+{
+	XMVECTOR position;
+	XMVECTOR uv;
+	XMVECTOR normal;
+};
+
 namespace Direct3D
 {
 	//èâä˙âª

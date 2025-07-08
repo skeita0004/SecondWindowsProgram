@@ -1,15 +1,15 @@
 #include "Texture.h"
 #include <wincodec.h>
-
 #include <DirectXTex.h>
-
-using namespace DirectX;
 
 // DirectXTexのライブラリをリンク
 #pragma comment(lib, "DirectXTex.lib")
 
+using namespace DirectX;
+
 Texture::Texture() :
-	pSampler_(nullptr)
+	pSampler_(nullptr),
+	pSRV_(nullptr)
 {
 }
 
@@ -41,7 +41,7 @@ HRESULT Texture::Load(std::string _fileName)
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
 	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP; // 繰り返すかどうか、この場合、端の色が引き延ばされる
-	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP; 
+	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	Direct3D::pDevice->CreateSamplerState(&SamDesc, &pSampler_);
 

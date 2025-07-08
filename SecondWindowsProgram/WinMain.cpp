@@ -82,7 +82,7 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
-	quad = new Quad();
+	quad = new Quad({0, 0, 0, 0}, 5.0f);
 
 	float deg = 0.f;
 	if (FAILED(quad->Initialize()))
