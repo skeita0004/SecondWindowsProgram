@@ -152,7 +152,7 @@ void Quad::Draw(const XMMATRIX& _worldMatrix)
 
 void Quad::Release()
 {
-	pTexture_->Release();
+	SAFE_RELEASE(pTexture_);
 	SafeDelete(pTexture_);
 
 	SAFE_RELEASE(pConstantBuffer_);

@@ -6,7 +6,7 @@ class Dice
 {
 public:
 	Dice();
-	Dice(float _size);
+	Dice(float _size, XMFLOAT4 _pos);
 	~Dice();
 
 	void Initialize();
@@ -15,5 +15,6 @@ public:
 
 private:
 	float size_;
+	XMFLOAT4 position_;
 	std::vector<Quad*> quads_;
 };
