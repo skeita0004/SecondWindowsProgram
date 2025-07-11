@@ -9,6 +9,7 @@
 #include <d3d11.h>
 
 #include "Quad.h"
+#include "Dice.h"
 #include "Camera.h"
 
 #pragma comment(lib, "d3d11.lib")
@@ -33,6 +34,7 @@ namespace
 	HWND hWnd = nullptr;
 
 	Quad* quad{ nullptr };
+	Dice* dice{ nullptr };
 }
 
 
@@ -82,14 +84,16 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
-	quad = new Quad({0, 0, 0, 0}, 5.0f);
+	//quad = new Quad({0, 0, 0, 0}, 5.0f);
+	dice = new Dice(1.0f, { 0, 0, 0, 0 });
 
 	float deg = 0.f;
-	if (FAILED(quad->Initialize()))
-	{
-		return -1;
-	}
-	
+	//if (FAILED(/*quad->Initialize()*/))
+	//{
+	//	return -1;
+	//}
+	dice->Initialize();
+
 	Camera::Initialize();
 	// メイン メッセージ ループ:
 	while (msg.message != WM_QUIT) // ここでメッセージを取得
@@ -118,7 +122,8 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			XMMATRIX rotYmat = XMMatrixRotationY(XMConvertToRadians(deg));
 			//XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians(deg));
 			//quad->Draw(rotYmat * rotXmat);
-			quad->Draw(rotYmat);
+			//quad->Draw(rotYmat);
+			dice->Draw(rotYmat);
 
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(-90));
 			//quad->Draw(mat);
@@ -127,9 +132,11 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 
-	quad->Release();
+	//quad->Release();
+	dice->Release();
+	SafeDelete(dice);
 	
-	SafeDelete(quad);
+	//SafeDelete(quad);
 
 	Direct3D::Release();
 	return (int)msg.wParam;

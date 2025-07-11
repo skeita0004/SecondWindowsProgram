@@ -49,7 +49,7 @@ HRESULT Direct3D::Initialize(const int winW, const int winH, HWND hWnd)
 		nullptr,					// どのビデオアダプタを使用するか？既定ならばnullptrで
 		D3D_DRIVER_TYPE_HARDWARE,	// ドライバのタイプを渡す。ふつうはHARDWARE
 		nullptr,					// 上記をD3D_DRIVER_TYPE_SOFTWAREに設定しないかぎりnullptr
-		0,							// 何らかのフラグを指定する。（デバッグ時はD3D11_CREATE_DEVICE_DEBUG？）
+		D3D11_CREATE_DEVICE_DEBUG,							// 何らかのフラグを指定する。（デバッグ時はD3D11_CREATE_DEVICE_DEBUG？）
 		nullptr,					// デバイス、コンテキストのレベルを設定。nullptrにしとけばOK
 		0,							// 上の引数でレベルを何個指定したか
 		D3D11_SDK_VERSION,			// SDKのバージョン。必ずこの値
@@ -187,7 +187,7 @@ HRESULT Direct3D::InitShader()
 
 	//ラスタライザ作成
 	D3D11_RASTERIZER_DESC rdc = {};
-	rdc.CullMode = D3D11_CULL_BACK;
+	rdc.CullMode = D3D11_CULL_NONE;
 	rdc.FillMode = D3D11_FILL_SOLID;
 	rdc.FrontCounterClockwise = FALSE; // 逆時計回りが表？なるほどね。
 

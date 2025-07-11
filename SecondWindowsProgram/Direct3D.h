@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <utility>
 
+#include <DirectXMath.h>
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -29,9 +31,16 @@ void SafeDelete(PTYPE * _ptr)
 
 struct VERTEX
 {
-	XMVECTOR position;
-	XMVECTOR uv;
-	XMVECTOR normal;
+	DirectX::XMVECTOR position;
+	DirectX::XMVECTOR uv;
+};
+
+struct QuadFace
+{
+	VERTEX topLeft;
+	VERTEX topRight;
+	VERTEX bottomRight;
+	VERTEX bottomLeft;
 };
 
 namespace Direct3D

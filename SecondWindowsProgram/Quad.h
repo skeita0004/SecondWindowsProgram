@@ -15,8 +15,8 @@ struct CONSTANT_BUFFER
 class Quad
 {
 public:
-	Quad();
-	Quad(XMFLOAT4 _pos, float _size, std::vector<VERTEX> _vertices);
+	//Quad();
+	Quad(XMFLOAT4 _pos, float _size, QuadFace _vertices);
 	~Quad();
 	HRESULT Initialize();
 	void Draw(const XMMATRIX& _worldMatrix);

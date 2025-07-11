@@ -2,31 +2,35 @@
 #include <cassert>
 #include "Camera.h"
 
-namespace
-{
-	const VERTEX DEFAULT_VERTICES[] =
-	{
-		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-	};
-}
+//namespace
+//{
+//	const VERTEX DEFAULT_VERTICES[] =
+//	{
+//		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+//		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+//		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+//		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
+//	};
+//}
+//
+//Quad::Quad() :
+//	Quad({ 0.0f, 0.0f, 0.0f, 0.0f }, 1.0f, DEFAULT_VERTICES)
+//{
+//}
 
-Quad::Quad() :
-	Quad({ 0.0f, 0.0f, 0.0f, 0.0f }, 1.0f, DEFAULT_VERTICES)
-{
-}
-
-Quad::Quad(XMFLOAT4 _pos, float _size, std::vector<VERTEX> _vertices) :
+Quad::Quad(XMFLOAT4 _pos, float _size, QuadFace _vertices) :
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
 	pConstantBuffer_(nullptr),
 	pTexture_(nullptr),
 	size_(_size),
-	position_({0, 0, 0, 0}),
-	vertices_(_vertices)
+	position_({0, 0, 0, 0})
 {
+	vertices_.clear();
+	vertices_.push_back(_vertices.topLeft);
+	vertices_.push_back(_vertices.topRight);
+	vertices_.push_back(_vertices.bottomRight);
+	vertices_.push_back(_vertices.bottomLeft);
 }
 
 Quad::~Quad()
@@ -41,23 +45,23 @@ HRESULT Quad::Initialize()
 	HRESULT hResult;
 
 	// 頂点情報
-	VERTEX vertices[] =
-	{
-		// {{pos},{uv}}
-		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-	};
+	//VERTEX vertices[] =
+	//{
+	//	// {{pos},{uv}}
+	//	XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+	//	XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+	//	XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+	//	XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
+	//};
 
-	VERTEX vertices2[] =
-	{
-		// {{pos},{uv}}
-		XMVectorSet(-size_,  size_, -size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-		XMVectorSet(size_,   size_, -size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-		XMVectorSet(size_,  -size_, -size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-		XMVectorSet(-size_, -size_, -size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-	};
+	//VERTEX vertices2[] =
+	//{
+	//	// {{pos},{uv}}
+	//	XMVectorSet(-size_,  size_, -size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
+	//	XMVectorSet(size_,   size_, -size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
+	//	XMVectorSet(size_,  -size_, -size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
+	//	XMVectorSet(-size_, -size_, -size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
+	//};
 
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
