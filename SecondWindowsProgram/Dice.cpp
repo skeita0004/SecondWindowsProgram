@@ -74,18 +74,10 @@ void Dice::Initialize()
 	quadFace_.push_back(
 		// right
 		{
-			// top left
-			vertices[LEFT_TOP_FRONT],
-
-			// top right
-			vertices[RIGHT_TOP_FRONT],
-
-			// bottom right
-			vertices[RIGHT_BOTTOM_BACK],
-
-			// bottom left
-			vertices[LEFT_BOTTOM_BACK],
-
+			vertices[RIGHT_TOP_FRONT],    // top left
+			vertices[RIGHT_TOP_BACK],     // top right
+			vertices[RIGHT_BOTTOM_BACK],  // bottom right
+			vertices[RIGHT_BOTTOM_FRONT], // bottom left
 		});
 
 	quadFace_.push_back(
@@ -95,10 +87,10 @@ void Dice::Initialize()
 			vertices[LEFT_TOP_BACK],
 
 			// top right
-			vertices[RIGHT_TOP_FRONT],
+			vertices[LEFT_TOP_FRONT],
 
 			// bottom right
-			vertices[RIGHT_BOTTOM_FRONT],
+			vertices[LEFT_BOTTOM_FRONT],
 
 			// bottom left
 			vertices[LEFT_BOTTOM_BACK],
