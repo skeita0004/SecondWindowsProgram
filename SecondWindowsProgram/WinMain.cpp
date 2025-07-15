@@ -121,11 +121,13 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 				deg = 0.f;
 			}
 			
-			//XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians());
+			XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians(45));
 			XMMATRIX rotYmat = XMMatrixRotationY(XMConvertToRadians(deg));
+			XMMATRIX rotZmat = XMMatrixRotationZ(XMConvertToRadians(45));
+
 			//quad->Draw(rotYmat * rotXmat);
 			//quad->Draw(rotYmat);
-			dice->Draw(/*rotXmat **/ rotYmat);
+			dice->Draw(rotXmat * rotZmat * rotYmat);
 
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(-90));
 			//quad->Draw(mat);
