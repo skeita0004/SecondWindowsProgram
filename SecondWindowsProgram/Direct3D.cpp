@@ -164,7 +164,7 @@ HRESULT Direct3D::InitShader()
 		{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(XMVECTOR) * 2, D3D11_INPUT_PER_VERTEX_DATA, 0}, // 法線
 	};
 
-	hResult = pDevice->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D10_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+	hResult = pDevice->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
 	if FAILED(hResult)
 	{
 		return hResult;
@@ -183,12 +183,12 @@ HRESULT Direct3D::InitShader()
 		return hResult;
 	}
 
-	SAFE_RELEASE(pCompilePS); // マクロはセミコロンいらない
+	SAFE_RELEASE(pCompilePS);
 
 	//ラスタライザ作成
 	D3D11_RASTERIZER_DESC rdc = {};
 	rdc.CullMode = D3D11_CULL_NONE;
-	rdc.FillMode = D3D11_FILL_SOLID;
+	rdc.FillMode = D3D11_FILL_WIREFRAME;
 	rdc.FrontCounterClockwise = FALSE; // 逆時計回りが表？なるほどね。
 
 	hResult = pDevice->CreateRasterizerState(&rdc, &pRasterizerState);

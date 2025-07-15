@@ -65,7 +65,7 @@ HRESULT Quad::Initialize()
 
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = vertices_.size();
+	bd_vertex.ByteWidth = static_cast<UINT>(sizeof(VERTEX) * vertices_.size());
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
@@ -116,7 +116,7 @@ HRESULT Quad::Initialize()
 	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 
 	pTexture_ = new Texture();
-	pTexture_->Load("Assets/velvia.png");
+	pTexture_->Load("Assets/fudice.png");
 
 	return hResult;
 }
@@ -143,7 +143,7 @@ void Quad::Draw(const XMMATRIX& _worldMatrix)
 	Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
 	// インデックスバッファーをセット
-	stride = sizeof(int);
+	//stride = sizeof(int);
 	offset = 0;
 	Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
 

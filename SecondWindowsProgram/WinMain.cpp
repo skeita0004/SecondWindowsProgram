@@ -112,7 +112,7 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			//ゲームの処理
 			Camera::Update();
 
-			deg += 0.1f;
+			deg += 0.01f;
 			
 			if (deg >= 360)
 			{
