@@ -33,6 +33,7 @@ struct VERTEX
 {
 	DirectX::XMVECTOR position;
 	DirectX::XMVECTOR uv;
+	DirectX::XMVECTOR normal;
 };
 
 struct QuadFace

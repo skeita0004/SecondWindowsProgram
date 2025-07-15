@@ -35,6 +35,8 @@ namespace
 
 	Quad* quad{ nullptr };
 	Dice* dice{ nullptr };
+
+	std::vector<Dice*> dices(0, nullptr);
 }
 
 
@@ -84,15 +86,15 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
-	//quad = new Quad({0, 0, 0, 0}, 5.0f);
 	dice = new Dice(1.0f, { 0, 0, 0, 0 });
-
+	dice = new Dice(1.0f, { 2, 0, 3, 0 });
 	float deg = 0.f;
 	float deg2 = 0.f;
 	//if (FAILED(/*quad->Initialize()*/))
 	//{
 	//	return -1;
 	//}
+	quad->Initialize();
 	dice->Initialize();
 
 	Camera::Initialize();

@@ -2,22 +2,6 @@
 #include <cassert>
 #include "Camera.h"
 
-//namespace
-//{
-//	const VERTEX DEFAULT_VERTICES[] =
-//	{
-//		XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-//		XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-//		XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-//		XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-//	};
-//}
-//
-//Quad::Quad() :
-//	Quad({ 0.0f, 0.0f, 0.0f, 0.0f }, 1.0f, DEFAULT_VERTICES)
-//{
-//}
-
 Quad::Quad(XMFLOAT4 _pos, float _size, QuadFace _vertices) :
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
@@ -43,25 +27,6 @@ Quad::~Quad()
 HRESULT Quad::Initialize()
 {
 	HRESULT hResult;
-
-	// 頂点情報
-	//VERTEX vertices[] =
-	//{
-	//	// {{pos},{uv}}
-	//	XMVectorSet(-size_,  size_, size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-	//	XMVectorSet(size_,   size_, size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-	//	XMVectorSet(size_,  -size_, size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-	//	XMVectorSet(-size_, -size_, size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-	//};
-
-	//VERTEX vertices2[] =
-	//{
-	//	// {{pos},{uv}}
-	//	XMVectorSet(-size_,  size_, -size_, 0.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左上
-	//	XMVectorSet(size_,   size_, -size_, 0.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右上
-	//	XMVectorSet(size_,  -size_, -size_, 0.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 右下
-	//	XMVectorSet(-size_, -size_, -size_, 0.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), // 左下
-	//};
 
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
@@ -126,6 +91,7 @@ void Quad::Draw(const XMMATRIX& _worldMatrix)
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(_worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matW = _worldMatrix;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データの値を送る
 

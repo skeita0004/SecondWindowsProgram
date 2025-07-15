@@ -37,6 +37,13 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
     outData.pos = mul(pos, matWVP);
     outData.uv = uv.xy;
     
+    normal = mul(normal, matW);
+    
+    // 楽しい平行光源
+    float4 light = float4(-1, 0.5, -0.7, 0); // 高原の位置 // 那須光源
+    light = normalize(light);
+    outData.color = clamp(dot(normal, light), 0, 1); // 光線と頂点のベクトルとの内積の結果を突っ込んでいる
+    
 	//まとめて出力
     return outData;
 }
@@ -47,6 +54,8 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 float4 PS(VS_OUT inData) : SV_Target
 {
     // テクスチャから色を取得している
-    return g_texture.Sample(g_sampler, inData.uv);
-    //return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float4 diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
+    float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2, 0.2, 0.2, 1);
+    //float4 noise = 
+    return diffuse + ambient;
 }

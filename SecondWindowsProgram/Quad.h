@@ -10,6 +10,7 @@ using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	XMMATRIX	matWVP;
+	XMMATRIX    matW;
 };
 
 class Quad

@@ -28,16 +28,15 @@ void Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		// {{pos},{uv}}
-		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
-		{XMVectorSet(position_.x +  size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右上
-		{XMVectorSet(position_.x +  size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左下
-		
-		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
-		{XMVectorSet(position_.x +  size_, position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右上
-		{XMVectorSet(position_.x +  size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左下
+		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左上
+		{XMVectorSet(position_.x + size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右上
+		{XMVectorSet(position_.x + size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右下
+		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左下
 
+		{XMVectorSet(position_.x + -size_, position_.y + size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左上
+		{XMVectorSet(position_.x + size_, position_.y + size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右上
+		{XMVectorSet(position_.x + size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右下
+		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左下
 	};
 
 	// front
