@@ -47,6 +47,6 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 float4 PS(VS_OUT inData) : SV_Target
 {
     // テクスチャから色を取得している
-    //return g_texture.Sample(g_sampler, inData.uv);
-    return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    return g_texture.Sample(g_sampler, inData.uv);
+    //return float4(1.0f, 1.0f, 1.0f, 1.0f);
 }

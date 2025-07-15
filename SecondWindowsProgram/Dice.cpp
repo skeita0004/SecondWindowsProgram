@@ -28,107 +28,154 @@ void Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		// {{pos},{uv}}
-		{XMVectorSet(position_.x + -size_,  position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
-		{XMVectorSet(position_.x + size_,  position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f)}, // 右上
-		{XMVectorSet(position_.x + size_, position_.y + -size_,  position_.z + size_, 1.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f)}, // 左下
-		{XMVectorSet(position_.x + -size_,  position_.y + size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
-		{XMVectorSet(position_.x + size_,  position_.y + size_, position_.z + -size_, 1.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f)}, // 右上
-		{XMVectorSet(position_.x + size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f)}, // 左下
+		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
+		{XMVectorSet(position_.x +  size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右上
+		{XMVectorSet(position_.x +  size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右下
+		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左下
+		
+		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左上
+		{XMVectorSet(position_.x +  size_, position_.y + size_,  position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右上
+		{XMVectorSet(position_.x +  size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 右下
+		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f)}, // 左下
+
 	};
 
-	quadFace_.push_back(
-		// front
-		{
-			// top left
-			vertices[LEFT_TOP_FRONT],
+	// front
+	QuadFace front
+	{
+		// top left
+		vertices[LEFT_TOP_FRONT],
 
-			// top right
-			vertices[RIGHT_TOP_FRONT],
+		// top right
+		vertices[RIGHT_TOP_FRONT],
 
-			// bottom right
-			vertices[RIGHT_BOTTOM_FRONT],
+		// bottom right
+		vertices[RIGHT_BOTTOM_FRONT],
 
-			// bottom left
-			vertices[LEFT_BOTTOM_FRONT],
-		});
+		// bottom left
+		vertices[LEFT_BOTTOM_FRONT],
+	};
 
-	quadFace_.push_back(
-		// back
-		{
-			// top left
-			vertices[LEFT_TOP_BACK],
 
-			// top right
-			vertices[RIGHT_TOP_BACK],
+	QuadFace back
+	{
+		// top left
+		vertices[LEFT_BOTTOM_BACK],
 
-			// bottom right
-			vertices[RIGHT_BOTTOM_BACK],
+		// top right
+		vertices[RIGHT_BOTTOM_BACK],
 
-			// bottom left
-			vertices[LEFT_BOTTOM_BACK],
+		// bottom right
+		vertices[RIGHT_TOP_BACK],
 
-		});
+		// bottom left
+		vertices[LEFT_TOP_BACK],
+	};
 
-	quadFace_.push_back(
-		// right
-		{
-			vertices[RIGHT_TOP_FRONT],    // top left
-			vertices[RIGHT_TOP_BACK],     // top right
-			vertices[RIGHT_BOTTOM_BACK],  // bottom right
-			vertices[RIGHT_BOTTOM_FRONT], // bottom left
-		});
+	QuadFace right
+	{
+		// top left
+		vertices[RIGHT_TOP_FRONT],
 
-	quadFace_.push_back(
-		// left
-		{
-			// top left
-			vertices[LEFT_TOP_BACK],
+		// top right
+		vertices[RIGHT_TOP_BACK],
 
-			// top right
-			vertices[LEFT_TOP_FRONT],
+		// bottom right
+		vertices[RIGHT_BOTTOM_BACK],
 
-			// bottom right
-			vertices[LEFT_BOTTOM_FRONT],
+		// bottom left
+		vertices[RIGHT_BOTTOM_FRONT],
+	};
 
-			// bottom left
-			vertices[LEFT_BOTTOM_BACK],
+	QuadFace left
+	{
+		// top left
+		vertices[LEFT_TOP_BACK],
 
-		});
+		// top right
+		vertices[LEFT_TOP_FRONT],
 
-	quadFace_.push_back(
-		// top
-		{
-			// top left
-			vertices[LEFT_TOP_BACK],
+		// bottom right
+		vertices[LEFT_BOTTOM_FRONT],
 
-			// top right
-			vertices[RIGHT_TOP_BACK],
+		// bottom left
+		vertices[LEFT_BOTTOM_BACK],
 
-			// bottom right
-			vertices[RIGHT_TOP_FRONT],
+	};
 
-			// bottom left
-			vertices[LEFT_TOP_FRONT],
+	QuadFace top
+	{
+		// top left
+		vertices[LEFT_TOP_BACK],
 
-		});
+		// top right
+		vertices[RIGHT_TOP_BACK],
 
-	quadFace_.push_back(
-		// bottom
-		{
-			// top left
-			vertices[LEFT_BOTTOM_FRONT],
+		// bottom right
+		vertices[RIGHT_TOP_FRONT],
 
-			// top right
-			vertices[RIGHT_BOTTOM_FRONT],
+		// bottom left
+		vertices[LEFT_TOP_FRONT],
 
-			// bottom right
-			vertices[RIGHT_BOTTOM_BACK],
+	};
 
-			// bottom left
-			vertices[LEFT_BOTTOM_BACK],
-		});
+	QuadFace bottom
+	{
+		// top left
+		vertices[LEFT_BOTTOM_FRONT],
+
+		// top right
+		vertices[RIGHT_BOTTOM_FRONT],
+
+		// bottom right
+		vertices[RIGHT_BOTTOM_BACK],
+
+		// bottom left
+		vertices[LEFT_BOTTOM_BACK],
+	};
+
+	front.topLeft.uv = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	front.topRight.uv = XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f);
+	front.bottomRight.uv = XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f);
+	front.bottomLeft.uv = XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f);
+
+	back.topLeft.uv = XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f);
+	back.topRight.uv = XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f);
+	back.bottomRight.uv = XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f);
+	back.bottomLeft.uv = XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f);
+
+	right.topLeft.uv = XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f);
+	right.topRight.uv = XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f);
+	right.bottomRight.uv = XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f);
+	right.bottomLeft.uv = XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f);
+
+	left.topLeft.uv = XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f);
+	left.topRight.uv = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+	left.bottomRight.uv = XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f);
+	left.bottomLeft.uv = XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f);
+
+	top.topLeft.uv = XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f);
+	top.topRight.uv = XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f);
+	top.bottomRight.uv = XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f);
+	top.bottomLeft.uv = XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f);
+
+	bottom.topLeft.uv = XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f);
+	bottom.topRight.uv = XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f);
+	bottom.bottomRight.uv = XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f);
+	bottom.bottomLeft.uv = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+	quadFace_.push_back(front);
+
+	quadFace_.push_back(back);
+
+	quadFace_.push_back(right);
+
+	quadFace_.push_back(left);
+
+	quadFace_.push_back(top);
+
+	quadFace_.push_back(bottom);
+
 
 	for (int i = 0; i < FACE_NUM; i++)
 	{

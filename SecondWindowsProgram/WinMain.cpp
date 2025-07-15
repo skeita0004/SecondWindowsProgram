@@ -88,6 +88,7 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 	dice = new Dice(1.0f, { 0, 0, 0, 0 });
 
 	float deg = 0.f;
+	float deg2 = 0.f;
 	//if (FAILED(/*quad->Initialize()*/))
 	//{
 	//	return -1;
@@ -112,18 +113,19 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			//ゲームの処理
 			Camera::Update();
 
-			deg += 0.01f;
+			deg += 0.1f;
+			deg2 += 0.05f;
 			
 			if (deg >= 360)
 			{
 				deg = 0.f;
 			}
 			
+			//XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians());
 			XMMATRIX rotYmat = XMMatrixRotationY(XMConvertToRadians(deg));
-			//XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians(deg));
 			//quad->Draw(rotYmat * rotXmat);
 			//quad->Draw(rotYmat);
-			dice->Draw(rotYmat);
+			dice->Draw(/*rotXmat **/ rotYmat);
 
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(-90));
 			//quad->Draw(mat);
