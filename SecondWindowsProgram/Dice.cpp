@@ -163,6 +163,37 @@ void Dice::Initialize()
 	bottom.bottomRight.uv = XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f);
 	bottom.bottomLeft.uv = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
+
+	front.topLeft.normal = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+	front.topRight.normal = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+	front.bottomRight.normal = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+	front.bottomLeft.normal = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+
+	back.topLeft.normal = XMVectorSet(0.0f, .0f, 1.0f, 0.0f);
+	back.topRight.normal = XMVectorSet(0.0f, .0f, 1.0f, 0.0f);
+	back.bottomRight.normal = XMVectorSet(0.0f, .0f, 1.0f, 0.0f);
+	back.bottomLeft.normal = XMVectorSet(0.0f, .0f, 1.0f, 0.0f);
+
+	right.topLeft.normal = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+	right.topRight.normal = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+	right.bottomRight.normal = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+	right.bottomLeft.normal = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+
+	left.topLeft.normal = XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+	left.topRight.normal = XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+	left.bottomRight.normal = XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+	left.bottomLeft.normal = XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+
+	top.topLeft.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	top.topRight.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	top.bottomRight.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	top.bottomLeft.normal = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+	bottom.topLeft.normal = XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f);
+	bottom.topRight.normal = XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f);
+	bottom.bottomRight.normal = XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f);
+	bottom.bottomLeft.normal = XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f);
+
 	quadFace_.push_back(front);
 
 	quadFace_.push_back(back);

@@ -19,7 +19,7 @@
 		}                   \
 
 template <typename PTYPE>
-void SafeDelete(PTYPE * _ptr)
+inline void SafeDelete(PTYPE * _ptr)
 {
 	if (_ptr != nullptr)
 	{
@@ -28,6 +28,12 @@ void SafeDelete(PTYPE * _ptr)
 	}
 }
 
+enum SHADER_TYPE
+{
+	SHADER_3D,
+	SHADER_2D,
+	SHADER_MAX
+};
 
 struct VERTEX
 {
@@ -51,6 +57,9 @@ namespace Direct3D
 
 	//シェーダー準備
 	HRESULT InitShader();
+	HRESULT InitShader3D();
+	HRESULT InitShader2D();
+	void SetShader(SHADER_TYPE _type);
 
 	//描画開始
 	void BeginDraw();
@@ -61,8 +70,8 @@ namespace Direct3D
 	//解放
 	void Release();
 
-	extern ID3D11Device* pDevice;	    	//デバイス
-	extern ID3D11DeviceContext* pContext;	    	//デバイスコンテキスト
-	extern IDXGISwapChain* pSwapChain;		    //スワップチェイン
-	extern ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+	extern ID3D11Device* pDevice;                     //デバイス
+	extern ID3D11DeviceContext* pContext;             //デバイスコンテキスト
+	extern IDXGISwapChain* pSwapChain;                //スワップチェイン
+	extern ID3D11RenderTargetView* pRenderTargetView; //レンダーターゲットビュー
 };

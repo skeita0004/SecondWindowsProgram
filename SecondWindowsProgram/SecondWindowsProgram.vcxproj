@@ -133,6 +133,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SecondWindowsProgram.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Direct3D.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -155,6 +157,14 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Simple2D.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Simple3D.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>

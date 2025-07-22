@@ -89,9 +89,11 @@ HRESULT Quad::Initialize()
 void Quad::Draw(const XMMATRIX& _worldMatrix)
 {
 	D3D11_MAPPED_SUBRESOURCE pdata;
-	CONSTANT_BUFFER cb;
+	CONSTANT_BUFFER cb{};
 	cb.matWVP = XMMatrixTranspose(_worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNormal = XMMatrixInverse(nullptr, cb.matW);
 	cb.matW = _worldMatrix;
+
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データの値を送る
 

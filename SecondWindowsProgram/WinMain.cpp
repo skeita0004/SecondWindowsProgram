@@ -1,5 +1,8 @@
-﻿// アプリケーションのエントリ ポイントを定義します。
-//
+﻿///
+/// @file WinMain.cpp
+/// @brief アプリケーションのエントリポイント
+/// @author 齋藤啓大及び東北電子の教員
+///
 
 #include "framework.h"
 #include "SecondWindowsProgram.h"
@@ -25,7 +28,7 @@ namespace
 	
 	const wchar_t* WIN_CLASS_NAME = L"SampleGame";
 
-	const int WINDOW_WIDTH = 800;
+	const int WINDOW_WIDTH  = 800;
 	const int WINDOW_HEIGHT = 600;
 
 	int winW;
@@ -35,6 +38,7 @@ namespace
 
 	Quad* quad{ nullptr };
 	Dice* dice{ nullptr };
+	Dice* dice2{ nullptr };
 
 	std::vector<Dice*> dices(0, nullptr);
 }
@@ -86,16 +90,17 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
-	dice = new Dice(1.0f, { 0, 0, 0, 0 });
-	dice = new Dice(1.0f, { 2, 0, 3, 0 });
+	dice = new Dice(3.0f, { 0, 0, 0, 0 });
+	dice2 = new Dice(1.0f, { 2, 0, 3, 0 });
 	float deg = 0.f;
 	float deg2 = 0.f;
 	//if (FAILED(/*quad->Initialize()*/))
 	//{
 	//	return -1;
 	//}
-	quad->Initialize();
+	//quad->Initialize();
 	dice->Initialize();
+	dice2->Initialize();
 
 	Camera::Initialize();
 	// メイン メッセージ ループ:
@@ -129,7 +134,9 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 			//quad->Draw(rotYmat * rotXmat);
 			//quad->Draw(rotYmat);
-			dice->Draw(rotXmat * rotZmat * rotYmat);
+			//dice->Draw(rotXmat * rotZmat * rotYmat);
+			dice->Draw(rotYmat);
+			//dice2->Draw(rotXmat * rotZmat * rotYmat);
 
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(-90));
 			//quad->Draw(mat);
@@ -140,6 +147,8 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	//quad->Release();
 	dice->Release();
+	dice2->Release();
+	SafeDelete(dice2);
 	SafeDelete(dice);
 	
 	//SafeDelete(quad);
@@ -157,55 +166,41 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEXW wcex;
 
-	// この構造体のサイズ
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	// クラスのスタイル
-	wcex.style          = NULL;
-
-	// ウィンドウプロシージャへのポインタ
-	wcex.lpfnWndProc    = WndProc;
-
-	// この構造体のパディング
-	wcex.cbClsExtra     = 0;
-	
-	// インスタンスの末尾のパディング
-	wcex.cbWndExtra     = 0;
-	
-	// 当該プログラムのハンドル
-	wcex.hInstance      = hInstance;
-	
-	// アイコンのハンドル
-	wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SECONDWINDOWSPROGRAM));
-	
-	// マウスカーソルへのハンドル
-	wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-	
-	// 背景ブラシのハンドル
-	wcex.hbrBackground  = (HBRUSH)(6);
-	
-	// メニュー
-	wcex.lpszMenuName   = /*MAKEINTRESOURCEW(IDC_SECONDWINDOWSPROGRAM)*/ NULL;
-	
-	// Windowクラスの名前
-	wcex.lpszClassName  = WIN_CLASS_NAME;
-	
-	// 小さいアイコンへのハンドル
-	wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.cbSize        = sizeof(WNDCLASSEX); // この構造体のサイズ
+	wcex.style         = NULL;               // クラスのスタイル
+	wcex.lpfnWndProc   = WndProc;            // ウィンドウプロシージャへのポインタ
+	wcex.cbClsExtra    = 0;                  // この構造体のパディング
+	wcex.cbWndExtra    = 0;                  // インスタンスの末尾のパディング
+	wcex.hInstance     = hInstance;          // 当該プログラムのハンドル
+	wcex.hIcon         = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SECONDWINDOWSPROGRAM)); // アイコンのハンドル
+	wcex.hCursor       = LoadCursor(nullptr, IDC_ARROW);                                 // マウスカーソルへのハンドル
+	wcex.hbrBackground = (HBRUSH)(6);                                                    // 背景ブラシのハンドル
+	wcex.lpszMenuName  = NULL;               // メニュー
+	wcex.lpszClassName = WIN_CLASS_NAME;                                                 // Windowクラスの名前
+	wcex.hIconSm       = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));           // 小さいアイコンへのハンドル
 
 	return RegisterClassExW(&wcex);
 }
 
-//
-//   関数: InitInstance(HINSTANCE, int)
-//
-//   目的: インスタンス ハンドルを保存して、メイン ウィンドウを作成します
-//
-//   コメント:
-//
-//        この関数で、グローバル変数でインスタンス ハンドルを保存し、
-//        メイン プログラム ウィンドウを作成および表示します。
-//
+/// <summary>
+/// InitInstance
+/// インスタンス ハンドルを保存して、メイン ウィンドウを作成する
+/// <remarks>
+/// この関数で、グローバル変数でインスタンス ハンドルを保存し、
+/// メイン プログラム ウィンドウを作成および表示します。
+/// </remarks>
+/// </summary>
+/// <param name="hInstance">インスタンスハンドル</param>
+/// <param name="nCmdShow">当該プログラムの表示形式</param>
+/// <returns></returns>
+
+/**
+ * @brief 
+ * @
+ * @param hInstance 
+ * @param nCmdShow 
+ * @return 
+ */
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
@@ -252,9 +247,24 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    // 戻り値：
    //   作成されたウィンドウへのハンドル
    //
+   /***********************************************************
+	        マクロ：CreateWindowW
+	***********************************************************
 
-   hWnd = CreateWindowW(WIN_CLASS_NAME, WIN_CLASS_NAME, WS_OVERLAPPEDWINDOW,
-	  CW_USEDEFAULT, 0, winW, winH, nullptr, nullptr, hInstance, nullptr);
+			引数：
+			lpClassName
+			lpWindowName
+			dwStyle
+
+
+   ************************************************************/
+   hWnd = CreateWindowW(WIN_CLASS_NAME, WIN_CLASS_NAME,
+	      WS_OVERLAPPEDWINDOW,
+	      CW_USEDEFAULT,
+	      0,
+	      winW, winH,
+	      nullptr, nullptr,
+	      hInstance, nullptr);
 
    if (!hWnd)
    {
