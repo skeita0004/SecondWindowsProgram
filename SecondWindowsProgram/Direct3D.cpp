@@ -1,15 +1,18 @@
 #include "Direct3D.h"
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include "Camera.h"
 
 using namespace DirectX;
 
 namespace Direct3D
 {	// MSの命令で初期化を行うので、何もしなくても大丈夫（あとでチェックする）
-	ID3D11Device* pDevice;	    	//デバイス
-	ID3D11DeviceContext* pContext;	    	//デバイスコンテキスト
-	IDXGISwapChain* pSwapChain;		    //スワップチェイン
-	ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+	ID3D11Device* pDevice;                     //デバイス
+	ID3D11DeviceContext* pContext;             //デバイスコンテキスト
+	IDXGISwapChain* pSwapChain;                //スワップチェイン
+	ID3D11RenderTargetView* pRenderTargetView; //レンダーターゲットビュー
+	ID3D11Texture2D* pDepthStencil;            //深度ステンシル
+	ID3D11DepthStencilView* pDepthStencilView; //深度ステンシルビュー
 
 	struct SHADER_BANDLE
 	{
@@ -106,9 +109,27 @@ HRESULT Direct3D::Initialize(const int winW, const int winH, HWND hWnd)
 	vp.TopLeftX = 0;	//左
 	vp.TopLeftY = 0;	//上
 
+	//深度ステンシルビューの作成
+	//pDepthStencil = nullptr;
+
+	D3D11_TEXTURE2D_DESC descDepth;
+	descDepth.Width = winW;
+	descDepth.Height = winH;
+	descDepth.MipLevels = 1;
+	descDepth.ArraySize = 1;
+	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+	descDepth.SampleDesc.Count = 1;
+	descDepth.SampleDesc.Quality = 0;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	descDepth.CPUAccessFlags = 0;
+	descDepth.MiscFlags = 0;
+	pDevice->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
+	pDevice->CreateDepthStencilView(pDepthStencil, NULL, &pDepthStencilView);
+
 	//データを画面に描画するための一通りの設定（パイプライン）
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定(ポリゴンのトポロジ)
-	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);             // 描画先を設定(レンダリング先は複数指定できたりする)
+	pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);             // 描画先を設定(レンダリング先は複数指定できたりする)
 	pContext->RSSetViewports(1, &vp);                                         // ビューポートを設定
 
 	//シェーダー準備
@@ -129,6 +150,11 @@ void Direct3D::BeginDraw()
 
 	//画面をクリア
 	Direct3D::pContext->ClearRenderTargetView(Direct3D::pRenderTargetView, clearColor);
+
+	Camera::Update();
+
+	//深度バッファクリア
+	pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void Direct3D::EndDraw()
@@ -299,8 +325,7 @@ HRESULT Direct3D::InitShader2D()
 	D3D11_RASTERIZER_DESC rdc = {};
 	rdc.CullMode = D3D11_CULL_NONE;
 	rdc.FillMode = D3D11_FILL_SOLID;
-	rdc.FrontCounterClockwise = FALSE; // 逆時計回りが表？なるほどね。
-
+	rdc.FrontCounterClockwise = FALSE;
 	hResult = pDevice->CreateRasterizerState(&rdc, &shader.pRasterizerState);
 
 	if FAILED(hResult)

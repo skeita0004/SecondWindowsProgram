@@ -35,6 +35,7 @@ enum SHADER_TYPE
 	SHADER_MAX
 };
 
+/// @brief ポリゴンの一頂点を定義する構造体
 struct VERTEX
 {
 	DirectX::XMVECTOR position;
@@ -42,12 +43,21 @@ struct VERTEX
 	DirectX::XMVECTOR normal;
 };
 
+/// @brief 四角形の頂点を定義する構造体
 struct QuadFace
 {
 	VERTEX topLeft;
 	VERTEX topRight;
 	VERTEX bottomRight;
 	VERTEX bottomLeft;
+};
+
+//コンスタントバッファー
+struct CONSTANT_BUFFER
+{
+	DirectX::XMMATRIX matWVP;
+	DirectX::XMMATRIX matNormal;
+	DirectX::XMMATRIX matW;
 };
 
 namespace Direct3D
@@ -59,6 +69,9 @@ namespace Direct3D
 	HRESULT InitShader();
 	HRESULT InitShader3D();
 	HRESULT InitShader2D();
+
+	/// @brief 指定されたタイプのシェーダを作成する
+	/// @param _type シェーダのタイプ
 	void SetShader(SHADER_TYPE _type);
 
 	//描画開始
@@ -74,4 +87,7 @@ namespace Direct3D
 	extern ID3D11DeviceContext* pContext;             //デバイスコンテキスト
 	extern IDXGISwapChain* pSwapChain;                //スワップチェイン
 	extern ID3D11RenderTargetView* pRenderTargetView; //レンダーターゲットビュー
+	extern ID3D11Texture2D* pDepthStencil;			//深度ステンシル
+	extern ID3D11DepthStencilView* pDepthStencilView;		//深度ステンシルビュー
+
 };
