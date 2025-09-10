@@ -13,6 +13,9 @@ cbuffer global
     float4x4 matWVP;    // ワールド・ビュー・プロジェクションの合成行列
     float4x4 matNormal; 
     float4x4 matW;      // ワールド行列
+    float4 diffuseColor; // ディフューズカラー（マテリアルの色）
+    //float4 speculaColor;
+    bool isTexture; // テクスチャ貼ってあるかどうか
 };
 
 //───────────────────────────────────────
@@ -42,7 +45,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
     normal = normalize(normal);
     
     // 楽しい平行光源
-    float4 light = float4(-1, 0.5, -0.7, 0); // 高原の位置 // 那須光源
+    float4 light = float4(0, 0, -1, 0); // 高原の位置 // 那須光源
     light = normalize(light);
     outData.color = clamp(dot(normal, light), 0, 1); // 光線と頂点のベクトルとの内積の結果を突っ込んでいる
     
@@ -53,12 +56,25 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 //───────────────────────────────────────
 // ピクセルシェーダ
 //───────────────────────────────────────
-float4 PS(VS_OUT inData) : SV_Target
+float4 PS(VS_OUT PsInData) : SV_Target
 {
     // テクスチャから色を取得している
     //float4 specular = 
-    float4 diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
-    float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2, 0.2, 0.2, 1);
-    //float4 noise = 
+    
+    const float ambientPower = 0.3;
+    
+    float4 diffuse;
+    float4 ambient;
+    if (isTexture == true)
+    {
+        diffuse = g_texture.Sample(g_sampler, PsInData.uv) * PsInData.color;
+        ambient = g_texture.Sample(g_sampler, PsInData.uv) * float4(ambientPower, ambientPower, ambientPower, 1);
+    }
+    else
+    {
+        diffuse = diffuseColor;
+        ambient = diffuseColor * float4(ambientPower, ambientPower, ambientPower, 1);
+    }
+
     return diffuse + ambient;
 }
