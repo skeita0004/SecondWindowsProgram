@@ -14,6 +14,10 @@
 #include "Quad.h"
 #include "Dice.h"
 #include "Camera.h"
+#include "Sprite.h"
+#include "Fbx.h"
+
+#include "Input.h"
 
 #pragma comment(lib, "d3d11.lib")
 
@@ -39,8 +43,11 @@ namespace
 	Quad* quad{ nullptr };
 	Dice* dice{ nullptr };
 	Dice* dice2{ nullptr };
+	Sprite* img{ nullptr };
+	Fbx* oden{ nullptr };
 
 	std::vector<Dice*> dices(0, nullptr);
+	Transform odenForm{};
 }
 
 
@@ -90,19 +97,30 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
+	
+#if true
+#define DICEOFF
+#endif
+
+
+#ifndef DICEOFF
+	dice2 = new Dice(Transform{ {0, 0, 0}, {0, 0, 0}, {2, 2, 2} });
 	dice = new Dice(3.0f, { 0, 0, 0, 0 });
-	dice2 = new Dice(1.0f, { 2, 0, 3, 0 });
-	float deg = 0.f;
-	float deg2 = 0.f;
-	//if (FAILED(/*quad->Initialize()*/))
-	//{
-	//	return -1;
-	//}
-	//quad->Initialize();
 	dice->Initialize();
 	dice2->Initialize();
+#endif
+	const float imageSize = 2;
+	oden = new Fbx();
+	float deg = 0.f;
+	float deg2 = 0.f;
 
+	oden->Load("/Assets/models/oden.fbx");
+	//oden->Load("/Assets/models/Enemy01.fbx");
+
+	// カメラとかインプットとか
 	Camera::Initialize();
+	Input::Initialize(hWnd);
+
 	// メイン メッセージ ループ:
 	while (msg.message != WM_QUIT) // ここでメッセージを取得
 	{
@@ -111,48 +129,39 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		
 		else//メッセージなし
 		{
 			//描画処理
 			Direct3D::BeginDraw();
 
-			//ゲームの処理
-			Camera::Update();
+			Input::Update();
 
-			deg += 0.1f;
-			deg2 += 0.05f;
+			deg -= 0.1f;
 			
 			if (deg >= 360)
 			{
 				deg = 0.f;
 			}
 			
-			XMMATRIX rotXmat = XMMatrixRotationX(XMConvertToRadians(45));
-			XMMATRIX rotYmat = XMMatrixRotationY(XMConvertToRadians(deg));
-			XMMATRIX rotZmat = XMMatrixRotationZ(XMConvertToRadians(45));
-
-			//quad->Draw(rotYmat * rotXmat);
-			//quad->Draw(rotYmat);
-			//dice->Draw(rotXmat * rotZmat * rotYmat);
-			dice->Draw(rotYmat);
-			//dice2->Draw(rotXmat * rotZmat * rotYmat);
-
-			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(-90));
-			//quad->Draw(mat);
+			if (Input::IsKey(DIK_SPACE))
+			{
+				PostQuitMessage(0);
+			}
+			
+			odenForm.position.y = -5.f;
+			odenForm.rotate.y = deg;
+			//odenForm.scale.x = 1.0f;
+			//odenForm.scale.y = 1.0f;
+			//odenForm.scale.z = 1.0f;
+			oden->Draw(odenForm);
 
 			Direct3D::EndDraw();
 		}
 	}
 
-	//quad->Release();
-	dice->Release();
-	dice2->Release();
-	SafeDelete(dice2);
-	SafeDelete(dice);
+	SafeDelete(img);
 	
-	//SafeDelete(quad);
-
+	Input::Release();
 	Direct3D::Release();
 	return (int)msg.wParam;
 }
