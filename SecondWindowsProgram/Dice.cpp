@@ -5,14 +5,8 @@ namespace
 	const int FACE_NUM = 6;
 }
 
-Dice::Dice() :
-	Dice(1.f, { 0.f, 0.f, 0.f, 0.f })
-{
-}
-
-Dice::Dice(float _size, XMFLOAT4 _pos) :
-	size_(_size),
-	position_(_pos),
+Dice::Dice(Transform _transform) :
+	transform_(_transform),
 	quads_(FACE_NUM, nullptr),
 	quadFace_()
 {
@@ -25,18 +19,21 @@ Dice::~Dice()
 
 void Dice::Initialize()
 {
+	XMFLOAT3 position = transform_.position;
+	XMFLOAT3 scale    = transform_.scale;
+
 	VERTEX vertices[] =
 	{
 		// {{pos},{uv}}
-		{XMVectorSet(position_.x + -size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左上
-		{XMVectorSet(position_.x + size_, position_.y + size_,  position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右上
-		{XMVectorSet(position_.x + size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + -size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左下
+		{XMVectorSet(position.x + -scale.x, position.y + scale.y,  position.z + -scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左上
+		{XMVectorSet(position.x + scale.x, position.y + scale.y,  position.z + -scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右上
+		{XMVectorSet(position.x + scale.x, position.y + -scale.y, position.z + -scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 右下
+		{XMVectorSet(position.x + -scale.x, position.y + -scale.y, position.z + -scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7, 0.0f)}, // 左下
 
-		{XMVectorSet(position_.x + -size_, position_.y + size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左上
-		{XMVectorSet(position_.x + size_, position_.y + size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右上
-		{XMVectorSet(position_.x + size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右下
-		{XMVectorSet(position_.x + -size_, position_.y + -size_, position_.z + size_, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左下
+		{XMVectorSet(position.x + -scale.x, position.y + scale.y, position.z + scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左上
+		{XMVectorSet(position.x + scale.x, position.y + scale.y, position.z + scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右上
+		{XMVectorSet(position.x + scale.x, position.y + -scale.y, position.z + scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 右下
+		{XMVectorSet(position.x + -scale.x, position.y + -scale.y, position.z + scale.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(-1, 0.5, -0.7f, 0.0f)}, // 左下
 	};
 
 	// front
@@ -209,16 +206,16 @@ void Dice::Initialize()
 
 	for (int i = 0; i < FACE_NUM; i++)
 	{
-		quads_[i] = new Quad(position_, size_, quadFace_[i]);
+		quads_[i] = new Quad(transform_, quadFace_[i]);
 		quads_[i]->Initialize();
 	}
 }
 
-void Dice::Draw(DirectX::XMMATRIX _worldMat)
+void Dice::Draw(Transform& _transform)
 {
 	for (auto& quad : quads_)
 	{
-		quad->Draw(_worldMat);
+		quad->Draw(_transform);
 	}
 }
 

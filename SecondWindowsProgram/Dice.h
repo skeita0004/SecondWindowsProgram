@@ -17,17 +17,25 @@ enum Vertex
 class Dice
 {
 public:
-	Dice();
-	Dice(float _size, XMFLOAT4 _pos);
+	Dice(Transform _transform);
 	~Dice();
 
 	void Initialize();
-	void Draw(DirectX::XMMATRIX _worldMat);
+	void Draw(Transform& _transform);
 	void Release();
 
+	void SetTransform(Transform& _transform)
+	{
+		transform_ = _transform;
+	}
+
+	Transform GetTransform()
+	{
+		return transform_;
+	}
+
 private:
-	float size_;
-	XMFLOAT4 position_;
+	Transform transform_;
 	std::vector<Quad*> quads_;
 	//std::vector<VERTEX> faces_;
 	std::vector<QuadFace> quadFace_;

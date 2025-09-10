@@ -2,13 +2,12 @@
 #include <cassert>
 #include "Camera.h"
 
-Quad::Quad(XMFLOAT4 _pos, float _size, QuadFace _vertices) :
+Quad::Quad(Transform _transform, QuadFace _vertices) :
+	transform_(_transform),
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
 	pConstantBuffer_(nullptr),
-	pTexture_(nullptr),
-	size_(_size),
-	position_({0, 0, 0, 0})
+	pTexture_(nullptr)
 {
 	vertices_.clear();
 	vertices_.push_back(_vertices.topLeft);
@@ -86,12 +85,13 @@ HRESULT Quad::Initialize()
 	return hResult;
 }
 
-void Quad::Draw(const XMMATRIX& _worldMatrix)
+void Quad::Draw(Transform& _transform)
 {
+	XMMATRIX worldMat = _transform.GetWorldMatrix(); // ここで計算されるのですわ～
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb{};
-	cb.matWVP = XMMatrixTranspose(_worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	cb.matW = _worldMatrix;
+	cb.matWVP = XMMatrixTranspose(worldMat * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matW = worldMat;
 	cb.matNormal = XMMatrixInverse(nullptr, cb.matW);
 
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
