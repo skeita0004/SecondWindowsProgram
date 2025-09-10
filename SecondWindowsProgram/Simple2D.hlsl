@@ -49,8 +49,5 @@ VS_OUT VS(float4 pos : POSITION, float2 uv : TEXCOORD)
 float4 PS(VS_OUT inData) : SV_Target
 {
     // テクスチャから色を取得している
-    //float4 specular = 
-    float4 diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
-    float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2, 0.2, 0.2, 1);
-    return diffuse + ambient;
+    return g_texture.Sample(g_sampler, inData.uv) * inData.color;
 }
