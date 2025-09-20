@@ -40,9 +40,6 @@ namespace
 
 	HWND hWnd = nullptr;
 
-	Quad* quad{ nullptr };
-	Dice* dice{ nullptr };
-	Dice* dice2{ nullptr };
 	Sprite* img{ nullptr };
 	Fbx* oden{ nullptr };
 
@@ -83,7 +80,7 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 	winH = winRect.bottom - winRect.top; // ウィンドウ高
 
 	// アプリケーション初期化の実行:
-	if (!InitInstance (hInstance, nCmdShow))
+	if (not(InitInstance(hInstance, nCmdShow)))
 	{
 		return FALSE;
 	}
@@ -150,9 +147,6 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			
 			odenForm.position.y = -5.f;
 			odenForm.rotate.y = deg;
-			//odenForm.scale.x = 1.0f;
-			//odenForm.scale.y = 1.0f;
-			//odenForm.scale.z = 1.0f;
 			oden->Draw(odenForm);
 
 			Direct3D::EndDraw();
@@ -214,66 +208,39 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
 
-   //
-   // CreateWindowW
-   // 
-   // マクロ
-   // 
-   // 引数：
-   //   lpClassName
-   //       Windowクラスの名前
-   // 
-   //   lpWindowName
-   //       Windowの名前
-   // 
-   //   dwStyle
-   //       Windowのスタイル
-   // 
-   //   x
-   //       初期位置（水平）
-   // 
-   //   y
-   //       初期位置（垂直）
-   // 
-   //   nWidth
-   //       ウィンドウの幅
-   // 
-   //   nHeight
-   //       ウィンドウの高さ
-   // 
-   //   hWndParent
-   //       親ウィンドウ
-   //   
-   //   hMenu
-   //       メニュー
-   // 
-   //   hInstance
-   //       インスタンスハンドル
-   // 
-   //   lpParam
-   //       CREATESTRUCT構造体へのポインタ
-   // 
-   // 戻り値：
-   //   作成されたウィンドウへのハンドル
-   //
    /***********************************************************
-	        マクロ：CreateWindowW
+	        マクロ：CreateWindow
 	***********************************************************
 
-			引数：
-			lpClassName
-			lpWindowName
-			dwStyle
+			lpClassName   Window Class Name
+			lpWindowName  Window Title Name
+			dwStyle       Window Stile
+			x             Initial Pos (Horizontal)
+			y             Initial Pos (Vertical)
+			nWidth        Window Width
+			nHeight       Window Height
+			hWndParent    Parent Window Handle
+			hMenu         Menu Bar Handle
+			hInstance     Application Instance Handle
+			lpParam       Pointer to CREATESTRUCT
 
+			戻り値：
+			Type : HWND
+			Handle of Created Window
 
    ************************************************************/
-   hWnd = CreateWindowW(WIN_CLASS_NAME, WIN_CLASS_NAME,
+   hWnd = CreateWindow(
+          WIN_CLASS_NAME,
+	      WIN_CLASS_NAME,
 	      WS_OVERLAPPEDWINDOW,
 	      CW_USEDEFAULT,
-	      0,
-	      winW, winH,
-	      nullptr, nullptr,
-	      hInstance, nullptr);
+	      CW_USEDEFAULT,
+	      winW,
+	      winH,
+	      nullptr,
+	      nullptr,
+	      hInstance,
+	      nullptr);
 
    if (!hWnd)
    {
@@ -297,10 +264,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// 53行目で取得したメッセージをここで処理
+	// メッセージループで取得したメッセージをここで処理
 	switch (message)
 	{
 	case WM_COMMAND:
+		// plane block
 		{
 			int wmId = LOWORD(wParam);
 			// 選択されたメニューの解析:
@@ -318,6 +286,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_PAINT:
+		// plane block
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
@@ -334,6 +303,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // バージョン情報ボックスのメッセージ ハンドラ。
+// これは別に使っていない -- 20250911
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
