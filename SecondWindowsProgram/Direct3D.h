@@ -35,6 +35,7 @@ enum SHADER_TYPE
 	SHADER_MAX
 };
 
+// ここにあるのはけしからん
 /// @brief ポリゴンの一頂点を定義する構造体
 struct VERTEX
 {
@@ -43,6 +44,7 @@ struct VERTEX
 	DirectX::XMVECTOR normal;
 };
 
+// ここにあるのはけしからん
 /// @brief 四角形の頂点を定義する構造体
 struct QuadFace
 {
