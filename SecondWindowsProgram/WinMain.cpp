@@ -65,7 +65,7 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 /// <param name="nCmdShow">      当該プログラムをどういった形式で表示するか     </param>
 /// <returns></returns>
 int WINAPI wWinMain(_In_     HINSTANCE hInstance,
-					 _In_opt_ HINSTANCE hPrevInstance,
+					_In_opt_ HINSTANCE hPrevInstance,
 					_In_     LPWSTR    lpCmdLine,
 					_In_     INT       nCmdShow)
 {
@@ -298,6 +298,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	// 53行目で取得したメッセージをここで処理
 	switch (message)
 	{
+	case WM_MOUSEMOVE:
+		Input::SetMousePosition({ static_cast<float>( LOWORD(lParam) ), static_cast<float>( HIWORD(lParam) ) });
+		return S_OK; // breakじゃなくていいのか？
+
 	case WM_COMMAND:
 		{
 			int wmId = LOWORD(wParam);
@@ -310,6 +314,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case IDM_EXIT:
 				DestroyWindow(hWnd);
 				break;
+
 			default:
 				return DefWindowProc(hWnd, message, wParam, lParam);
 			}
