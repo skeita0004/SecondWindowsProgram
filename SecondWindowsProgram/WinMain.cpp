@@ -64,10 +64,10 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 /// <param name="lpCmdLine">     コマンドライン引数の文字列へのポインタ         </param>
 /// <param name="nCmdShow">      当該プログラムをどういった形式で表示するか     </param>
 /// <returns></returns>
-int __stdcall wWinMain(_In_ HINSTANCE hInstance,
+int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 					 _In_opt_ HINSTANCE hPrevInstance,
-					 _In_ LPWSTR    lpCmdLine,
-					 _In_ int       nCmdShow)
+					_In_     LPWSTR    lpCmdLine,
+					_In_     INT       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -150,9 +150,7 @@ int __stdcall wWinMain(_In_ HINSTANCE hInstance,
 			
 			odenForm.position.y = -5.f;
 			odenForm.rotate.y = deg;
-			//odenForm.scale.x = 1.0f;
-			//odenForm.scale.y = 1.0f;
-			//odenForm.scale.z = 1.0f;
+
 			oden->Draw(odenForm);
 
 			Direct3D::EndDraw();

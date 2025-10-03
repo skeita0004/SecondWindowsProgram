@@ -11,8 +11,9 @@ namespace Input
 {
 	HRESULT Initialize(const HWND& _hWnd);
 	void Update();
-	bool IsKey(int keyCode);
-	bool IsKeyUp(int keyCode);
-	bool IsKeyDown(int keyCode);
+
+	bool IsKey    (int _keyCode);
+	bool IsKeyUp  (int _keyCode);
+	bool IsKeyDown(int _keyCode);
 	void Release();
 };
