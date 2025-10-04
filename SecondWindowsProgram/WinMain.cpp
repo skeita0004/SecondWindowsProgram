@@ -1,29 +1,22 @@
 ﻿///
 /// @file WinMain.cpp
 /// @brief アプリケーションのエントリポイント
-/// @author 齋藤啓大及び東北電子の教員
+/// @author 齋藤啓大
 ///
 
 #include "framework.h"
 #include "SecondWindowsProgram.h"
 #include "Direct3D.h"
 #include <string>
-
 #include <d3d11.h>
-
-#include "Quad.h"
-#include "Dice.h"
 #include "Camera.h"
-#include "Sprite.h"
-#include "Fbx.h"
-
 #include "Input.h"
 
 #pragma comment(lib, "d3d11.lib")
 
 #define MAX_LOADSTRING 100
 
-// グローバル変数:
+// ファイル内変数:
 namespace
 {
 	HINSTANCE hInst;                                // 現在のインターフェイス
@@ -39,12 +32,6 @@ namespace
 	int winH;
 
 	HWND hWnd = nullptr;
-
-	Sprite* img{ nullptr };
-	Fbx* oden{ nullptr };
-
-	std::vector<Dice*> dices(0, nullptr);
-	Transform odenForm{};
 }
 
 
@@ -94,25 +81,6 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
 	MSG msg{};
 	//ZeroMemory(&msg, sizeof(msg));
-	
-#if true
-#define DICEOFF
-#endif
-
-
-#ifndef DICEOFF
-	dice2 = new Dice(Transform{ {0, 0, 0}, {0, 0, 0}, {2, 2, 2} });
-	dice = new Dice(3.0f, { 0, 0, 0, 0 });
-	dice->Initialize();
-	dice2->Initialize();
-#endif
-	const float imageSize = 2;
-	oden = new Fbx();
-	float deg = 0.f;
-	float deg2 = 0.f;
-
-	oden->Load("/Assets/models/oden.fbx");
-	//oden->Load("/Assets/models/Enemy01.fbx");
 
 	// カメラとかインプットとか
 	Camera::Initialize();
@@ -133,28 +101,9 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
 			Input::Update();
 
-			deg -= 0.1f;
-			
-			if (deg >= 360)
-			{
-				deg = 0.f;
-			}
-			
-			if (Input::IsKey(DIK_SPACE))
-			{
-				PostQuitMessage(0);
-			}
-			
-			odenForm.position.y = -5.f;
-			odenForm.rotate.y = deg;
-
-			oden->Draw(odenForm);
-
 			Direct3D::EndDraw();
 		}
 	}
-
-	SafeDelete(img);
 	
 	Input::Release();
 	Direct3D::Release();
