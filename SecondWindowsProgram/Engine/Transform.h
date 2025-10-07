@@ -1,32 +1,32 @@
-#pragma once
+﻿#pragma once
 #include <DirectXMath.h>
 
 using namespace DirectX;
 
-//�ʒu�A�����A�g�嗦�Ȃǂ��Ǘ�����N���X
+//位置、向き、拡大率などを管理するクラス
+// いずれ、計算とデータ部分を分けてあげたほうが良い
+// なぜなら、サイズが大きいから
 class Transform
 {
 private:
-	XMMATRIX matTranslate_;	//�ړ��s��
-	XMMATRIX matRotate_;	//��]�s��	
-	XMMATRIX matScale_;	//�g��s��
+	XMMATRIX matTranslate_; //移動行列
+	XMMATRIX matRotate_;    //回転行列	
+	XMMATRIX matScale_;     //拡大行列
 
 public:
-	XMFLOAT3 position;	//�ʒu
-	XMFLOAT3 rotate;	//����
-	XMFLOAT3 scale;	//�g�嗦
+	XMFLOAT3 position; //位置
+	XMFLOAT3 rotate;   //向き
+	XMFLOAT3 scale;    //拡大率
 
-	//�R���X�g���N�^
 	Transform();
 	Transform(XMFLOAT3 _pos, XMFLOAT3 _rot, XMFLOAT3 _scale);
 
-	//�f�X�g���N�^
 	~Transform();
 
-	//�e�s��̌v�Z
+	//各行列の計算
 	void Calculation();
 
-	//���[���h�s����擾
+	//ワールド行列を取得
 	const XMMATRIX GetWorldMatrix();
 	const XMMATRIX GetNormalMatrix();
 };

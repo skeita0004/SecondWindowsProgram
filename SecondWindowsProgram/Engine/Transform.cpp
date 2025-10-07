@@ -1,12 +1,12 @@
-#include "Transform.h"
+﻿#include "Transform.h"
 
 Transform::Transform() :
     matTranslate_(),
     matRotate_(),
     matScale_(),
-    position(),
-    rotate(),
-    scale({2, 2, 2})
+    position({0, 0, 0}),
+    rotate({0, 0, 0}),
+    scale({1, 1, 1})
 {
 }
 
@@ -26,20 +26,6 @@ Transform::~Transform()
 
 void Transform::Calculation()
 {
-    /*
-    XMVECTOR scale = XMLoadFloat3(&scale_);
-    XMVECTOR rotate = XMLoadFloat3(&rotate_);
-    XMVECTOR translate = XMLoadFloat3(&position_);
-
-    scale = XMVector3TransformCoord(scale, matScale_);
-    rotate = XMVector3TransformCoord(rotate, matRotate_);
-    translate = XMVector3TransformCoord(translate, matTranslate_);
-
-    XMStoreFloat3(&scale_, scale);
-    XMStoreFloat3(&scale_, rotate);
-    XMStoreFloat3(&scale_, translate);
-    */
-
     matTranslate_ = XMMatrixTranslation(position.x, position.y, position.z);
 
     XMMATRIX matRotateX{};
