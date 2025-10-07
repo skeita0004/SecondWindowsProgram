@@ -5,14 +5,19 @@
 ///
 
 #include "framework.h"
-#include "SecondWindowsProgram.h"
 #include "Direct3D.h"
 #include <string>
 #include <d3d11.h>
 #include "Camera.h"
 #include "Input.h"
+#include "RootJob.h"
+
+#include <cstdlib>
+
+#include <timeapi.h>
 
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "winmm.lib")
 
 #define MAX_LOADSTRING 100
 
@@ -32,6 +37,7 @@ namespace
 	int winH;
 
 	HWND hWnd = nullptr;
+	RootJob* pRootJob{nullptr};
 }
 
 
@@ -86,6 +92,9 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 	Camera::Initialize();
 	Input::Initialize(hWnd);
 
+	pRootJob = new RootJob();
+	pRootJob->Init();
+
 	// メイン メッセージ ループ:
 	while (msg.message != WM_QUIT) // ここでメッセージを取得
 	{
@@ -96,15 +105,47 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 		}
 		else//メッセージなし
 		{
+			static DWORD fps{0};
+
+			timeBeginPeriod(1);
+			static DWORD startTime = timeGetTime();
+			DWORD nowTime = timeGetTime();
+			static DWORD lastUpdateTime = nowTime;
+			timeEndPeriod(1);
+
+			if (nowTime - startTime >= 1000)
+			{
+				#if _DEBUG
+				wchar_t str[16]{ L"\0"};
+				wsprintf(str, L"%u", fps);
+				SetWindowText(hWnd, str);
+				#endif
+
+				fps = 0;
+				startTime = nowTime;
+			}
+
+			if (nowTime - lastUpdateTime <= 1000.f / 60)
+			{
+				continue;
+			}
+			lastUpdateTime = nowTime;
+
+			fps++;
+
+			pRootJob->UpdateSub();
+			Input::Update();
+
 			//描画処理
 			Direct3D::BeginDraw();
 
-			Input::Update();
+			pRootJob->DrawSub();
 
 			Direct3D::EndDraw();
 		}
 	}
 	
+	pRootJob->ReleaseSub();
 	Input::Release();
 	Direct3D::Release();
 	return (int)msg.wParam;
