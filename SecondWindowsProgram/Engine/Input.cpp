@@ -1,4 +1,4 @@
-#include "Input.h"
+Ôªø#include "Input.h"
 #include <DirectXMath.h>
 #include <vector>
 #include <string>
@@ -11,8 +11,8 @@ namespace
     const DWORD MAX_KEY  { 256 };  // Max keyboard key num
     const BYTE  DIK_TRUE { 0x80 }; // DirectInput flag mask
     const int   PAD_ID   { 0 };
-    BYTE currKeyState[MAX_KEY]{}; // Ñ±Ñ™KeyStates
-    BYTE prevKeyState[MAX_KEY]{}; // ÑÆ
+    BYTE currKeyState[MAX_KEY]{}; // ‚î≥‚îÅKeyStates
+    BYTE prevKeyState[MAX_KEY]{}; // ‚îõ
 
     XMFLOAT2     mousePosition{};
     DIMOUSESTATE currMouseState{};
@@ -71,7 +71,7 @@ namespace
         XMStoreFloat2(&lStick, vLStick);
         XMStoreFloat2(&rStick, vRStick);
 
-        // èÁí∑
+        // ÂÜóÈï∑
         if (fabsf(lStick.x) <= lStickDeadZone)
         {
             lStick.x = 0.0f;
@@ -95,7 +95,7 @@ namespace
 
 namespace Input
 {
-    using namespace DirectX; // ÉuÉçÉbÉNì‡Ç…Ç∑ÇÈà”ñ°ÇÕÇ»Ç¢Ç∆évÇ§ÇØÇ«ÅAàÍâû
+    using namespace DirectX; // „Éñ„É≠„ÉÉ„ÇØÂÜÖ„Å´„Åô„ÇãÊÑèÂë≥„ÅØ„Å™„ÅÑ„Å®ÊÄù„ÅÜ„Åë„Å©„ÄÅ‰∏ÄÂøú
 
     HRESULT Input::Initialize(const HWND& _hWnd)
     {
@@ -105,11 +105,11 @@ namespace Input
         DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
         
         pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice,   nullptr);
-        pKeyDevice->SetDataFormat(&c_dfDIKeyboard); // âΩÇÃÉfÅ[É^ÉtÉHÅ[É}ÉbÉgÇæÇÊ
-        pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND); // ã@äÌóòópÇÃóDêÊìxÇê›íË
+        pKeyDevice->SetDataFormat(&c_dfDIKeyboard); // ‰Ωï„ÅÆ„Éá„Éº„Çø„Éï„Ç©„Éº„Éû„ÉÉ„Éà„Å†„Çà
+        pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND); // Ê©üÂô®Âà©Áî®„ÅÆÂÑ™ÂÖàÂ∫¶„ÇíË®≠ÂÆö
 
         pDInput->CreateDevice(GUID_SysMouse,    &pMouseDevice, nullptr);
-        pMouseDevice->SetDataFormat(&c_dfDIMouse); // âΩÇÃÉfÅ[É^ÉtÉHÅ[É}ÉbÉgÇæÇÊ
+        pMouseDevice->SetDataFormat(&c_dfDIMouse); // ‰Ωï„ÅÆ„Éá„Éº„Çø„Éï„Ç©„Éº„Éû„ÉÉ„Éà„Å†„Çà
         pMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND);
 
         return S_OK;
@@ -135,13 +135,13 @@ namespace Input
         //XMVectorAdd(mousePosVector, mousePosDiffVector);
         //XMStoreFloat2(&mousePosition, mousePosVector);
 #ifdef _DEBUG
-        OutputDebugStringA(( std::to_string(mousePosition.x) + ", " + std::to_string(mousePosition.y) + "\n" ).c_str());
-        
-        for (auto& button : currMouseState.rgbButtons)
-        {
-            OutputDebugStringA((std::to_string(button)).c_str());
-        }
-        OutputDebugStringA("\n");
+        //OutputDebugStringA(( std::to_string(mousePosition.x) + ", " + std::to_string(mousePosition.y) + "\n" ).c_str());
+        //
+        //for (auto& button : currMouseState.rgbButtons)
+        //{
+        //    OutputDebugStringA((std::to_string(button)).c_str());
+        //}
+        //OutputDebugStringA("\n");
 #endif
     }
 
