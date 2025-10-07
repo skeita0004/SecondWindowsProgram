@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <d3d11.h>
 #include <fbxsdk.h>
@@ -21,7 +21,7 @@ public:
 	void    Release();
 
 private:
-	struct CONSTANT_BUFFER // ƒVƒF[ƒ_‘¤‚Æ‡‚í‚¹‚È‚¢‚ÆA‚¨‚©‚µ‚­‚È‚é‚æI
+	struct CONSTANT_BUFFER // ã‚·ã‚§ãƒ¼ãƒ€å´ã¨åˆã‚ã›ãªã„ã¨ã€ãŠã‹ã—ããªã‚‹ã‚ˆï¼
 	{
 		XMMATRIX	matWVP;
 		XMMATRIX	matNormal;
@@ -47,18 +47,16 @@ private:
 
 	void    InitVertex(fbxsdk::FbxMesh* _mesh);
 	void    InitIndex (fbxsdk::FbxMesh* _mesh);
-	void    InitConstantBuffer();	//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@€”õ
+	void    InitConstantBuffer();	//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡æº–å‚™
 	void    InitMaterial(fbxsdk::FbxNode* _pNode);
 
-	int vertexCount_;   //’¸“_”
-	int polygonCount_;  //ƒ|ƒŠƒSƒ“”
-	int* indexCount_;    //ƒCƒ“ƒfƒbƒNƒX”
-	int materialCount_; //ƒ}ƒeƒŠƒAƒ‹”
+	int vertexCount_;   //é ‚ç‚¹æ•°
+	int polygonCount_;  //ãƒãƒªã‚´ãƒ³æ•°
+	int* indexCount_;    //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+	int materialCount_; //ãƒãƒ†ãƒªã‚¢ãƒ«æ•°
 
 	ID3D11Buffer*         pVertexBuffer_;
 	ID3D11Buffer**        pIndexBuffer_;
 	ID3D11Buffer*         pConstantBuffer_;
 	std::vector<MATERIAL> materialList_;
-
-
 };

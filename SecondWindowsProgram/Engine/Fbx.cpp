@@ -1,4 +1,4 @@
-#include "Fbx.h"
+ï»¿#include "Fbx.h"
 #include "Camera.h"
 #include <filesystem>
 #include <sstream>
@@ -17,78 +17,82 @@ Fbx::Fbx() :
     vertexCount_(0),
     polygonCount_(0),
 	indexCount_(0),
+	materialCount_(0),
 	materialList_()
 {
 }
 
 HRESULT Fbx::Load(std::string _fileName)
 {
-	//ƒ}ƒl[ƒWƒƒ‚ğ¶¬
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ã‚’ç”Ÿæˆ
 	FbxManager* pFbxManager = FbxManager::Create();
 
-	//ƒCƒ“ƒ|[ƒ^[‚ğ¶¬
+	//ã‚¤ãƒ³ãƒãƒ¼ã‚¿ãƒ¼ã‚’ç”Ÿæˆ
 	FbxImporter* fbxImporter = FbxImporter::Create(pFbxManager, "imp");
-	fbxImporter->Initialize(_fileName.c_str(), -1, pFbxManager->GetIOSettings());
+	if (not(fbxImporter->Initialize(_fileName.c_str(), -1, pFbxManager->GetIOSettings())))
+	{
+		return E_FAIL;
+	}
 
-	//ƒV[ƒ“ƒIƒuƒWƒFƒNƒg‚ÉFBXƒtƒ@ƒCƒ‹‚Ìî•ñ‚ğ—¬‚µ‚Ş
+	//ã‚·ãƒ¼ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«FBXãƒ•ã‚¡ã‚¤ãƒ«ã®æƒ…å ±ã‚’æµã—è¾¼ã‚€
 	FbxScene* pFbxScene = FbxScene::Create(pFbxManager, "fbxscene");
 	fbxImporter->Import(pFbxScene);
 	fbxImporter->Destroy();
 
-	//ƒƒbƒVƒ…î•ñ‚ğæ“¾
+	//ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã‚’å–å¾—
 	FbxNode* rootNode = pFbxScene->GetRootNode();
 	FbxNode* pNode = rootNode->GetChild(0);
 	FbxMesh* mesh = pNode->GetMesh();
 
-	//Šeî•ñ‚ÌŒÂ”‚ğæ“¾
-	vertexCount_ = mesh->GetControlPointsCount();	//’¸“_‚Ì”
-	polygonCount_ = mesh->GetPolygonCount();	    //ƒ|ƒŠƒSƒ“‚Ì”
-	materialCount_ = pNode->GetMaterialCount();     // ƒ}ƒeƒŠƒAƒ‹‚Ì”
+	//å„æƒ…å ±ã®å€‹æ•°ã‚’å–å¾—
+	vertexCount_ = mesh->GetControlPointsCount();	//é ‚ç‚¹ã®æ•°
+	polygonCount_ = mesh->GetPolygonCount();	    //ãƒãƒªã‚´ãƒ³ã®æ•°
+	materialCount_ = pNode->GetMaterialCount();     // ãƒãƒ†ãƒªã‚¢ãƒ«ã®æ•°
 
 	wchar_t defaultCurrentDir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
 
-	// TTTOOODDDOOOFˆø”‚©‚ç‚Æ‚ê‚æI
+	// TTTOOODDDOOOï¼šå¼•æ•°ã‹ã‚‰ã¨ã‚Œã‚ˆï¼
 	SetCurrentDirectory(L"Assets/models/");
 
 	indexCount_ = new int[materialCount_];
 
-	InitVertex(mesh);		//’¸“_ƒoƒbƒtƒ@€”õ
+	InitVertex(mesh);		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡æº–å‚™
 	InitIndex(mesh);
 	InitConstantBuffer();
 	InitMaterial(pNode);
 
 	SetCurrentDirectory(defaultCurrentDir);
 
-	//ƒ}ƒl[ƒWƒƒ‰ğ•ú
+	//ãƒãƒãƒ¼ã‚¸ãƒ£è§£æ”¾
 	pFbxManager->Destroy();
 
 	return S_OK;
 }
 
-//’¸“_ƒoƒbƒtƒ@€”õ
+//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡æº–å‚™
 void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 {
 	HRESULT hResult;
-	//’¸“_î•ñ‚ğ“ü‚ê‚é”z—ñ
+	//é ‚ç‚¹æƒ…å ±ã‚’å…¥ã‚Œã‚‹é…åˆ—
 	VERTEX* vertices = new VERTEX[vertexCount_];
 
-	//‘Sƒ|ƒŠƒSƒ“
+	//å…¨ãƒãƒªã‚´ãƒ³
 	for (size_t poly = 0; poly < polygonCount_; poly++)
 	{
-		//3’¸“_•ª
+		//3é ‚ç‚¹åˆ†
 		for (int vertex = 0; vertex < 3; vertex++)
 		{
-			//’²‚×‚é’¸“_‚Ì”Ô†
+			//èª¿ã¹ã‚‹é ‚ç‚¹ã®ç•ªå·
 			int index = _mesh->GetPolygonVertex(poly, vertex);
 
-			//’¸“_‚ÌˆÊ’u
+			//é ‚ç‚¹ã®ä½ç½®
 			FbxVector4 pos = _mesh->GetControlPointAt(index);
 			vertices[index].position = XMVectorSet((float)pos[0], (float)pos[1], (float)pos[2], 0.0f);
 
 #if false
 #define WRONG_CODE
-			//’¸“_‚ÌUV
+			//é ‚ç‚¹ã®UV
 			FbxLayerElementUV* pUV = _mesh->GetLayer(0)->GetUVs();
 			int uvIndex = _mesh->GetTextureUVIndex(poly, vertex, FbxLayerElement::eTextureDiffuse);
 			FbxVector2  uv = pUV->GetDirectArray().GetAt(uvIndex);
@@ -133,15 +137,15 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 			/*END GPTs CODE*/
 #endif
 
-			//’¸“_‚Ì–@ü
+			//é ‚ç‚¹ã®æ³•ç·š
 			FbxVector4 Normal;
-			_mesh->GetPolygonVertexNormal(poly, vertex, Normal);	//‚‰”Ô–Ú‚Ìƒ|ƒŠƒSƒ“‚ÌA‚Š”Ô–Ú‚Ì’¸“_‚Ì–@ü‚ğƒQƒbƒg
+			_mesh->GetPolygonVertexNormal(poly, vertex, Normal);	//ï½‰ç•ªç›®ã®ãƒãƒªã‚´ãƒ³ã®ã€ï½Šç•ªç›®ã®é ‚ç‚¹ã®æ³•ç·šã‚’ã‚²ãƒƒãƒˆ
 			vertices[index].normal = XMVectorSet((float)Normal[0], (float)Normal[1], (float)Normal[2], 0.0f);
 		}
 	}
 
-	// ’¸“_ƒoƒbƒtƒ@ì¬
-	// ’¸“_ƒf[ƒ^—pƒoƒbƒtƒ@‚Ìİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ä½œæˆ
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = static_cast<UINT>( sizeof(VERTEX) * vertexCount_ );
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -156,7 +160,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 	hResult = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hResult))
 	{
-		MessageBox(nullptr, L"’¸“_‚ª‚È‚ñ‚©•Ï‚Å‚·", L"ƒGƒ‰[", MB_OK);
+		MessageBox(nullptr, L"é ‚ç‚¹ãŒãªã‚“ã‹å¤‰ã§ã™", L"ã‚¨ãƒ©ãƒ¼", MB_OK);
 	}
 
 	delete[] vertices;
@@ -174,7 +178,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 	{
 		int count = 0;
 
-		//‘Sƒ|ƒŠƒSƒ“
+		//å…¨ãƒãƒªã‚´ãƒ³
 		for (DWORD poly = 0; poly < polygonCount_; poly++)
 		{
 
@@ -183,7 +187,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 
 			if (mtlId == i)
 			{
-				//3’¸“_•ª
+				//3é ‚ç‚¹åˆ†
 				for (DWORD vertex = 0; vertex < 3; vertex++)
 				{
 					index[count] = _mesh->GetPolygonVertex(poly, vertex);
@@ -192,7 +196,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 			}
 		}
 
-		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬‚·‚é
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆã™ã‚‹
 		D3D11_BUFFER_DESC   bd;
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.ByteWidth = sizeof(int) * count;
@@ -208,7 +212,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 		hResult = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_[i]);
 		if (FAILED(hResult))
 		{
-			MessageBox(nullptr, L"ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ª‚È‚ñ‚©•Ï‚Å‚·", L"éÒ[", MB_OK);
+			MessageBox(nullptr, L"ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãŒãªã‚“ã‹å¤‰ã§ã™", L"é°“ãƒ¼", MB_OK);
 		}
 		indexCount_[i] = count;
 	}
@@ -218,7 +222,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 
 void Fbx::InitConstantBuffer()
 {
-	//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ì¬
+	//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	D3D11_BUFFER_DESC cb;
 	cb.ByteWidth = sizeof(Fbx::CONSTANT_BUFFER);
 	cb.Usage = D3D11_USAGE_DYNAMIC;
@@ -227,7 +231,7 @@ void Fbx::InitConstantBuffer()
 	cb.MiscFlags = 0;
 	cb.StructureByteStride = 0;
 
-	// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ìì¬
+	// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
 	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 }
 
@@ -238,16 +242,16 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* _pNode)
 
 	for (size_t i = 0; i < materialCount_; i++)
 	{
-		//i”Ô–Ú‚Ìƒ}ƒeƒŠƒAƒ‹î•ñ‚ğæ“¾
+		//iç•ªç›®ã®ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã‚’å–å¾—
 		FbxSurfaceMaterial* pMaterial = _pNode->GetMaterial(i);
 
-		//ƒeƒNƒXƒ`ƒƒî•ñ
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±
 		FbxProperty  lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
 
-		//ƒeƒNƒXƒ`ƒƒ‚Ì–‡”
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°
 		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
 
-		//ƒeƒNƒXƒ`ƒƒ‚ ‚è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚ã‚Š
 		if (fileTextureCount > 0)
 		{
 			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
@@ -261,30 +265,30 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* _pNode)
 			//pathOss << "Assets/models/" << txFileName;
 
 			//txFileName = pathOss.str();
-			                                                 //‚É‚Ç‚Å‚Ü
-			fs::path newFilePath(txFileName); // ‚É‚Ç‚Å‚Ü‚Å‚ÍH“ñ“xèŠÔ
+			                                                 //ã«ã©ã§ã¾
+			fs::path newFilePath(txFileName); // ã«ã©ã§ã¾ã§ã¯ï¼ŸäºŒåº¦æ‰‹é–“
 
 			if (fs::is_regular_file(newFilePath))
 			{
-				//ƒtƒ@ƒCƒ‹‚©‚çƒeƒNƒXƒ`ƒƒì¬
+				//ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ä½œæˆ
 				materialList_[i].pTexture = new Texture();
 			
 				if (FAILED(materialList_[i].pTexture->Load(txFileName)))
 				{
-					MessageBox(nullptr, L"ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½B", L"ƒGƒ‰[", MB_OKCANCEL | MB_ICONWARNING);
+					MessageBox(nullptr, L"ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", L"ã‚¨ãƒ©ãƒ¼", MB_OKCANCEL | MB_ICONWARNING);
 				}
 				
 			}
 			else
 			{
-				// Ì§²Ù‚È‚µ
+				// ï¾Œï½§ï½²ï¾™ãªã—
 			}
 		}
-		else	//ƒeƒNƒXƒ`ƒƒ–³‚µ
+		else	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç„¡ã—
 		{
 			materialList_[i].pTexture = nullptr;
 
-			//ƒ}ƒeƒŠƒAƒ‹‚ÌF
+			//ãƒãƒ†ãƒªã‚¢ãƒ«ã®è‰²
 			FbxSurfaceLambert* pMaterial = (FbxSurfaceLambert*)_pNode->GetMaterial(i);
 			FbxDouble3  diffuse = pMaterial->Diffuse;
 			materialList_[i].diffuse = XMFLOAT4((float)diffuse[0], (float)diffuse[1], (float)diffuse[2], 1.0f);
@@ -298,18 +302,17 @@ void Fbx::Draw(Transform& _transform)
 
 	for (int i = 0; i < materialCount_; i++)
 	{
-		XMMATRIX worldMat = _transform.GetWorldMatrix(); // ‚±‚±‚ÅŒvZ‚³‚ê‚é‚Ì‚Å‚·‚í`
+		XMMATRIX worldMat = _transform.GetWorldMatrix(); // ã“ã“ã§è¨ˆç®—ã•ã‚Œã‚‹ã®ã§ã™ã‚ï½
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		Fbx::CONSTANT_BUFFER cb{};
 		cb.matWVP = XMMatrixTranspose(worldMat * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(_transform.GetNormalMatrix());
-		//cb.matNormal = _transform.GetNormalMatrix();
 		cb.matW = worldMat;
 		cb.diffuseColor = materialList_[i].diffuse;
 		cb.isTexture = (BOOL)(materialList_[i].pTexture != nullptr);
 
-		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPU‚©‚ç‚Ìƒf[ƒ^ƒAƒNƒZƒX‚ğ~‚ß‚é
-		memcpy_s(pdata.pData, pdata.RowPitch, (void*)( &cb ), sizeof(cb));	// ƒf[ƒ^‚Ì’l‚ğ‘—‚é
+		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã‚¢ã‚¯ã‚»ã‚¹ã‚’æ­¢ã‚ã‚‹
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)( &cb ), sizeof(cb));	// ãƒ‡ãƒ¼ã‚¿ã®å€¤ã‚’é€ã‚‹
 
 		if (materialList_[i].pTexture != nullptr)
 		{
@@ -320,21 +323,21 @@ void Fbx::Draw(Transform& _transform)
 			Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 		}
 
-		Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//ÄŠJ
+		Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//å†é–‹
 
-		//’¸“_ƒoƒbƒtƒ@
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 		UINT stride = sizeof(VERTEX);
 		UINT offset = 0;
 		Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
-		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@[‚ğƒZƒbƒg
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 		//stride = sizeof(int);
 		offset = 0;
 		Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_[i], DXGI_FORMAT_R32_UINT, 0);
 
-		//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@
-		Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//’¸“_ƒVƒF[ƒ_[—p	
-		Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[—p
+		//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡
+		Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨	
+		Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨
 
 		Direct3D::pContext->DrawIndexed(indexCount_[i], 0, 0);
 	}
