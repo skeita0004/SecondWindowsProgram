@@ -13,7 +13,8 @@ GameObject::GameObject(GameObject* _pParent, const std::string& _name) :
 	childList_(0, nullptr),
 	transForm_(),
 	pParent_(_pParent),
-	objectName_(_name)
+	objectName_(_name),
+	isKillMe_(false)
 {
 }
 

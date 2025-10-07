@@ -2,6 +2,7 @@
 #include <string>
 #include "Input.h"
 #include "Bullet.h"
+#include "Model.h"
 
 namespace
 {
@@ -10,7 +11,7 @@ namespace
 
 Player::Player(GameObject* _parent) :
 	GameObject(_parent, "Player"),
-	pModel_(nullptr),
+	hModel_(-1),
 	transform_()
 {
 }
@@ -21,8 +22,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	pModel_ = new Fbx();
-	pModel_->Load(MODEL_PATH);
+	hModel_ = Model::Load(MODEL_PATH);
 }
 
 void Player::Update()
@@ -42,14 +42,15 @@ void Player::Update()
 	{
 		transform_.position.x += 0.2f;
 	}
+
+	Model::SetTransForm(hModel_, transform_);
 }
 
 void Player::Draw()
 {
-	pModel_->Draw(transform_);
+	Model::Draw(hModel_);
 }
 
 void Player::Release()
 {
-	pModel_->Release();
 }

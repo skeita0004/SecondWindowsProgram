@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 #include "Player.h"
 #include <string>
+#include "Model.h"
 
 namespace
 {
@@ -11,7 +12,7 @@ namespace
 Bullet::Bullet(GameObject* _parent):
 	GameObject(_parent, "Bullet"),
 	transform_(),
-	pModel_(nullptr)
+	hModel_(-1)
 {
 }
 
@@ -21,14 +22,15 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-	pModel_ = new Fbx();
-	pModel_->Load(MODEL_PATH);
+	hModel_ = Model::Load(MODEL_PATH);
 }
 
 void Bullet::Update()
 {
 	transform_.rotate.y = 90;
 	transform_.position.z--;
+
+	Model::SetTransForm(hModel_, transform_);
 
 	if (deadCounter >= 60 * 3)
 	{
@@ -41,10 +43,9 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	pModel_->Draw(transform_);
+	Model::Draw(hModel_);
 }
 
 void Bullet::Release()
 {
-	SAFE_RELEASE(pModel_);
 }

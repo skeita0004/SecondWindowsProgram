@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "GameObject.h"
-#include "Fbx.h"
 
 class Player : public GameObject
 {
@@ -15,6 +14,6 @@ public:
 	void Release() override;
 
 private:
-	Fbx* pModel_;
+	int       hModel_;
 	Transform transform_;
 };

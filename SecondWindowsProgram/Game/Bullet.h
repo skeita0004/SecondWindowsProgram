@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "GameObject.h"
-#include "Fbx.h"
 
 class Bullet : public GameObject
 {
@@ -15,6 +14,6 @@ public:
 
 private:
 	Transform transform_;
-	Fbx* pModel_;
+	int hModel_;
 
 };
