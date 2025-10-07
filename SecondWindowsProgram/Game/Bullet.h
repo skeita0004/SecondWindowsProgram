@@ -16,4 +16,5 @@ public:
 private:
 	Transform transform_;
 	Fbx* pModel_;
+
 };

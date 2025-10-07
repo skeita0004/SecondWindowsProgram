@@ -5,6 +5,7 @@
 namespace
 {
 	const std::string MODEL_PATH{"Assets/models/mochi_kinchaku.fbx"};
+	int deadCounter = 0;
 }
 
 Bullet::Bullet(GameObject* _parent):
@@ -26,14 +27,13 @@ void Bullet::Init()
 
 void Bullet::Update()
 {
-	static int deadCounter = 0;
-
 	transform_.rotate.y = 90;
 	transform_.position.z--;
 
 	if (deadCounter >= 60 * 3)
 	{
 		KillMe();
+		deadCounter = 0;
 	}
 
 	deadCounter++;

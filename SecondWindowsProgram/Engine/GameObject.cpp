@@ -28,7 +28,6 @@ void GameObject::UpdateSub()
 	for (auto& object : childList_)
 	{
 		object->UpdateSub();
-	
 	}
 
 	for (auto itr = childList_.begin(); itr != childList_.end();)
