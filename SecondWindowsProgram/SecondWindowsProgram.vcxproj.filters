@@ -72,12 +72,6 @@
     <ClInclude Include="Engine\Model.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\TestScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -125,12 +119,6 @@
     <ClCompile Include="Engine\Model.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SceneManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\TestScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SecondWindowsProgram.rc">
@@ -156,6 +144,5 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Setting.ini" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
