@@ -2,7 +2,8 @@
 #include "Input.h"
 
 TestScene::TestScene(GameObject* _parent) :
-	GameObject(_parent, "TestScene")
+	GameObject(_parent, "TestScene"),
+	pSceneManager(nullptr)
 {
 }
 

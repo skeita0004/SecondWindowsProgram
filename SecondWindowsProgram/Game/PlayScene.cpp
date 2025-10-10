@@ -3,7 +3,8 @@
 #include "Input.h"
 
 PlayScene::PlayScene(GameObject* _parent) :
-	GameObject(_parent, "PlayScene")
+	GameObject(_parent, "PlayScene"),
+	pSceneManager_(nullptr)
 {
 }
 

@@ -44,8 +44,11 @@ namespace
         const BYTE  ByteMax   = UCHAR_MAX;
 
         const float triggerDeadZone = (int)XINPUT_GAMEPAD_TRIGGER_THRESHOLD / ByteMax;
-        const float lStickDeadZone = fabsf((int)XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE / sShortMax);
-        const float rStickDeadZone = fabsf((int)XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE / sShortMax);
+        const float lStickDeadZone = fabsf(
+            (int)XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE / sShortMax);
+
+        const float rStickDeadZone = fabsf(
+            (int)XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE / sShortMax);
 
         XMVECTOR vLStick{};
         XMVECTOR vRStick{};
@@ -53,8 +56,13 @@ namespace
         vLStick = XMLoadFloat2(&lStick);
         vRStick = XMLoadFloat2(&rStick);
 
-        vLStick = XMVectorSet(_analogVal.sThumbLX / sShortMax, _analogVal.sThumbLY / sShortMax, 0.f, 0.f);
-        vRStick = XMVectorSet(_analogVal.sThumbRX / sShortMax, _analogVal.sThumbRY / sShortMax, 0.f, 0.f);
+        vLStick = XMVectorSet(_analogVal.sThumbLX / sShortMax,
+                              _analogVal.sThumbLY / sShortMax,
+                              0.f, 0.f);
+
+        vRStick = XMVectorSet(_analogVal.sThumbRX / sShortMax,
+                              _analogVal.sThumbRY / sShortMax,
+                              0.f, 0.f);
 
         _dist->lTrigger = _analogVal.bLeftTrigger  / ByteMax;
         _dist->rTrigger = _analogVal.bRightTrigger / ByteMax;
@@ -105,11 +113,11 @@ namespace Input
         DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
         
         pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice,   nullptr);
-        pKeyDevice->SetDataFormat(&c_dfDIKeyboard); // 何のデータフォーマットだよ
-        pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND); // 機器利用の優先度を設定
+        pKeyDevice->SetDataFormat(&c_dfDIKeyboard);
+        pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND);
 
         pDInput->CreateDevice(GUID_SysMouse,    &pMouseDevice, nullptr);
-        pMouseDevice->SetDataFormat(&c_dfDIMouse); // 何のデータフォーマットだよ
+        pMouseDevice->SetDataFormat(&c_dfDIMouse);
         pMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE bitor DISCL_FOREGROUND);
 
         return S_OK;
@@ -134,15 +142,6 @@ namespace Input
         //XMVECTOR mousePosDiffVector{ XMVectorSet(currMouseState.lX, currMouseState.lY, 0.f, 0.f) };
         //XMVectorAdd(mousePosVector, mousePosDiffVector);
         //XMStoreFloat2(&mousePosition, mousePosVector);
-#ifdef _DEBUG
-        //OutputDebugStringA(( std::to_string(mousePosition.x) + ", " + std::to_string(mousePosition.y) + "\n" ).c_str());
-        //
-        //for (auto& button : currMouseState.rgbButtons)
-        //{
-        //    OutputDebugStringA((std::to_string(button)).c_str());
-        //}
-        //OutputDebugStringA("\n");
-#endif
     }
 
 #pragma region Key_Board
