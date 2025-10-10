@@ -22,6 +22,22 @@ public:
 
 	void KillMe();
 
+	GameObject* GetParent();
+	GameObject* GetRootJob();
+	std::list<GameObject*>* GetChildList();
+	GameObject* FindChildObject(const std::string& _name);
+
+	template <typename T>
+	inline T* FindGameObject(const std::string& _name)
+	{
+		return static_cast<T*>(GetRootJob()->FindChildObject(_name));
+	}
+
+	void DeleteObjectSub(GameObject* _object);
+	void DeleteAllChildren();
+	
+	inline const std::string& GetObjectName() {return this->objectName_;}
+
 	template <typename PTYPE>
 	inline static void SafeDelete(PTYPE* _ptr)
 	{
@@ -37,8 +53,8 @@ public:
 	{
 		T* pObject{nullptr};
 		pObject = new T(_parent);
-		pObject->Init();
 		_parent->childList_.push_back(pObject);
+		pObject->Init();
 	}
 
 private:

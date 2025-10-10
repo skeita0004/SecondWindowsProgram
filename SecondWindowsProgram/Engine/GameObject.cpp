@@ -1,4 +1,5 @@
 ﻿#include "GameObject.h"
+#include <Windows.h>
 
 GameObject::GameObject() :
 	childList_(0, nullptr),
@@ -71,4 +72,103 @@ void GameObject::ReleaseSub()
 void GameObject::KillMe()
 {
 	isKillMe_ = true;
+}
+
+GameObject* GameObject::GetParent()
+{
+	return this->pParent_;
+}
+
+GameObject* GameObject::GetRootJob()
+{
+	if (GetParent() != nullptr)
+	{
+		return GetParent()->GetRootJob();
+	}
+	else if (GetParent() == nullptr)
+	{
+		return this;
+	}
+
+	return nullptr;
+}
+
+std::list<GameObject*>* GameObject::GetChildList()
+{
+	return &childList_;
+}
+
+GameObject* GameObject::FindChildObject(const std::string& _name)
+{
+	if (this->childList_.empty())
+	{
+		return nullptr;
+	}
+
+	auto itr    = this->childList_.begin();
+	auto itrEnd = this->childList_.end();
+
+	while (itr != itrEnd)
+	{
+		auto object = (*itr);
+
+		if (object->GetObjectName() == _name)
+		{
+			return object;
+		}
+		
+		GameObject* child = object->FindChildObject(_name);
+		if (child != nullptr)
+		{
+			return child;
+		}
+		
+		itr++;
+	}
+
+	return nullptr;
+}
+
+void GameObject::DeleteObjectSub(GameObject* _object)
+{
+	if (not(_object->childList_.empty()))
+	{
+		auto list   = _object->GetChildList();
+		auto itr    = list->begin();
+		auto itrEnd = list->end();
+		auto object = (*itr);
+
+		while (itr != itrEnd)
+		{
+
+			object = (*itr);
+			DeleteObjectSub(object);
+			SafeDelete(object);
+			itr = list->erase(itr);
+
+		}
+		list->clear();
+	}
+	_object->Release();
+}
+
+void GameObject::DeleteAllChildren()
+{
+	if (this->childList_.empty())
+	{
+		return;
+	}
+
+	auto itr    = this->childList_.begin();
+	auto itrEnd = this->childList_.end();
+	auto object = (*itr);
+
+	while (itr != itrEnd)
+	{
+		DeleteObjectSub(object);
+		SafeDelete(object);
+		itr = childList_.erase(itr);
+	}
+
+	childList_.clear();
 }

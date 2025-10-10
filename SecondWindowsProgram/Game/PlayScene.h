@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include "../Engine/GameObject.h"
+#include "GameObject.h"
+#include "SceneManager.h"
 
 class PlayScene : public GameObject
 {
@@ -12,4 +13,7 @@ public:
 	void Update()  override;
 	void Draw()    override;
 	void Release() override;
+
+private:
+	SceneManager* pSceneManager_;
 };
