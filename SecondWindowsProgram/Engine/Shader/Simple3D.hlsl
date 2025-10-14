@@ -1,64 +1,65 @@
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒeƒNƒXƒ`ƒƒ•ƒTƒ“ƒvƒ‰[ƒf[ƒ^‚ÌƒOƒ[ƒoƒ‹•Ï”’è‹`
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-Texture2D g_texture : register(t0); //ƒeƒNƒXƒ`ƒƒ[
-SamplerState g_sampler : register(s0); //ƒTƒ“ƒvƒ‰[
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ï¼†ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å®šç¾©
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+Texture2D g_texture : register(t0); //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
+SamplerState g_sampler : register(s0); //ã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@
-// DirectX ‘¤‚©‚ç‘—M‚³‚ê‚Ä‚­‚éAƒ|ƒŠƒSƒ“’¸“_ˆÈŠO‚Ì”î•ñ‚Ì’è‹`
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡
+// DirectX å´ã‹ã‚‰é€ä¿¡ã•ã‚Œã¦ãã‚‹ã€ãƒãƒªã‚´ãƒ³é ‚ç‚¹ä»¥å¤–ã®è«¸æƒ…å ±ã®å®šç¾©
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 cbuffer global
 {
-    float4x4 matWVP;    // ƒ[ƒ‹ƒhEƒrƒ…[EƒvƒƒWƒFƒNƒVƒ‡ƒ“‚Ì‡¬s—ñ
+    float4x4 matWVP;    // ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ»ãƒ“ãƒ¥ãƒ¼ãƒ»ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®åˆæˆè¡Œåˆ—
     float4x4 matNormal; 
-    float4x4 matW;      // ƒ[ƒ‹ƒhs—ñ
-    float4 diffuseColor; // ƒfƒBƒtƒ…[ƒYƒJƒ‰[iƒ}ƒeƒŠƒAƒ‹‚ÌFj
+    float4x4 matW;      // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+    float4 diffuseColor; // ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºã‚«ãƒ©ãƒ¼ï¼ˆãƒžãƒ†ãƒªã‚¢ãƒ«ã®è‰²ï¼‰
     //float4 speculaColor;
-    bool isTexture; // ƒeƒNƒXƒ`ƒƒ“\‚Á‚Ä‚ ‚é‚©‚Ç‚¤‚©
+    bool isTexture; // ãƒ†ã‚¯ã‚¹ãƒãƒ£è²¼ã£ã¦ã‚ã‚‹ã‹ã©ã†ã‹
 };
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ’¸“_ƒVƒF[ƒ_[o—Í•ƒsƒNƒZƒ‹ƒVƒF[ƒ_[“ü—Íƒf[ƒ^\‘¢‘Ì
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‡ºåŠ›ï¼†ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å…¥åŠ›ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 struct VS_OUT
 {
-    float4 pos : SV_POSITION; //ˆÊ’u
-    float2 uv : TEXCOORD; //UVÀ•W
-    float4 color : COLOR; //Fi–¾‚é‚³j
+    float4 pos : SV_POSITION; //ä½ç½®
+    float2 uv : TEXCOORD; //UVåº§æ¨™
+    float4 color : COLOR; //è‰²ï¼ˆæ˜Žã‚‹ã•ï¼‰
 };
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ’¸“_ƒVƒF[ƒ_
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 {
-	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö“n‚·î•ñ
+	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸æ¸¡ã™æƒ…å ±
     VS_OUT outData;
 
-	//ƒ[ƒJƒ‹À•W‚ÉAƒ[ƒ‹ƒhEƒrƒ…[EƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ð‚©‚¯‚Ä
-	//ƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·‚µAƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã«ã€ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ»ãƒ“ãƒ¥ãƒ¼ãƒ»ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã‚’ã‹ã‘ã¦
+	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›ã—ã€ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸
     outData.pos = mul(pos, matWVP);
     outData.uv = uv.xy;
     
     normal = mul(normal, matNormal);
     normal = normalize(normal);
     
-    // Šy‚µ‚¢•½sŒõŒ¹
-    float4 light = float4(0, 0, -1, 0); // ‚Œ´‚ÌˆÊ’u // “ß{ŒõŒ¹
+    // æ¥½ã—ã„å¹³è¡Œå…‰æº
+    float4 light = float4(0, 0, -1, 0); // é«˜åŽŸã®ä½ç½® // é‚£é ˆå…‰æº
     light = normalize(light);
-    outData.color = clamp(dot(normal, light), 0, 1); // Œõü‚Æ’¸“_‚ÌƒxƒNƒgƒ‹‚Æ‚Ì“àÏ‚ÌŒ‹‰Ê‚ð“Ë‚Áž‚ñ‚Å‚¢‚é
+    outData.color = clamp(dot(normal, light), 0, 1); // å…‰ç·šã¨é ‚ç‚¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã®å†…ç©ã®çµæžœã‚’çªã£è¾¼ã‚“ã§ã„ã‚‹
     
-	//‚Ü‚Æ‚ß‚Äo—Í
+	//ã¾ã¨ã‚ã¦å‡ºåŠ›
     return outData;
 }
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 float4 PS(VS_OUT PsInData) : SV_Target
 {
-    // ƒeƒNƒXƒ`ƒƒ‚©‚çF‚ðŽæ“¾‚µ‚Ä‚¢‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‹ã‚‰è‰²ã‚’å–å¾—ã—ã¦ã„ã‚‹
     //float4 specular = 
     
     const float ambientPower = 0.3;
@@ -72,9 +73,8 @@ float4 PS(VS_OUT PsInData) : SV_Target
     }
     else
     {
-        diffuse = diffuseColor;
+        diffuse = diffuseColor * PsInData.color;
         ambient = diffuseColor * float4(ambientPower, ambientPower, ambientPower, 1);
     }
-
     return diffuse + ambient;
 }
