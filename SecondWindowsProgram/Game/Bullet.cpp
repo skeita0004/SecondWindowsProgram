@@ -12,7 +12,7 @@ namespace
 Bullet::Bullet(GameObject* _parent):
 	GameObject(_parent, "Bullet"),
 	transform_(),
-	hModel_(-1)
+	hModel_(-1),
 {
 }
 
@@ -22,6 +22,8 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
+	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
+	AddCollider(pSphereCollider_);
 	hModel_ = Model::Load(MODEL_PATH);
 }
 

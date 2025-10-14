@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "GameObject.h"
 
 class Bullet : public GameObject
@@ -15,5 +15,5 @@ public:
 private:
 	Transform transform_;
 	int hModel_;
-
+	SphereCollider* pSphereCollider_;
 };

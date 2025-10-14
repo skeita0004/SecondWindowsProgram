@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "GameObject.h"
 
@@ -16,4 +16,5 @@ public:
 private:
 	int       hModel_;
 	Transform transform_;
+	SphereCollider* pSphereCollider_;
 };

@@ -57,10 +57,14 @@ public:
 		pObject->Init();
 	}
 
+	void AddCollider(SphereCollider* _pSphereCollider);
+
+	void Collision(GameObject* _pGameObject);
 private:
 	std::list<GameObject*> childList_;
 	Transform transForm_;
 	GameObject* pParent_;
 	std::string objectName_;
 	bool isKillMe_;
+	SphereCollider* pSphereCollider_;
 };

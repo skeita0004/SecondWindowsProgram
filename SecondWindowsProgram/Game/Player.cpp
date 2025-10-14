@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include <string>
 #include "Input.h"
 #include "Bullet.h"
@@ -12,7 +12,8 @@ namespace
 Player::Player(GameObject* _parent) :
 	GameObject(_parent, "Player"),
 	hModel_(-1),
-	transform_()
+	transform_(),
+	pSphereCollider_(nullptr)
 {
 }
 
@@ -22,6 +23,7 @@ Player::~Player()
 
 void Player::Init()
 {
+	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
 	hModel_ = Model::Load(MODEL_PATH);
 }
 

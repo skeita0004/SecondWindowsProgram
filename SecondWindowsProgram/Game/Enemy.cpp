@@ -4,7 +4,8 @@
 Enemy::Enemy(GameObject* _parent) :
 	GameObject(_parent, "Enemy"),
 	hModel_(-1),
-	transform_()
+	transform_(),
+	pSphereCollider_(nullptr)
 {
 }
 
@@ -14,6 +15,7 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
+	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
 	hModel_ = Model::Load("Assets/models/Enemy.fbx");
 }
 
