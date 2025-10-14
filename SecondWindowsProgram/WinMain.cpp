@@ -1,4 +1,4 @@
-﻿///
+///
 /// @file WinMain.cpp
 /// @brief アプリケーションのエントリポイント
 /// @author 齋藤啓大
@@ -12,7 +12,7 @@
 #include "Input.h"
 #include "RootJob.h"
 
-#include <cstdlib>
+//#include <cstdlib>
 
 #include <timeapi.h>
 

@@ -1,4 +1,4 @@
-﻿#include "Fbx.h"
+#include "Fbx.h"
 #include "Camera.h"
 #include <filesystem>
 #include <sstream>

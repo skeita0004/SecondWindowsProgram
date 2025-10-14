@@ -81,6 +81,9 @@
     <ClInclude Include="Game\Enemy.h">
       <Filter>ゲーム</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\SphereCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Game\Enemy.cpp">
       <Filter>ゲーム</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
