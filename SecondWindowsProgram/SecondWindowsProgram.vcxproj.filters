@@ -16,11 +16,11 @@
     <Filter Include="シェーダ ファイル">
       <UniqueIdentifier>{fa2df924-89ee-4abe-9acf-533d6a4d7afd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine">
-      <UniqueIdentifier>{6dd95c0b-69a9-4960-a173-8f0138425813}</UniqueIdentifier>
+    <Filter Include="エンジン">
+      <UniqueIdentifier>{c7c07d61-9b89-460a-a063-14bd162a939f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine">
-      <UniqueIdentifier>{ed2737d7-6ff4-4cc0-b4d2-9b93c963841a}</UniqueIdentifier>
+    <Filter Include="ゲーム">
+      <UniqueIdentifier>{7471c38b-8938-48ea-9a88-79980f2d1349}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,106 +30,112 @@
     <ClInclude Include="Resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Camera.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Direct3D.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Fbx.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Quad.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Sprite.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Texture.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Transform.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\RootJob.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\PlayScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Bullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Bullet.h">
+      <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Player.h">
+      <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\PlayScene.h">
+      <Filter>ゲーム</Filter>
+    </ClInclude>
     <ClInclude Include="Game\TestScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Model.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RootJob.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Direct3D.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Fbx.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Quad.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sprite.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Texture.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Transform.h">
+      <Filter>エンジン</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemy.h">
+      <Filter>ゲーム</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Transform.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Camera.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Direct3D.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Fbx.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Input.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Quad.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Sprite.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Texture.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\RootJob.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\PlayScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Bullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Model.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Bullet.cpp">
+      <Filter>ゲーム</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Player.cpp">
+      <Filter>ゲーム</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\PlayScene.cpp">
+      <Filter>ゲーム</Filter>
+    </ClCompile>
     <ClCompile Include="Game\TestScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ゲーム</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Model.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RootJob.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Direct3D.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Fbx.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Quad.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sprite.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Texture.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Transform.cpp">
+      <Filter>エンジン</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemy.cpp">
+      <Filter>ゲーム</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

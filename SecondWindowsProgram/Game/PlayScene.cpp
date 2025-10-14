@@ -1,5 +1,6 @@
 ﻿#include "PlayScene.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Input.h"
 
 PlayScene::PlayScene(GameObject* _parent) :
@@ -15,6 +16,8 @@ PlayScene::~PlayScene()
 void PlayScene::Init()
 {
 	Instantiate<Player>(this);
+	Instantiate<Enemy>(this);
+	
 	pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
 }
 
