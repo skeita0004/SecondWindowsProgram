@@ -1,8 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include <list>
 #include <string>
 #include "Transform.h"
+#include "SphereCollider.h"
 
 class GameObject
 {

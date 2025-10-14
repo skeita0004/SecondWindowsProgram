@@ -1,4 +1,4 @@
-﻿#include "Bullet.h"
+#include "Bullet.h"
 #include "Player.h"
 #include <string>
 #include "Model.h"
@@ -13,6 +13,7 @@ Bullet::Bullet(GameObject* _parent):
 	GameObject(_parent, "Bullet"),
 	transform_(),
 	hModel_(-1),
+	pSphereCollider_(nullptr)
 {
 }
 
@@ -30,7 +31,7 @@ void Bullet::Init()
 void Bullet::Update()
 {
 	transform_.rotate.y = 90;
-	transform_.position.z--;
+	transform_.position.x++;
 
 	Model::SetTransForm(hModel_, transform_);
 

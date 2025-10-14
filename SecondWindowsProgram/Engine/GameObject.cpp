@@ -1,4 +1,4 @@
-﻿#include "GameObject.h"
+#include "GameObject.h"
 #include <Windows.h>
 
 GameObject::GameObject() :
@@ -171,4 +171,13 @@ void GameObject::DeleteAllChildren()
 	}
 
 	childList_.clear();
+}
+
+void GameObject::AddCollider(SphereCollider* _pSphereCollider)
+{
+	pSphereCollider_ = _pSphereCollider;
+}
+
+void GameObject::Collision(GameObject* _pGameObject)
+{
 }
