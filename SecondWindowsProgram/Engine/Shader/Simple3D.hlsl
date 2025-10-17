@@ -54,7 +54,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
     return outData;
 }
 
-//───────────────────────────────────────
+//─────────────────────────────────────── 
 // ピクセルシェーダ
 //───────────────────────────────────────
 float4 PS(VS_OUT PsInData) : SV_Target

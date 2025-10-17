@@ -1,45 +1,46 @@
 #include "Camera.h"
 
-//•Ï”
-XMVECTOR position_;	//ƒJƒƒ‰‚ÌˆÊ’ui‹“_j
-XMVECTOR target_;	//Œ©‚éˆÊ’uiÅ“_j
-XMMATRIX viewMatrix_;	//ƒrƒ…[s—ñ
-XMMATRIX projMatrix_;	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
 
-//‰Šú‰»
+//å¤‰æ•°
+XMVECTOR position_;	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®ï¼ˆè¦–ç‚¹ï¼‰
+XMVECTOR target_;	//è¦‹ã‚‹ä½ç½®ï¼ˆç„¦ç‚¹ï¼‰
+XMMATRIX viewMatrix_;	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
+XMMATRIX projMatrix_;	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+
+//åˆæœŸåŒ–
 void Camera::Initialize()
 {
-	position_ = XMVectorSet(0, 0, -10, 0);	//ƒJƒƒ‰‚ÌˆÊ’u
-	target_ = XMVectorSet(0, 0, 0, 0);	//ƒJƒƒ‰‚ÌÅ“_
+	position_ = XMVectorSet(0, 0, -10, 0);	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®
+	target_ = XMVectorSet(0, 0, 0, 0);	//ã‚«ãƒ¡ãƒ©ã®ç„¦ç‚¹
 	projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV2, (FLOAT)800 / (FLOAT)600, 0.1f, 100.0f);
 }
 
-//XV
+//æ›´æ–°
 void Camera::Update()
 {
-	//ƒrƒ…[s—ñ‚Ìì¬
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®ä½œæˆ
 	viewMatrix_ = XMMatrixLookAtLH(position_, target_, XMVectorSet(0, 1, 0, 0));
 }
 
-//ˆÊ’u‚ğİ’è
+//ä½ç½®ã‚’è¨­å®š
 void Camera::SetPosition(XMVECTOR position)
 {
 	position_ = position;
 }
 
-//Å“_‚ğİ’è
+//ç„¦ç‚¹ã‚’è¨­å®š
 void Camera::SetTarget(XMVECTOR target)
 {
 	target_ = target;
 }
 
-//ƒrƒ…[s—ñ‚ğæ“¾
+//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’å–å¾—
 XMMATRIX Camera::GetViewMatrix()
 {
 	return viewMatrix_;
 }
 
-//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ğæ“¾
+//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã‚’å–å¾—
 XMMATRIX Camera::GetProjectionMatrix()
 {
 	return projMatrix_;

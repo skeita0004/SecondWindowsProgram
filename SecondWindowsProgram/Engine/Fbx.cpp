@@ -1,4 +1,4 @@
-#include "Fbx.h"
+﻿#include "Fbx.h"
 #include "Camera.h"
 #include <filesystem>
 #include <sstream>
@@ -153,6 +153,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 	bd_vertex.CPUAccessFlags = 0;
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
+
 
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;

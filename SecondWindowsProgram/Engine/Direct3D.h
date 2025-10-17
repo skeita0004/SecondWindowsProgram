@@ -11,6 +11,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+
 #define SAFE_RELEASE(ptr)   \
 		if (ptr != nullptr) \
 		{                   \
@@ -35,8 +36,8 @@ enum SHADER_TYPE
 	SHADER_MAX
 };
 
-// ‚±‚±‚É‚ ‚é‚Ì‚Í‚¯‚µ‚©‚ç‚ñ
-/// @brief ƒ|ƒŠƒSƒ“‚Ìˆê’¸“_‚ğ’è‹`‚·‚é\‘¢‘Ì
+// ã“ã“ã«ã‚ã‚‹ã®ã¯ã‘ã—ã‹ã‚‰ã‚“
+/// @brief ãƒãƒªã‚´ãƒ³ã®ä¸€é ‚ç‚¹ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 struct VERTEX
 {
 	DirectX::XMVECTOR position;
@@ -44,8 +45,8 @@ struct VERTEX
 	DirectX::XMVECTOR normal;
 };
 
-// ‚±‚±‚É‚ ‚é‚Ì‚Í‚¯‚µ‚©‚ç‚ñ
-/// @brief lŠpŒ`‚Ì’¸“_‚ğ’è‹`‚·‚é\‘¢‘Ì
+// ã“ã“ã«ã‚ã‚‹ã®ã¯ã‘ã—ã‹ã‚‰ã‚“
+/// @brief å››è§’å½¢ã®é ‚ç‚¹ã‚’å®šç¾©ã™ã‚‹æ§‹é€ ä½“
 struct QuadFace
 {
 	VERTEX topLeft;
@@ -54,7 +55,7 @@ struct QuadFace
 	VERTEX bottomLeft;
 };
 
-//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@[
+//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ãƒ¼
 struct CONSTANT_BUFFER
 {
 	DirectX::XMMATRIX matWVP;
@@ -64,32 +65,32 @@ struct CONSTANT_BUFFER
 
 namespace Direct3D
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	HRESULT Initialize(int winW, int winH, HWND hWnd);
 
-	//ƒVƒF[ƒ_[€”õ
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼æº–å‚™
 	HRESULT InitShader();
 	HRESULT InitShader3D();
 	HRESULT InitShader2D();
 
-	/// @brief w’è‚³‚ê‚½ƒ^ƒCƒv‚ÌƒVƒF[ƒ_‚ğì¬‚·‚é
-	/// @param _type ƒVƒF[ƒ_‚Ìƒ^ƒCƒv
+	/// @brief æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚¤ãƒ—ã®ã‚·ã‚§ãƒ¼ãƒ€ã‚’ä½œæˆã™ã‚‹
+	/// @param _type ã‚·ã‚§ãƒ¼ãƒ€ã®ã‚¿ã‚¤ãƒ—
 	void SetShader(SHADER_TYPE _type);
 
-	//•`‰æŠJn
+	//æç”»é–‹å§‹
 	void BeginDraw();
 
-	//•`‰æI—¹
+	//æç”»çµ‚äº†
 	void EndDraw();
 
-	//‰ğ•ú
+	//è§£æ”¾
 	void Release();
 
-	extern ID3D11Device* pDevice;                     //ƒfƒoƒCƒX
-	extern ID3D11DeviceContext* pContext;             //ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
-	extern IDXGISwapChain* pSwapChain;                //ƒXƒƒbƒvƒ`ƒFƒCƒ“
-	extern ID3D11RenderTargetView* pRenderTargetView; //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
-	extern ID3D11Texture2D* pDepthStencil;			//[“xƒXƒeƒ“ƒVƒ‹
-	extern ID3D11DepthStencilView* pDepthStencilView;		//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+	extern ID3D11Device* pDevice;                     //ãƒ‡ãƒã‚¤ã‚¹
+	extern ID3D11DeviceContext* pContext;             //ãƒ‡ãƒã‚¤ã‚¹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+	extern IDXGISwapChain* pSwapChain;                //ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³
+	extern ID3D11RenderTargetView* pRenderTargetView; //ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼
+	extern ID3D11Texture2D* pDepthStencil;			//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«
+	extern ID3D11DepthStencilView* pDepthStencilView;		//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 
 };
