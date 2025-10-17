@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <list>
 #include <string>
@@ -37,6 +37,9 @@ public:
 	void DeleteObjectSub(GameObject* _object);
 	void DeleteAllChildren();
 	
+    void SetPosition(XMFLOAT3 _position);
+    void SetPosition(float _x, float _y, float _z);
+
 	inline const std::string& GetObjectName() {return this->objectName_;}
 
 	template <typename PTYPE>
@@ -50,20 +53,22 @@ public:
 	}
 
 	template <class T>
-	inline void Instantiate(GameObject* _parent)
+	inline T* Instantiate(GameObject* _parent)
 	{
 		T* pObject{nullptr};
 		pObject = new T(_parent);
 		_parent->childList_.push_back(pObject);
 		pObject->Init();
+        return pObject;
 	}
 
 	void AddCollider(SphereCollider* _pSphereCollider);
 
 	void Collision(GameObject* _pGameObject);
+
 private:
 	std::list<GameObject*> childList_;
-	Transform transForm_;
+	Transform transform_;
 	GameObject* pParent_;
 	std::string objectName_;
 	bool isKillMe_;

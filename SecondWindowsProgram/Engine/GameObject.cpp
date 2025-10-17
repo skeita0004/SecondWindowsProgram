@@ -1,22 +1,28 @@
-#include "GameObject.h"
+﻿#include "GameObject.h"
 #include <Windows.h>
 
 GameObject::GameObject() :
 	childList_(0, nullptr),
-	transForm_(),
+	transform_(),
 	pParent_(nullptr),
 	objectName_("Unknown Object"),
-	isKillMe_(false)
+	isKillMe_(false),
+	pSphereCollider_(nullptr)
 {
 }
 
 GameObject::GameObject(GameObject* _pParent, const std::string& _name) :
 	childList_(0, nullptr),
-	transForm_(),
+	transform_(),
 	pParent_(_pParent),
 	objectName_(_name),
-	isKillMe_(false)
+	isKillMe_(false),
+	pSphereCollider_(nullptr)
 {
+    if (_pParent != nullptr)
+    {
+        transform_.pParent = &_pParent->transform_;
+    }
 }
 
 GameObject::~GameObject()
@@ -47,6 +53,11 @@ void GameObject::UpdateSub()
 			itr++;
 		}
 	}
+
+    for (auto object : childList_)
+    {
+        Collision(GetRootJob());
+    }
 }
 
 void GameObject::DrawSub()
@@ -173,6 +184,16 @@ void GameObject::DeleteAllChildren()
 	childList_.clear();
 }
 
+void GameObject::SetPosition(XMFLOAT3 _position)
+{
+    transform_.position = _position;
+}
+
+void GameObject::SetPosition(float _x, float _y, float _z)
+{
+    transform_.position = {_x, _y, _z};
+}
+
 void GameObject::AddCollider(SphereCollider* _pSphereCollider)
 {
 	pSphereCollider_ = _pSphereCollider;
@@ -180,4 +201,50 @@ void GameObject::AddCollider(SphereCollider* _pSphereCollider)
 
 void GameObject::Collision(GameObject* _pGameObject)
 {
+    if (_pGameObject->pSphereCollider_ == nullptr)
+    {
+        return;
+    }
+
+	if (_pGameObject->GetChildList()->empty())
+	{
+		return;
+	}
+
+#pragma region CollisionDetection
+
+	float x1 = this->transform_.position.x;
+	float x2 = _pGameObject->transform_.position.x;
+
+	float y1 = this->transform_.position.y;
+	float y2 = _pGameObject->transform_.position.y;
+
+	float z1 = this->transform_.position.z;
+	float z2 = _pGameObject->transform_.position.z;
+
+	float r1 = this->pSphereCollider_->GetRadius();
+	float r2 = _pGameObject->pSphereCollider_->GetRadius();
+
+	float dx = (x2 - x1) * (x2 - x1);
+	float dy = (y2 - y1) * (y2 - y1);
+	float dz = (z2 - z1) * (z2 - z1);
+
+	float rSumPow = (r1 + r2) * (r1 + r2);
+
+	bool isHit = dx + dy + dz <= rSumPow;
+
+	if (isHit)
+	{
+
+	}
+#pragma endregion
+
+	auto itr = _pGameObject->GetChildList()->begin();
+	auto itrEnd = _pGameObject->GetChildList()->end();
+	auto object = (*itr);
+
+	while (itr != itrEnd)
+	{
+		Collision(object);
+	}
 }
