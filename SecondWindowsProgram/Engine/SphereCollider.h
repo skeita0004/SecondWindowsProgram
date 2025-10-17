@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Transform.h"
 
@@ -8,7 +8,7 @@ public:
 	SphereCollider(XMFLOAT3 _position, float _radius);
 	~SphereCollider();
 
-	inline float GetRadius()
+	float GetRadius()
 	{
 		return radius_;
 	}
