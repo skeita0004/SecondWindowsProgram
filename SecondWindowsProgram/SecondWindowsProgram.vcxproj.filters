@@ -84,6 +84,9 @@
     <ClInclude Include="Engine\SphereCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Orbiter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -143,6 +146,9 @@
     <ClCompile Include="Engine\SphereCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Orbiter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SecondWindowsProgram.rc">
@@ -169,5 +175,6 @@
     <None Include="packages.config" />
     <None Include="Setting.ini" />
     <None Include="ClassDiagram.cd" />
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>

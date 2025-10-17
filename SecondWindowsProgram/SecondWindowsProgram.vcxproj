@@ -153,6 +153,7 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game\Bullet.h" />
+    <ClInclude Include="Game\Orbiter.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\PlayScene.h" />
     <ClInclude Include="Game\TestScene.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Game\Bullet.cpp" />
+    <ClCompile Include="Game\Orbiter.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\PlayScene.cpp" />
     <ClCompile Include="Game\TestScene.cpp" />
@@ -205,6 +207,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Setting.ini" />
