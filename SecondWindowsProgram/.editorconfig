@@ -1,0 +1,6 @@
+﻿[*]
+charset = utf-8-bom
+indent_style = space
+
+[*.hlsl]
+charset = utf-8
