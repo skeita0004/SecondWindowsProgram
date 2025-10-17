@@ -1,6 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #include "GameObject.h"
+
+class Orbiter;
 
 class Player : public GameObject
 {
@@ -17,4 +19,6 @@ private:
 	int       hModel_;
 	Transform transform_;
 	SphereCollider* pSphereCollider_;
+    Orbiter* pOrbiterLeft_;
+    Orbiter* pOrbiterRight_;
 };

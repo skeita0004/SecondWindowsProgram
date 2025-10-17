@@ -1,8 +1,9 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include <string>
 #include "Input.h"
 #include "Bullet.h"
 #include "Model.h"
+#include "Orbiter.h"
 
 namespace
 {
@@ -25,15 +26,21 @@ void Player::Init()
 {
 	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
 	hModel_ = Model::Load(MODEL_PATH);
+    pOrbiterLeft_ = Instantiate<Orbiter>(this);
+    pOrbiterRight_ = Instantiate<Orbiter>(this);
 }
 
 void Player::Update()
 {
 	transform_.rotate.y--;
 
-	if (Input::IsKeyDown(DIK_SPACE))
-	{
-		Instantiate<Bullet>(this);
+    pOrbiterLeft_ ->SetPosition(XMFLOAT3{ 3, 3, 0});
+    pOrbiterRight_->SetPosition(XMFLOAT3{-3, 3, 0});
+
+    if (Input::IsKeyDown(DIK_SPACE))
+    {
+        Bullet* pBullet = Instantiate<Bullet>(this);
+        //pBullet->Settransform
 	}
 
 	if (Input::IsKey(DIK_A))
