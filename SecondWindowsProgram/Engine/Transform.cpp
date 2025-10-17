@@ -6,7 +6,8 @@ Transform::Transform() :
     matScale_(),
     position({0, 0, 0}),
     rotate({0, 0, 0}),
-    scale({1, 1, 1})
+    scale({1, 1, 1}),
+    pParent(nullptr)
 {
 }
 
@@ -16,7 +17,8 @@ Transform::Transform(XMFLOAT3 _pos, XMFLOAT3 _rot, XMFLOAT3 _scale) :
     matScale_(XMMatrixIdentity()),
     position(_pos),
     rotate(_rot),
-    scale(_scale)
+    scale(_scale),
+    pParent(nullptr)
 {
 }
 
@@ -42,6 +44,12 @@ void Transform::Calculation()
 XMMATRIX const Transform::GetWorldMatrix()
 {
     Calculation();
+
+    if (pParent != nullptr)
+    {
+        return matScale_ * matRotate_ * matTranslate_ * pParent->GetWorldMatrix();
+    }
+
     return matScale_ * matRotate_ * matTranslate_;
 }
 
