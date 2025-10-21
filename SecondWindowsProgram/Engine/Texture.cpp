@@ -1,8 +1,9 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include <wincodec.h>
 #include <DirectXTex.h>
+#include "SafeCleaning.h"
 
-// DirectXTex‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ğƒŠƒ“ƒN
+// DirectXTexã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ãƒªãƒ³ã‚¯
 #pragma comment(lib, "DirectXTex.lib")
 
 using namespace DirectX;
@@ -19,14 +20,14 @@ Texture::~Texture()
 {
 }
 
-// ˆø”‚Åwstring‚ÍAŒÄ‚Ô‚Æ‚«‚Éxá‚ğ‚«‚½‚·I
+// å¼•æ•°ã§wstringã¯ã€å‘¼ã¶ã¨ãã«æ”¯éšœã‚’ããŸã™ï¼
 HRESULT Texture::Load(string _fileName)
 {
-	ScratchImage image;   //‰æ‘œ–{‘Ì
+	ScratchImage image;   //ç”»åƒæœ¬ä½“
 
 	HRESULT hr;
 
-	//ÀÛ‚É“Ç‚ñ‚Å‚ä‚­‚£
+	//å®Ÿéš›ã«èª­ã‚“ã§ã‚†ãã…
 	std::wstring fileName{ _fileName.begin(), _fileName.end() };
 	
 	hr = LoadFromWICFile(fileName.c_str(), WIC_FLAGS::WIC_FLAGS_NONE,
@@ -40,13 +41,13 @@ HRESULT Texture::Load(string _fileName)
 	D3D11_SAMPLER_DESC  SamDesc;
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
 	//SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // •âŠÔ‚È‚µ
-	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP; // ŒJ‚è•Ô‚·‚©‚Ç‚¤‚©A‚±‚Ìê‡A’[‚ÌF‚ªˆø‚«‰„‚Î‚³‚ê‚é
+	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // è£œé–“ãªã—
+	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP; // ç¹°ã‚Šè¿”ã™ã‹ã©ã†ã‹ã€ã“ã®å ´åˆã€ç«¯ã®è‰²ãŒå¼•ãå»¶ã°ã•ã‚Œã‚‹
 	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	Direct3D::pDevice->CreateSamplerState(&SamDesc, &pSampler_);
 
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
 	srv.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -71,7 +72,7 @@ XMFLOAT4 Texture::GetTextureAspectRatio()
 
 	if (aspectRatio.x < aspectRatio.y)
 	{
-		aspectRatio.y /= aspectRatio.x; // ‹¤’Ê‚Ì•ª•ê‚¾‚©‚çA•ª•ê‚ğæ‚É•ÏX‚·‚é‚Æ‚¨‚©‚µ‚­‚È‚Á‚¿‚á‚¤‚æ
+		aspectRatio.y /= aspectRatio.x; // å…±é€šã®åˆ†æ¯ã ã‹ã‚‰ã€åˆ†æ¯ã‚’å…ˆã«å¤‰æ›´ã™ã‚‹ã¨ãŠã‹ã—ããªã£ã¡ã‚ƒã†ã‚ˆ
 		aspectRatio.x /= aspectRatio.x;
 	}
 	else if (aspectRatio.y < aspectRatio.x)

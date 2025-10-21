@@ -170,7 +170,7 @@ void Direct3D::Release()
     SafeCleaning::SafeRelease(pVertexLayout);
     SafeCleaning::SafeRelease(pPixelShader);
     SafeCleaning::SafeRelease(pVertexShader);
-	
+
     SafeCleaning::SafeRelease(pRenderTargetView);
     SafeCleaning::SafeRelease(pSwapChain);
     SafeCleaning::SafeRelease(pContext);

@@ -79,7 +79,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 	VERTEX* vertices = new VERTEX[vertexCount_];
 
 	//全ポリゴン
-	for (size_t poly = 0; poly < polygonCount_; poly++)
+	for (int poly = 0; poly < polygonCount_; poly++)
 	{
 		//3頂点分
 		for (int vertex = 0; vertex < 3; vertex++)
@@ -181,7 +181,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 		int count = 0;
 
 		//全ポリゴン
-		for (DWORD poly = 0; poly < polygonCount_; poly++)
+		for (int poly = 0; poly < polygonCount_; poly++)
 		{
 
 			FbxLayerElementMaterial* mtl = _mesh->GetLayer(0)->GetMaterials();
@@ -190,7 +190,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 			if (mtlId == i)
 			{
 				//3頂点分
-				for (DWORD vertex = 0; vertex < 3; vertex++)
+				for (int vertex = 0; vertex < 3; vertex++)
 				{
 					index[count] = _mesh->GetPolygonVertex(poly, vertex);
 					count++;
@@ -242,7 +242,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* _pNode)
 	//pMaterialList_ = new MATERIAL[materialCount_];
 	materialList_.resize(materialCount_);
 
-	for (size_t i = 0; i < materialCount_; i++)
+	for (int i = 0; i < materialCount_; i++)
 	{
 		//i番目のマテリアル情報を取得
 		FbxSurfaceMaterial* pMaterial = _pNode->GetMaterial(i);
@@ -349,10 +349,10 @@ void Fbx::Release()
 {
     SafeCleaning::SafeRelease(pVertexBuffer_);
 
-	for (int i = 0; i < materialCount_; i++)
-	{
+    for (int i = 0; i < materialCount_; i++)
+    {
         SafeCleaning::SafeRelease(pIndexBuffer_[i]);
-	}
+    }
 
     SafeCleaning::SafeDeleteArray(pIndexBuffer_);
     SafeCleaning::SafeRelease(pConstantBuffer_);

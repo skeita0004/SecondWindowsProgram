@@ -1,13 +1,15 @@
-#include "Quad.h"
+ï»¿#include "Quad.h"
 #include <cassert>
 #include "Camera.h"
+#include "SafeCleaning.h"
 
 Quad::Quad(Transform _transform, QuadFace _vertices) :
 	transform_(_transform),
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
 	pConstantBuffer_(nullptr),
-	pTexture_(nullptr)
+	pTexture_(nullptr),
+    size_(1)
 {
 	vertices_.clear();
 	vertices_.push_back(_vertices.topLeft);
@@ -27,7 +29,7 @@ HRESULT Quad::Initialize()
 {
 	HRESULT hResult;
 
-	// ’¸“_ƒf[ƒ^—pƒoƒbƒtƒ@‚Ìİ’è
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = static_cast<UINT>(sizeof(VERTEX) * vertices_.size());
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -41,13 +43,13 @@ HRESULT Quad::Initialize()
 	hResult = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hResult))
 	{
-		MessageBox(nullptr, L"’¸“_‚ª‚È‚ñ‚©•Ï‚Å‚·", L"éÒ[", MB_OK);
+		MessageBox(nullptr, L"é ‚ç‚¹ãŒãªã‚“ã‹å¤‰ã§ã™", L"é°“ãƒ¼", MB_OK);
 		return hResult;
 	}
 
 	int index[] = { 0, 2, 3, 0, 1, 2 };
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬‚·‚é
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆã™ã‚‹
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.ByteWidth = sizeof(index);
@@ -63,11 +65,11 @@ HRESULT Quad::Initialize()
 	hResult = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hResult))
 	{
-		MessageBox(nullptr, L"ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ª‚È‚ñ‚©•Ï‚Å‚·", L"éÒ[", MB_OK);
+		MessageBox(nullptr, L"ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãŒãªã‚“ã‹å¤‰ã§ã™", L"é°“ãƒ¼", MB_OK);
 		return hResult;
 	}
 
-	//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@ì¬
+	//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ä½œæˆ
 	D3D11_BUFFER_DESC cb;
 	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
 	cb.Usage = D3D11_USAGE_DYNAMIC;
@@ -76,7 +78,7 @@ HRESULT Quad::Initialize()
 	cb.MiscFlags = 0;
 	cb.StructureByteStride = 0;
 
-	// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@‚Ìì¬
+	// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
 	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 
 	pTexture_ = new Texture();
@@ -87,15 +89,15 @@ HRESULT Quad::Initialize()
 
 void Quad::Draw(Transform& _transform)
 {
-	XMMATRIX worldMat = _transform.GetWorldMatrix(); // ‚±‚±‚ÅŒvZ‚³‚ê‚é‚Ì‚Å‚·‚í`
+	XMMATRIX worldMat = _transform.GetWorldMatrix(); // ã“ã“ã§è¨ˆç®—ã•ã‚Œã‚‹ã®ã§ã™ã‚ï½
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb{};
 	cb.matWVP = XMMatrixTranspose(worldMat * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	cb.matW = worldMat;
 	cb.matNormal = XMMatrixInverse(nullptr, cb.matW);
 
-	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPU‚©‚ç‚Ìƒf[ƒ^ƒAƒNƒZƒX‚ğ~‚ß‚é
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// ƒf[ƒ^‚Ì’l‚ğ‘—‚é
+	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã‚¢ã‚¯ã‚»ã‚¹ã‚’æ­¢ã‚ã‚‹
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// ãƒ‡ãƒ¼ã‚¿ã®å€¤ã‚’é€ã‚‹
 
 	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
 	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
@@ -103,21 +105,21 @@ void Quad::Draw(Transform& _transform)
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
 	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//ÄŠJ
+	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//å†é–‹
 
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@[‚ğƒZƒbƒg
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	//stride = sizeof(int);
 	offset = 0;
 	Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
 
-	//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@
-	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//’¸“_ƒVƒF[ƒ_[—p	
-	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[—p
+	//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡
+	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨	
+	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”¨
 
 	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }

@@ -140,6 +140,11 @@ GameObject* GameObject::FindChildObject(const std::string& _name)
 	return nullptr;
 }
 
+Transform* GameObject::GetTransform()
+{
+	return &transform_;
+}
+
 void GameObject::DeleteObjectSub(GameObject* _object)
 {
 	if (not(_object->childList_.empty()))

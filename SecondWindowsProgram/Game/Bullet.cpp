@@ -1,4 +1,4 @@
-#include "Bullet.h"
+﻿#include "Bullet.h"
 #include "Player.h"
 #include <string>
 #include "Model.h"
@@ -32,7 +32,6 @@ void Bullet::Update()
 	transform_.rotate.y = 90;
 	transform_.position.x++;
 
-	Model::SetTransForm(hModel_, transform_);
 
 	if (deadCounter >= 60 * 3)
 	{
@@ -45,6 +44,7 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
+	Model::SetTransForm(hModel_, &transform_);
 	Model::Draw(hModel_);
 }
 

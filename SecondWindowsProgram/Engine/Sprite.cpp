@@ -1,6 +1,7 @@
-#include "Sprite.h"
+Ôªø#include "Sprite.h"
 #include <cassert>
 #include "Camera.h"
+#include "SafeCleaning.h"
 
 using DirectX::XMFLOAT4;
 using DirectX::XMVECTOR;
@@ -20,10 +21,10 @@ Sprite::Sprite(std::string _filePath, Transform _transform) :
 
 	spriteVertices_ =
 	{
-		{XMVectorSet(position.x + -size.x, position.y +  size.y, position.z + -size.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // ç∂è„
-		{XMVectorSet(position.x +  size.x, position.y +  size.y, position.z + -size.z, 1.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // âEè„
-		{XMVectorSet(position.x +  size.x, position.y + -size.y, position.z + -size.z, 1.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // âEâ∫
-		{XMVectorSet(position.x + -size.x, position.y + -size.y, position.z + -size.z, 1.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // ç∂â∫
+		{XMVectorSet(position.x + -size.x, position.y +  size.y, position.z + -size.z, 1.0f), XMVectorSet(0.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // Â∑¶‰∏ä
+		{XMVectorSet(position.x +  size.x, position.y +  size.y, position.z + -size.z, 1.0f), XMVectorSet(1.0f, 0.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // Âè≥‰∏ä
+		{XMVectorSet(position.x +  size.x, position.y + -size.y, position.z + -size.z, 1.0f), XMVectorSet(1.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // Âè≥‰∏ã
+		{XMVectorSet(position.x + -size.x, position.y + -size.y, position.z + -size.z, 1.0f), XMVectorSet(0.0f, 1.0f, 0.f, 0.f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)}, // Â∑¶‰∏ã
 	};
 
 	vertices_.clear();
@@ -35,17 +36,13 @@ Sprite::Sprite(std::string _filePath, Transform _transform) :
 
 Sprite::~Sprite()
 {
-	SafeDelete(pTexture_);
-	SAFE_RELEASE(pConstantBuffer_);
-	SAFE_RELEASE(pIndexBuffer_);
-	SAFE_RELEASE(pVertexBuffer_);
 }
 
 HRESULT Sprite::Initialize()
 {
 	HRESULT hResult;
 
-	// í∏ì_ÉfÅ[É^ópÉoÉbÉtÉ@ÇÃê›íË
+	// È†ÇÁÇπ„Éá„Éº„ÇøÁî®„Éê„ÉÉ„Éï„Ç°„ÅÆË®≠ÂÆö
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = static_cast<UINT>( sizeof(VERTEX) * vertices_.size() );
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -59,13 +56,13 @@ HRESULT Sprite::Initialize()
 	hResult = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hResult))
 	{
-		MessageBox(nullptr, L"í∏ì_Ç™Ç»ÇÒÇ©ïœÇ≈Ç∑", L"È“Å[", MB_OK);
+		MessageBox(nullptr, L"È†ÇÁÇπ„Åå„Å™„Çì„ÅãÂ§â„Åß„Åô", L"È∞ì„Éº", MB_OK);
 		return hResult;
 	}
 
 	int index[] = { 0, 2, 3, 0, 1, 2 };
 
-	// ÉCÉìÉfÉbÉNÉXÉoÉbÉtÉ@Çê∂ê¨Ç∑ÇÈ
+	// „Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„Éê„ÉÉ„Éï„Ç°„ÇíÁîüÊàê„Åô„Çã
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.ByteWidth = sizeof(index);
@@ -81,11 +78,11 @@ HRESULT Sprite::Initialize()
 	hResult = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hResult))
 	{
-		MessageBox(nullptr, L"ÉCÉìÉfÉbÉNÉXÉoÉbÉtÉ@Ç™Ç»ÇÒÇ©ïœÇ≈Ç∑", L"È“Å[", MB_OK);
+		MessageBox(nullptr, L"„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„Éê„ÉÉ„Éï„Ç°„Åå„Å™„Çì„ÅãÂ§â„Åß„Åô", L"È∞ì„Éº", MB_OK);
 		return hResult;
 	}
 
-	//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@çÏê¨
+	//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°‰ΩúÊàê
 	D3D11_BUFFER_DESC cb;
 	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
 	cb.Usage = D3D11_USAGE_DYNAMIC;
@@ -94,7 +91,7 @@ HRESULT Sprite::Initialize()
 	cb.MiscFlags = 0;
 	cb.StructureByteStride = 0;
 
-	// ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@ÇÃçÏê¨
+	// „Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°„ÅÆ‰ΩúÊàê
 	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 
 	pTexture_ = new Texture();
@@ -114,8 +111,8 @@ void Sprite::Draw(Transform& _transform)
 	cb.matW = worldMat;
 	cb.matNormal = XMMatrixInverse(nullptr, cb.matW);
 
-	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUÇ©ÇÁÇÃÉfÅ[É^ÉAÉNÉZÉXÇé~ÇﬂÇÈ
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)( &cb ), sizeof(cb));	// ÉfÅ[É^ÇÃílÇëóÇÈ
+	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPU„Åã„Çâ„ÅÆ„Éá„Éº„Çø„Ç¢„ÇØ„Çª„Çπ„ÇíÊ≠¢„ÇÅ„Çã
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)( &cb ), sizeof(cb));	// „Éá„Éº„Çø„ÅÆÂÄ§„ÇíÈÄÅ„Çã
 
 	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
 	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
@@ -123,21 +120,21 @@ void Sprite::Draw(Transform& _transform)
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
 	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//çƒäJ
+	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//ÂÜçÈñã
 
-	//í∏ì_ÉoÉbÉtÉ@
+	//È†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
-	// ÉCÉìÉfÉbÉNÉXÉoÉbÉtÉ@Å[ÇÉZÉbÉg
+	// „Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„Éê„ÉÉ„Éï„Ç°„Éº„Çí„Çª„ÉÉ„Éà
 	//stride = sizeof(int);
 	offset = 0;
 	Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
 
-	//ÉRÉìÉXÉ^ÉìÉgÉoÉbÉtÉ@
-	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//í∏ì_ÉVÉFÅ[É_Å[óp	
-	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ÉsÉNÉZÉãÉVÉFÅ[É_Å[óp
+	//„Ç≥„É≥„Çπ„Çø„É≥„Éà„Éê„ÉÉ„Éï„Ç°
+	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//È†ÇÁÇπ„Ç∑„Çß„Éº„ÉÄ„ÉºÁî®	
+	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//„Éî„ÇØ„Çª„É´„Ç∑„Çß„Éº„ÉÄ„ÉºÁî®
 
 	Direct3D::pContext->DrawIndexed(6, 0, 0);
 	Direct3D::SetShader(SHADER_3D);

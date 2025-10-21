@@ -1,4 +1,4 @@
-///
+﻿///
 /// @file WinMain.cpp
 /// @brief アプリケーションのエントリポイント
 /// @author 齋藤啓大
@@ -30,8 +30,8 @@ namespace
 	
 	const wchar_t* WIN_CLASS_NAME = L"SampleGame";
 
-	const int WINDOW_WIDTH  = 800;
-	const int WINDOW_HEIGHT = 600;
+	const int WINDOW_WIDTH  = 1920;
+	const int WINDOW_HEIGHT = 1080;
 
 	int winW;
 	int winH;

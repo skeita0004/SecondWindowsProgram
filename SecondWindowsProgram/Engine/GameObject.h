@@ -27,6 +27,7 @@ public:
 	GameObject* GetRootJob();
 	std::list<GameObject*>* GetChildList();
 	GameObject* FindChildObject(const std::string& _name);
+    Transform* GetTransform();
 
 	template <typename T>
 	inline T* FindGameObject(const std::string& _name)
@@ -58,6 +59,7 @@ public:
 		T* pObject{nullptr};
 		pObject = new T(_parent);
 		_parent->childList_.push_back(pObject);
+        //pObject->GetTransform()->pParent = _parent->GetTransform();
 		pObject->Init();
         return pObject;
 	}

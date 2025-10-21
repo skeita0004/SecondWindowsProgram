@@ -16,18 +16,11 @@ namespace Model
     struct Instance
     {
         int resourseIndex;
-        Transform transform;
+        Transform* transform;
     };
 
-	//struct Model
-	//{
-	//	Fbx* pModel;
-	//	std::string fileName;
-	//	Transform transform;
-	//};
-
-	int  Load(const std::string& _path);
-	void Draw(int _modelHandle);
-	void SetTransForm(int _modelHandle, const Transform& _transform);
-	void AllRelease();
+    int  Load(const std::string& _path);
+    void Draw(int _modelHandle);
+    void SetTransForm(int _modelHandle, Transform* _transform);
+    void AllRelease();
 }

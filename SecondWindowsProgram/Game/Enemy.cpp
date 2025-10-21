@@ -1,4 +1,4 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 #include "Model.h"
 
 Enemy::Enemy(GameObject* _parent) :
@@ -17,7 +17,7 @@ void Enemy::Init()
 	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
 	hModel_ = Model::Load("Assets/models/Enemy.fbx");
 	transform_.position.x = 10.f;
-	Model::SetTransForm(hModel_, transform_);
+	Model::SetTransForm(hModel_, &transform_);
 }
 
 void Enemy::Update()
@@ -32,11 +32,11 @@ void Enemy::Update()
 	transform_.scale.z = sinf(r) * 3;
 	//transform_.position.x = 0.5f;
 	//transform_.scale = { 0.01, 0.01, 0.01 };
-	Model::SetTransForm(hModel_, transform_);
 }
 
 void Enemy::Draw()
 {
+	Model::SetTransForm(hModel_, &transform_);
 	Model::Draw(hModel_);
 }
 
