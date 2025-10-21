@@ -47,7 +47,7 @@ XMMATRIX const Transform::GetWorldMatrix()
 
     if (pParent != nullptr)
     {
-        return matScale_ * matRotate_ * matTranslate_ * pParent->GetWorldMatrix();
+        return (matScale_ * matRotate_ * matTranslate_) * pParent->GetWorldMatrix();
     }
 
     return matScale_ * matRotate_ * matTranslate_;
