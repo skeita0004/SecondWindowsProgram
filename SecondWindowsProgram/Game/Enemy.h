@@ -15,6 +15,6 @@ public:
 
 private:
 	int       hModel_;
-	Transform transform_;
+	//Transform transform_;
 	SphereCollider* pSphereCollider_;
 };

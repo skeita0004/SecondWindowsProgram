@@ -13,7 +13,7 @@ public:
 	void Release() override;
 
 private:
-	Transform transform_;
+	//Transform transform_;
 	int hModel_;
 	SphereCollider* pSphereCollider_;
 };

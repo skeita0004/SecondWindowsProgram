@@ -13,7 +13,6 @@ namespace
 Player::Player(GameObject* _parent) :
 	GameObject(_parent, "Player"),
 	hModel_(-1),
-	transform_(),
 	pSphereCollider_(nullptr)
 {
 }

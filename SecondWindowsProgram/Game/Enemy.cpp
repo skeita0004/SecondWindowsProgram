@@ -4,7 +4,6 @@
 Enemy::Enemy(GameObject* _parent) :
 	GameObject(_parent, "Enemy"),
 	hModel_(-1),
-	transform_(),
 	pSphereCollider_(nullptr)
 {
 }

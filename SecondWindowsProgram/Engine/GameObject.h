@@ -66,9 +66,11 @@ public:
 
 	void Collision(GameObject* _pGameObject);
 
+protected:
+    Transform transform_;
+
 private:
 	std::list<GameObject*> childList_;
-	Transform transform_;
 	GameObject* pParent_;
 	std::string objectName_;
 	bool isKillMe_;

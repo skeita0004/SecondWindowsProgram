@@ -12,7 +12,6 @@ namespace
 Orbiter::Orbiter(GameObject* _parent) :
     GameObject(_parent, "Orbiter"),
     hModel_(-1),
-    transform_(),
     pSphereCollider_(nullptr)
 {
 }
