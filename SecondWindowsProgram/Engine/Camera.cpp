@@ -10,9 +10,9 @@ XMMATRIX projMatrix_;	//プロジェクション行列
 //初期化
 void Camera::Initialize()
 {
-	position_ = XMVectorSet(0, 0, -10, 0);	//カメラの位置
+	position_ = XMVectorSet(0, 0, -30, 0);	//カメラの位置
 	target_ = XMVectorSet(0, 0, 0, 0);	//カメラの焦点
-	projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV2, (FLOAT)800 / (FLOAT)600, 0.1f, 100.0f);
+    projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)16 / (FLOAT)9, 0.1f, 1000.0f);
 }
 
 //更新
