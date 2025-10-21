@@ -59,8 +59,8 @@ HRESULT Texture::Load(string _fileName)
 
 void Texture::Release()
 {
-	SAFE_RELEASE(pSampler_);
-	SAFE_RELEASE(pSRV_);
+    SafeCleaning::SafeRelease(pSampler_);
+    SafeCleaning::SafeRelease(pSRV_);
 }
 
 XMFLOAT4 Texture::GetTextureAspectRatio()

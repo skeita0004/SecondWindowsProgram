@@ -1,4 +1,6 @@
 ﻿#include "Model.h"
+#include "SafeCleaning.h"
+
 #undef FindResource
 
 namespace
@@ -118,7 +120,7 @@ void Model::AllRelease()
     for (auto itr = resourseList.begin(); itr != resourseList.end();)
     {
         auto model = (*itr);
-        SAFE_RELEASE(model.pModel);
+        SafeCleaning::SafeRelease(model.pModel);
         itr = resourseList.erase(itr);
     }
     resourseList.clear();

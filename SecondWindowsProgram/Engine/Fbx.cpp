@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include <filesystem>
 #include <sstream>
+#include "SafeCleaning.h"
 
 namespace fs = std::filesystem;
 
@@ -346,12 +347,14 @@ void Fbx::Draw(Transform& _transform)
 
 void Fbx::Release()
 {
-    SAFE_RELEASE(pVertexBuffer_);
+    SafeCleaning::SafeRelease(pVertexBuffer_);
+
 	for (int i = 0; i < materialCount_; i++)
 	{
-		SAFE_RELEASE(pIndexBuffer_[i]);
+        SafeCleaning::SafeRelease(pIndexBuffer_[i]);
 	}
-	delete[] pIndexBuffer_;
-    SAFE_RELEASE(pConstantBuffer_);
+
+    SafeCleaning::SafeDeleteArray(pIndexBuffer_);
+    SafeCleaning::SafeRelease(pConstantBuffer_);
 }
 

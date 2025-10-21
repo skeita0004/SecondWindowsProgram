@@ -2,6 +2,7 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 #include "Camera.h"
+#include "SafeCleaning.h"
 
 using namespace DirectX;
 
@@ -165,16 +166,15 @@ void Direct3D::EndDraw()
 
 void Direct3D::Release()
 {
+    SafeCleaning::SafeRelease(pRasterizerState);
+    SafeCleaning::SafeRelease(pVertexLayout);
+    SafeCleaning::SafeRelease(pPixelShader);
+    SafeCleaning::SafeRelease(pVertexShader);
 	
-	SAFE_RELEASE(pRasterizerState);
-	SAFE_RELEASE(pVertexLayout);
-	SAFE_RELEASE(pPixelShader)
-	SAFE_RELEASE(pVertexShader)
-
-	SAFE_RELEASE(pRenderTargetView);
-	SAFE_RELEASE(pSwapChain);
-	SAFE_RELEASE(pContext);
-	SAFE_RELEASE(pDevice);
+    SafeCleaning::SafeRelease(pRenderTargetView);
+    SafeCleaning::SafeRelease(pSwapChain);
+    SafeCleaning::SafeRelease(pContext);
+    SafeCleaning::SafeRelease(pDevice);
 }
 
 HRESULT Direct3D::InitShader()
@@ -239,7 +239,7 @@ HRESULT Direct3D::InitShader3D()
 		return hResult;
 	}
 
-	SAFE_RELEASE(pCompileVS);
+	SafeCleaning::SafeRelease(pCompileVS);
 	
 	// ピクセルシェーダの作成（コンパイル）
 	ID3DBlob* pCompilePS = nullptr;
@@ -255,7 +255,7 @@ HRESULT Direct3D::InitShader3D()
 		return hResult;
 	}
 
-	SAFE_RELEASE(pCompilePS);
+	SafeCleaning::SafeRelease(pCompilePS);
 
 	//ラスタライザ作成
 	D3D11_RASTERIZER_DESC rdc = {};
@@ -310,7 +310,7 @@ HRESULT Direct3D::InitShader2D()
 		return hResult;
 	}
 
-	SAFE_RELEASE(pCompileVS);
+	SafeCleaning::SafeRelease(pCompileVS);
 
 	// ピクセルシェーダの作成（コンパイル）
 	ID3DBlob* pCompilePS = nullptr;
@@ -327,7 +327,7 @@ HRESULT Direct3D::InitShader2D()
 		return hResult;
 	}
 
-	SAFE_RELEASE(pCompilePS);
+	SafeCleaning::SafeRelease(pCompilePS);
 
 	//ラスタライザ作成
 	D3D11_RASTERIZER_DESC rdc = {};

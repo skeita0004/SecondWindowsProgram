@@ -145,10 +145,10 @@ void Sprite::Draw(Transform& _transform)
 
 void Sprite::Release()
 {
-	SAFE_RELEASE(pTexture_);
-	SafeDelete(pTexture_);
+	SafeCleaning::SafeRelease(pTexture_);
+	SafeCleaning::SafeDelete(pTexture_);
 
-	SAFE_RELEASE(pConstantBuffer_);
-	SAFE_RELEASE(pIndexBuffer_);
-	SAFE_RELEASE(pVertexBuffer_);
+	SafeCleaning::SafeRelease(pConstantBuffer_);
+	SafeCleaning::SafeRelease(pIndexBuffer_);
+	SafeCleaning::SafeRelease(pVertexBuffer_);
 }
