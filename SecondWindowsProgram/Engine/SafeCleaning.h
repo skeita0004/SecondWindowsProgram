@@ -9,8 +9,12 @@ namespace SafeCleaning
         _ptr.Release();
     };
 
+    /// @brief ポインタ変数の完全な削除を行う
+    /// @tparam TYPE プリミティブ型、独自型なんでもござれ、ただしRelease関数を持つものには
+    /// SafeReleaseを用いること。
+    /// @param _ptr ポインタ変数
     template<typename TYPE>
-    inline static void SafeDelete(TYPE*& _ptr)
+    inline void SafeDelete(TYPE*& _ptr)
     {
         if (_ptr != nullptr)
         {
@@ -19,8 +23,11 @@ namespace SafeCleaning
         }
     }
 
+    /// @brief ポインタの配列の完全な削除を行う
+    /// @tparam TYPE プリミティブ型、独自型、なんでもござれ。
+    /// @param _ptr newで領域確保した配列
     template<typename TYPE>
-    inline static void SafeDeleteArray(TYPE*& _ptr)
+    inline void SafeDeleteArray(TYPE*& _ptr)
     {
         if (_ptr != nullptr)
         {
@@ -29,8 +36,11 @@ namespace SafeCleaning
         }
     }
 
+    /// @brief Release関数を持つ型のポインタを完全に削除する
+    /// @tparam TYPE Release関数を持っている型
+    /// @param _ptr ポインタ
     template<HasRelease TYPE>
-    inline static void SafeRelease(TYPE*& _ptr)
+    inline void SafeRelease(TYPE*& _ptr)
     {
         if (_ptr != nullptr)
         {
