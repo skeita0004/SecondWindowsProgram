@@ -12,8 +12,15 @@ public:
 	void Draw()    override;
 	void Release() override;
 
+    void SetVelocity(const XMFLOAT3& _velocity)
+    {
+        velocity_ = _velocity;
+    }
+
 private:
 	//Transform transform_;
 	int hModel_;
-	SphereCollider* pSphereCollider_;
+	//SphereCollider* pSphereCollider_;
+    XMFLOAT3 velocity_;
+
 };

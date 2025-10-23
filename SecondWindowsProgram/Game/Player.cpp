@@ -53,7 +53,7 @@ void Player::Update()
 
     if (Input::IsKeyDown(DIK_SPACE))
     {
-        Bullet* pBullet = Instantiate<Bullet>(this);
+        Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
         pOrbiterLeft_->KillMe();
         pOrbiterRight_->KillMe();
         //pBullet->Settransform
