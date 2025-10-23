@@ -88,7 +88,6 @@ void Model::SetTransForm(int _modelHandle, Transform* _transform)
 
 void Model::AllRelease()
 {
-
     for (auto itr = resourseList.begin(); itr != resourseList.end();)
     {
         auto model = (*itr);

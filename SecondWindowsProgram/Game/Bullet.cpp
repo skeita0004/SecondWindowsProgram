@@ -11,8 +11,7 @@ namespace
 
 Bullet::Bullet(GameObject* _parent):
 	GameObject(_parent, "Bullet"),
-	hModel_(-1),
-	pSphereCollider_(nullptr)
+	hModel_(-1)
 {
 }
 
