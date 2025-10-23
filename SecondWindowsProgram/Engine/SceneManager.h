@@ -4,7 +4,7 @@
 
 namespace Scene
 {
-	enum struct SceneID
+	enum struct SceneID : int
 	{
 		SID_TEST = 0,
 		SID_PLAY,
