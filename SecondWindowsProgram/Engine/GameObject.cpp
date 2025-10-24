@@ -206,11 +206,10 @@ void GameObject::AddCollider(SphereCollider* _pSphereCollider)
 
 void GameObject::Collision(GameObject* _pGameObject)
 {
-    if (_pGameObject->pSphereCollider_ == nullptr)
+    if (_pGameObject->pSphereCollider_ != nullptr)
     {
-        return;
-    }
 
+    }
 	if (_pGameObject->GetChildList()->empty())
 	{
 		return;

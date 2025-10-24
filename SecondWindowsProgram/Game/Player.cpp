@@ -54,9 +54,8 @@ void Player::Update()
     if (Input::IsKeyDown(DIK_SPACE))
     {
         Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
-        pOrbiterLeft_->KillMe();
-        pOrbiterRight_->KillMe();
-        //pBullet->Settransform
+        pBullet->SetPosition(transform_.position);
+        pBullet->SetVelocity({1.f, 0, 0});
 	}
 
 	if (Input::IsKey(DIK_A))
@@ -75,8 +74,7 @@ void Player::Update()
     {
         transform_.position.z -= 0.2f;
     }
-
-	Camera::SetTarget(XMLoadFloat3(&transform_.position));
+	//Camera::SetTarget(XMLoadFloat3(&transform_.position));
 }
 
 void Player::Draw()

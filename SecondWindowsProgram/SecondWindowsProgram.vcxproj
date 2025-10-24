@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\SafeCleaning.h" />
     <ClInclude Include="Engine\SphereCollider.h" />
+    <ClInclude Include="Engine\Types\Vector3.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Engine\Camera.h" />
     <ClInclude Include="Engine\Direct3D.h" />
