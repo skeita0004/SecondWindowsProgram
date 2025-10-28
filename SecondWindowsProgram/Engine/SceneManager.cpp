@@ -1,5 +1,6 @@
 ﻿#include "SceneManager.h"
 #include "../Game/TestScene.h"
+#include "../Game/TitleScene.h"
 #include "../Game/PlayScene.h"
 #include "Model.h"
 
@@ -36,6 +37,7 @@ void SceneManager::Update()
 				Instantiate<PlayScene>(this);
 				break;
 			case Scene::SceneID::SID_TITLE:
+				Instantiate<TitleScene>(this);
 				break;
 			case Scene::SceneID::SID_OVER:
 				break;

@@ -158,8 +158,11 @@
     <ClInclude Include="Game\Orbiter.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\PlayScene.h" />
+    <ClInclude Include="Game\TeaTime.h" />
+    <ClInclude Include="Game\TestLogo.h" />
     <ClInclude Include="Game\TestScene.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Game\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SphereCollider.cpp" />
@@ -180,7 +183,10 @@
     <ClCompile Include="Game\Orbiter.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\PlayScene.cpp" />
+    <ClCompile Include="Game\TeaTime.cpp" />
+    <ClCompile Include="Game\TestLogo.cpp" />
     <ClCompile Include="Game\TestScene.cpp" />
+    <ClCompile Include="Game\TitleScene.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

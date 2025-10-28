@@ -93,6 +93,15 @@
     <ClInclude Include="Engine\Types\Vector3.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Game\TitleScene.h">
+      <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TeaTime.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TestLogo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -153,6 +162,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Game\Orbiter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TitleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TeaTime.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TestLogo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿#pragma once
-
 #include "GameObject.h"
-#include "SceneManager.h"
+
+class SceneManager;
 
 class TestScene : public GameObject
 {
@@ -15,5 +15,6 @@ public:
 	void Release() override;
 
 private:
-	SceneManager* pSceneManager;
+	SceneManager* pSceneManager_;
+    int hModel_;
 };
