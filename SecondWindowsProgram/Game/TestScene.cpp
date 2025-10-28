@@ -1,9 +1,13 @@
 ﻿#include "TestScene.h"
+#include "SceneManager.h"
+#include "Model.h"
 #include "Input.h"
+#include "TeaTime.h"
+#include "TestLogo.h"
 
 TestScene::TestScene(GameObject* _parent) :
 	GameObject(_parent, "TestScene"),
-	pSceneManager(nullptr)
+	pSceneManager_(nullptr)
 {
 }
 
@@ -13,15 +17,17 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
-	pSceneManager = FindGameObject<SceneManager>("SceneManager");
+	pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
+    Instantiate<TeaTime>(this);
+    Instantiate<TestLogo>(this);
 }
 
 void TestScene::Update()
 {
-	if (Input::IsKey(DIK_P))
-	{
-		pSceneManager->ChangeScene(Scene::SceneID::SID_PLAY);
-	}
+    if (Input::IsKeyDown(DIK_P))
+    {
+        pSceneManager_->ChangeScene(Scene::SceneID::SID_PLAY);
+    }
 }
 
 void TestScene::Draw()
