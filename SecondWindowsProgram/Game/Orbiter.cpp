@@ -31,14 +31,14 @@ void Orbiter::Init()
 
 void Orbiter::Update()
 {
-    transform_.scale = {0.7, 0.7, 0.7};
+    transform.scale = {0.7, 0.7, 0.7};
     //transform_.rotate.y += ;
 
 }
 
 void Orbiter::Draw()
 {
-    Model::SetTransForm(hModel_, &transform_);
+    Model::SetTransForm(hModel_, &transform);
     Model::Draw(hModel_);
 }
 

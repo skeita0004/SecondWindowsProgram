@@ -21,21 +21,21 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-	SphereCollider* pSphereCollider = new SphereCollider(transform_.position, 1.f);
+	SphereCollider* pSphereCollider = new SphereCollider(transform.position, 1.f);
 	AddCollider(pSphereCollider);
 	hModel_ = Model::Load(MODEL_PATH);
 }
 
 void Bullet::Update()
 {
-	transform_.rotate.y = 90;
+	transform.rotate.y = 90;
 
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position);
+    XMVECTOR vPos = XMLoadFloat3(&transform.position);
     XMVECTOR vVelocity = XMLoadFloat3(&velocity_);
 
     vPos += vVelocity;
 
-    XMStoreFloat3(&transform_.position, vPos);
+    XMStoreFloat3(&transform.position, vPos);
     XMStoreFloat3(&velocity_, vVelocity);
 
     
@@ -51,7 +51,7 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	Model::SetTransForm(hModel_, &transform_);
+	Model::SetTransForm(hModel_, &transform);
 	Model::Draw(hModel_);
 }
 

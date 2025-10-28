@@ -69,7 +69,7 @@ public:
 	void Collision(GameObject* _pGameObject);
 
 protected:
-    Transform transform_;
+    Transform transform;
 
 private:
 	std::list<GameObject*> childList_;

@@ -3,7 +3,7 @@
 
 GameObject::GameObject() :
 	childList_(0, nullptr),
-	transform_(),
+	transform(),
 	pParent_(nullptr),
 	objectName_("Unknown Object"),
 	isKillMe_(false),
@@ -13,7 +13,7 @@ GameObject::GameObject() :
 
 GameObject::GameObject(GameObject* _pParent, const std::string& _name) :
 	childList_(0, nullptr),
-	transform_(),
+	transform(),
 	pParent_(_pParent),
 	objectName_(_name),
 	isKillMe_(false),
@@ -21,7 +21,7 @@ GameObject::GameObject(GameObject* _pParent, const std::string& _name) :
 {
     if (_pParent != nullptr)
     {
-        transform_.pParent = &_pParent->transform_;
+        transform.pParent = &_pParent->transform;
     }
 }
 
@@ -142,7 +142,7 @@ GameObject* GameObject::FindChildObject(const std::string& _name)
 
 Transform* GameObject::GetTransform()
 {
-	return &transform_;
+	return &transform;
 }
 
 void GameObject::DeleteObjectSub(GameObject* _object)
@@ -191,12 +191,12 @@ void GameObject::DeleteAllChildren()
 
 void GameObject::SetPosition(XMFLOAT3 _position)
 {
-    transform_.position = _position;
+    transform.position = _position;
 }
 
 void GameObject::SetPosition(float _x, float _y, float _z)
 {
-    transform_.position = {_x, _y, _z};
+    transform.position = {_x, _y, _z};
 }
 
 void GameObject::AddCollider(SphereCollider* _pSphereCollider)
@@ -223,14 +223,14 @@ void GameObject::Collision(GameObject* _pGameObject)
 
 #pragma region CollisionDetection
 
-	float x1 = this->transform_.position.x;
-	float x2 = _pGameObject->transform_.position.x;
+	float x1 = this->transform.position.x;
+	float x2 = _pGameObject->transform.position.x;
 
-	float y1 = this->transform_.position.y;
-	float y2 = _pGameObject->transform_.position.y;
+	float y1 = this->transform.position.y;
+	float y2 = _pGameObject->transform.position.y;
 
-	float z1 = this->transform_.position.z;
-	float z2 = _pGameObject->transform_.position.z;
+	float z1 = this->transform.position.z;
+	float z2 = _pGameObject->transform.position.z;
 
 	float r1 = this->pSphereCollider_->GetRadius();
 	float r2 = _pGameObject->pSphereCollider_->GetRadius();

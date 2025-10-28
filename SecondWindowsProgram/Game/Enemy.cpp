@@ -13,11 +13,11 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-    SphereCollider* pSphereCollider = new SphereCollider(transform_.position, 1.f);
+    SphereCollider* pSphereCollider = new SphereCollider(transform.position, 1.f);
     AddCollider(pSphereCollider);
 	hModel_ = Model::Load("Assets/models/Enemy.fbx");
-	transform_.position.x = 10.f;
-	Model::SetTransForm(hModel_, &transform_);
+	transform.position.x = 10.f;
+	Model::SetTransForm(hModel_, &transform);
 }
 
 void Enemy::Update()
@@ -26,17 +26,17 @@ void Enemy::Update()
 
 	r += 0.1;
 
-	transform_.rotate.y = r;
-	transform_.scale.x = sinf(r) * 3;
-	transform_.scale.y = sinf(r) * 3;
-	transform_.scale.z = sinf(r) * 3;
+	transform.rotate.y = r;
+	transform.scale.x = sinf(r) * 3;
+	transform.scale.y = sinf(r) * 3;
+	transform.scale.z = sinf(r) * 3;
 	//transform_.position.x = 0.5f;
 	//transform_.scale = { 0.01, 0.01, 0.01 };
 }
 
 void Enemy::Draw()
 {
-	Model::SetTransForm(hModel_, &transform_);
+	Model::SetTransForm(hModel_, &transform);
 	Model::Draw(hModel_);
 }
 
