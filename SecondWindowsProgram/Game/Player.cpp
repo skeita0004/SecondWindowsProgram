@@ -24,7 +24,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
+	pSphereCollider_ = new SphereCollider(transform.position, 1.f);
 	hModel_ = Model::Load(MODEL_PATH);
     pOrbiterLeft_ = Instantiate<Orbiter>(this);
     pOrbiterRight_ = Instantiate<Orbiter>(this);
@@ -32,7 +32,7 @@ void Player::Init()
 
 void Player::Update()
 {
-	transform_.rotate.y--;
+	transform.rotate.y--;
 
     //XMFLOAT3 posROrb{};
     //XMFLOAT3 posLOrb{};
@@ -54,32 +54,32 @@ void Player::Update()
     if (Input::IsKeyDown(DIK_SPACE))
     {
         Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
-        pBullet->SetPosition(transform_.position);
+        pBullet->SetPosition(transform.position);
         pBullet->SetVelocity({1.f, 0, 0});
 	}
 
 	if (Input::IsKey(DIK_A))
 	{
-		transform_.position.x -= 0.2f;
+		transform.position.x -= 0.2f;
 	}
 	if (Input::IsKey(DIK_D))
 	{
-		transform_.position.x += 0.2f;
+		transform.position.x += 0.2f;
 	}
     if (Input::IsKey(DIK_W))
     {
-        transform_.position.z += 0.2f;
+        transform.position.z += 0.2f;
     }
     if (Input::IsKey(DIK_S))
     {
-        transform_.position.z -= 0.2f;
+        transform.position.z -= 0.2f;
     }
 	//Camera::SetTarget(XMLoadFloat3(&transform_.position));
 }
 
 void Player::Draw()
 {
-    Model::SetTransForm(hModel_, &transform_);
+    Model::SetTransForm(hModel_, &transform);
 	Model::Draw(hModel_);
 }
 
