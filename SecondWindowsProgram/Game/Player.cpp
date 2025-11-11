@@ -5,6 +5,7 @@
 #include "Model.h"
 #include "Orbiter.h"
 #include "Camera.h"
+#include "SphereCollider.h"
 
 namespace
 {
@@ -14,7 +15,8 @@ namespace
 Player::Player(GameObject* _parent) :
     GameObject(_parent, "Player"),
 	hModel_(-1),
-	pSphereCollider_(nullptr)
+    pOrbiterLeft_(nullptr),
+    pOrbiterRight_(nullptr)
 {
 }
 
@@ -24,7 +26,8 @@ Player::~Player()
 
 void Player::Init()
 {
-	pSphereCollider_ = new SphereCollider(transform.position, 1.f);
+	SphereCollider* pSphereCollider_ = new SphereCollider(0.0001f);
+    AddCollider(pSphereCollider_);
 	hModel_ = Model::Load(MODEL_PATH);
     pOrbiterLeft_ = Instantiate<Orbiter>(this);
     pOrbiterRight_ = Instantiate<Orbiter>(this);
@@ -54,7 +57,7 @@ void Player::Update()
     if (Input::IsKeyDown(DIK_SPACE))
     {
         Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
-        pBullet->SetPosition(transform.position);
+        pBullet->SetPosition(XMFLOAT3(transform.position.x + 1.f, 0, 0));
         pBullet->SetVelocity({1.f, 0, 0});
 	}
 
