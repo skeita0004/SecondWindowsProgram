@@ -2,6 +2,7 @@
 #include "Player.h"
 #include <string>
 #include "Model.h"
+#include "SphereCollider.h"
 
 namespace
 {
@@ -21,7 +22,7 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-	SphereCollider* pSphereCollider = new SphereCollider(transform.position, 1.f);
+	SphereCollider* pSphereCollider = new SphereCollider(0.5f);
 	AddCollider(pSphereCollider);
 	hModel_ = Model::Load(MODEL_PATH);
 }
