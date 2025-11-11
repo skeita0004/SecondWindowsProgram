@@ -5,7 +5,7 @@
 class SphereCollider
 {
 public:
-	SphereCollider(XMFLOAT3 _position, float _radius);
+	SphereCollider(float _radius) : radius_(_radius) { }
 	~SphereCollider();
 
 	float GetRadius()
@@ -14,6 +14,5 @@ public:
 	}
 
 private:
-	Transform transform_;
 	float radius_;
 };
