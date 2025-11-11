@@ -3,7 +3,8 @@
 #include <list>
 #include <string>
 #include "Transform.h"
-#include "SphereCollider.h"
+
+class SphereCollider;
 
 class GameObject
 {
@@ -65,8 +66,10 @@ public:
 	}
 
 	void AddCollider(SphereCollider* _pSphereCollider);
-
 	void Collision(GameObject* _pGameObject);
+    void RoundRobinCollisionDetection(GameObject* _pGameObject);
+
+    virtual void OnCollision();
 
 protected:
     Transform transform;

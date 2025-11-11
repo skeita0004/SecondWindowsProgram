@@ -1,5 +1,8 @@
 ﻿#include "GameObject.h"
+
 #include <Windows.h>
+
+#include "SphereCollider.h"
 
 GameObject::GameObject() :
 	childList_(0, nullptr),
@@ -32,6 +35,8 @@ GameObject::~GameObject()
 void GameObject::UpdateSub()
 {
 	Update();
+
+    RoundRobinCollisionDetection(GetRootJob());
 	
 	for (auto& object : childList_)
 	{
@@ -54,10 +59,10 @@ void GameObject::UpdateSub()
 		}
 	}
 
-    for (auto object : childList_)
-    {
-        Collision(GetRootJob());
-    }
+    //for (auto object : childList_)
+    //{
+    //    Collision(GetRootJob());
+    //}
 }
 
 void GameObject::DrawSub()
@@ -206,55 +211,61 @@ void GameObject::AddCollider(SphereCollider* _pSphereCollider)
 
 void GameObject::Collision(GameObject* _pGameObject)
 {
+	    float x1 = this->transform.position.x;
+	    float x2 = _pGameObject->transform.position.x;
+
+	    float y1 = this->transform.position.y;
+	    float y2 = _pGameObject->transform.position.y;
+
+	    float z1 = this->transform.position.z;
+	    float z2 = _pGameObject->transform.position.z;
+
+	    float r1 = this->pSphereCollider_->GetRadius();
+	    float r2 = _pGameObject->pSphereCollider_->GetRadius();
+
+	    float dx = (x2 - x1) * (x2 - x1);
+	    float dy = (y2 - y1) * (y2 - y1);
+	    float dz = (z2 - z1) * (z2 - z1);
+
+	    float threshold = (r1 + r2) * (r1 + r2);
+
+	    bool isHit = (dx + dy + dz) <= threshold;
+
+	    if (isHit)
+	    {
+            //MessageBox(0, L"バキャーン！", L"caption", MB_OK);
+            _pGameObject->KillMe();
+	    }
+}
+
+void GameObject::RoundRobinCollisionDetection(GameObject* _pGameObject)
+{
+    // 自分はSphereColliderを持っているか
+    if (this->pSphereCollider_ == nullptr)
+    {
+        return;
+    }
+
+    // 相手が自分だ
     if (this == _pGameObject)
     {
         return;
     }
 
-    if (_pGameObject->pSphereCollider_ == nullptr)
+    if (_pGameObject->pSphereCollider_ != nullptr)
     {
-        return;
+        Collision(_pGameObject);
     }
 
-	if (_pGameObject->GetChildList()->empty())
-	{
-		return;
-	}
+    if (not(_pGameObject->childList_.empty()))
+    {
+        for (auto& gameObject : _pGameObject->childList_)
+        {
+            RoundRobinCollisionDetection(gameObject);
+        }
+    }
+}
 
-#pragma region CollisionDetection
-
-	float x1 = this->transform.position.x;
-	float x2 = _pGameObject->transform.position.x;
-
-	float y1 = this->transform.position.y;
-	float y2 = _pGameObject->transform.position.y;
-
-	float z1 = this->transform.position.z;
-	float z2 = _pGameObject->transform.position.z;
-
-	float r1 = this->pSphereCollider_->GetRadius();
-	float r2 = _pGameObject->pSphereCollider_->GetRadius();
-
-	float dx = (x2 - x1) * (x2 - x1);
-	float dy = (y2 - y1) * (y2 - y1);
-	float dz = (z2 - z1) * (z2 - z1);
-
-	float rSumPow = (r1 + r2) * (r1 + r2);
-
-	bool isHit = dx + dy + dz <= rSumPow;
-
-	if (isHit)
-	{
-
-	}
-#pragma endregion
-
-	auto itr = _pGameObject->GetChildList()->begin();
-	auto itrEnd = _pGameObject->GetChildList()->end();
-	auto object = (*itr);
-
-	while (itr != itrEnd)
-	{
-		Collision(object);
-	}
+void GameObject::OnCollision()
+{
 }
