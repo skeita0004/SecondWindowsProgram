@@ -9,7 +9,7 @@ namespace SafeCleaning
         _ptr.Release();
     };
 
-    /// @brief ポインタ変数の完全な削除を行う
+    /// @brief new演算子で取得したポインタ変数の完全な削除を行う
     /// @tparam TYPE プリミティブ型、独自型なんでもござれ、ただしRelease関数を持つものには
     /// SafeReleaseを用いること。
     /// @param _ptr ポインタ変数
@@ -23,7 +23,7 @@ namespace SafeCleaning
         }
     }
 
-    /// @brief ポインタの配列の完全な削除を行う
+    /// @brief new演算子で取得したポインタの配列の完全な削除を行う
     /// @tparam TYPE プリミティブ型、独自型、なんでもござれ。
     /// @param _ptr newで領域確保した配列
     template<typename TYPE>
@@ -36,7 +36,7 @@ namespace SafeCleaning
         }
     }
 
-    /// @brief Release関数を持つ型のポインタを完全に削除する
+    /// @brief DirectXAPIやWin32APIのポインタ変数を削除する
     /// @tparam TYPE Release関数を持っている型
     /// @param _ptr ポインタ
     template<HasRelease TYPE>
