@@ -2,21 +2,18 @@
 
 #include "GameObject.h"
 
-namespace Scene
-{
-	enum struct SceneID : int
-	{
-		SID_TEST = 0,
-		SID_PLAY,
-		SID_TITLE,
-		SID_OVER,
-		SID_CLEAR,
-	};
-}
-
 class SceneManager : public GameObject
 {
 public:
+	enum struct SceneID : int
+	{
+		SID_TEST = 0,
+		SID_TITLE,
+		SID_PLAY,
+		SID_CLEAR,
+		SID_OVER,
+	};
+
 	SceneManager(GameObject* _parent);
 	~SceneManager();
 	
@@ -25,9 +22,9 @@ public:
 	void Draw()    override;
 	void Release() override;
 
-	void ChangeScene(Scene::SceneID _sceneID);
+	void ChangeScene(SceneID _sceneID);
 
 private:
-	Scene::SceneID currScene;
-	Scene::SceneID nextScene;
+	SceneID currScene;
+	SceneID nextScene;
 };

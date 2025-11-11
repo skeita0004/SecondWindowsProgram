@@ -2,12 +2,14 @@
 #include "../Game/TestScene.h"
 #include "../Game/TitleScene.h"
 #include "../Game/PlayScene.h"
+#include "../Game/ClearScene.h"
+#include "../Game/OverScene.h"
 #include "Model.h"
 
 SceneManager::SceneManager(GameObject* _parent) :
 	GameObject(_parent, "SceneManager"),
-	currScene(Scene::SceneID::SID_TEST),
-	nextScene(Scene::SceneID::SID_TEST)
+	currScene(SceneID::SID_TEST),
+	nextScene(SceneID::SID_TEST)
 {
 }
 
@@ -30,18 +32,21 @@ void SceneManager::Update()
 
 		switch (nextScene)
 		{
-			case Scene::SceneID::SID_TEST:
+            using enum SceneID;
+			case SceneID::SID_TEST:
 				Instantiate<TestScene>(this);
 				break;
-			case Scene::SceneID::SID_PLAY:
-				Instantiate<PlayScene>(this);
-				break;
-			case Scene::SceneID::SID_TITLE:
+			case SceneID::SID_TITLE:
 				Instantiate<TitleScene>(this);
 				break;
-			case Scene::SceneID::SID_OVER:
+			case SceneID::SID_PLAY:
+				Instantiate<PlayScene>(this);
 				break;
-			case Scene::SceneID::SID_CLEAR:
+			case SceneID::SID_CLEAR:
+                Instantiate<ClearScene>(this);
+				break;
+			case SceneID::SID_OVER:
+                Instantiate<OverScene>(this);
 				break;
 			default:
 				break;
@@ -58,7 +63,7 @@ void SceneManager::Release()
 {
 }
 
-void SceneManager::ChangeScene(Scene::SceneID _sceneID)
+void SceneManager::ChangeScene(SceneID _sceneID)
 {
 	nextScene = _sceneID;
 }
