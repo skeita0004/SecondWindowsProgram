@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Engine\SafeCleaning.h" />
     <ClInclude Include="Engine\SphereCollider.h" />
     <ClInclude Include="Engine\Types\Vector3.h" />
