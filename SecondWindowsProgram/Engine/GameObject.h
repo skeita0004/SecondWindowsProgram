@@ -36,13 +36,21 @@ public:
 		return static_cast<T*>(GetRootJob()->FindChildObject(_name));
 	}
 
+    // 名前だけ渡して、型が何かを調べて、返すタイプのが必要
+
 	void DeleteObjectSub(GameObject* _object);
 	void DeleteAllChildren();
 	
     void SetPosition(XMFLOAT3 _position);
     void SetPosition(float _x, float _y, float _z);
 
-	inline const std::string& GetObjectName() {return this->objectName_;}
+	const std::string& GetObjectName()
+    {return this->objectName_;}
+
+    void SetObjectName(const std::string& _name)
+    {
+        this->objectName_ = _name;
+    }
 
 	template <typename PTYPE>
 	inline static void SafeDelete(PTYPE* _ptr)
@@ -69,7 +77,7 @@ public:
 	void Collision(GameObject* _pGameObject);
     void RoundRobinCollisionDetection(GameObject* _pGameObject);
 
-    virtual void OnCollision();
+    virtual void OnCollision(GameObject* _pTarget);
 
 protected:
     Transform transform;

@@ -233,8 +233,7 @@ void GameObject::Collision(GameObject* _pGameObject)
 
 	    if (isHit)
 	    {
-            //MessageBox(0, L"バキャーン！", L"caption", MB_OK);
-            _pGameObject->KillMe();
+            OnCollision(_pGameObject);
 	    }
 }
 
@@ -266,6 +265,6 @@ void GameObject::RoundRobinCollisionDetection(GameObject* _pGameObject)
     }
 }
 
-void GameObject::OnCollision()
+void GameObject::OnCollision(GameObject* _pTarget)
 {
 }
