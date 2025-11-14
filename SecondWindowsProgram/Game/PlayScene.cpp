@@ -25,7 +25,7 @@ void PlayScene::Update()
 {
 	if (Input::IsKey(DIK_T))
 	{
-		pSceneManager_->ChangeScene(Scene::SceneID::SID_TEST);
+		pSceneManager_->ChangeScene(SceneManager::SceneID::SID_TEST);
 	}
 }
 

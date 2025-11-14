@@ -26,7 +26,7 @@ void TestScene::Update()
 {
     if (Input::IsKeyDown(DIK_P))
     {
-        pSceneManager_->ChangeScene(Scene::SceneID::SID_PLAY);
+        pSceneManager_->ChangeScene(SceneManager::SceneID::SID_PLAY);
     }
 }
 
