@@ -8,7 +8,7 @@
 
 SceneManager::SceneManager(GameObject* _parent) :
 	GameObject(_parent, "SceneManager"),
-	currScene(SceneID::SID_TEST),
+	currScene(SceneID::SID_TITLE),
 	nextScene(SceneID::SID_TEST)
 {
 }
