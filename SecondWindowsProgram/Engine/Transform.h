@@ -28,7 +28,7 @@ public:
 	const XMMATRIX GetNormalMatrix();
 
 private:
-	//XMMATRIX matTranslate_; //移動行列
-	//XMMATRIX matRotate_;    //回転行列	
-	//XMMATRIX matScale_;     //拡大行列
+    static inline XMMATRIX matTranslate{ XMMatrixIdentity() };
+    static inline XMMATRIX matRotate{ XMMatrixIdentity() };
+    static inline XMMATRIX matScale{ XMMatrixIdentity() };
 };
