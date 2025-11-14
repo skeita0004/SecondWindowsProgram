@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Bullet.h"
 #include "Model.h"
+#include "Player.h"
 
 namespace
 {
@@ -12,7 +13,9 @@ namespace
 Orbiter::Orbiter(GameObject* _parent) :
     GameObject(_parent, "Orbiter"),
     hModel_(-1),
-    pSphereCollider_(nullptr)
+    pSphereCollider_(nullptr),
+    posOffset_(),
+    pPlayer_(nullptr)
 {
 }
 
@@ -22,18 +25,23 @@ Orbiter::~Orbiter()
 
 void Orbiter::Init()
 {
-    // pSphereCollider_ = new SphereCollider(transform_.position, 1.f);
-    //transform_.pParent = GetParent()->GetTransform();
+    pPlayer_ = static_cast<Player*>(GetParent());
     hModel_ = Model::Load(MODEL_PATH);
-    //transform_.rotate.y = 90;
-    // Model::SetTransForm(hModel_, &transform_);
+    transform.scale = {0.7, 0.7, 0.7};
 }
 
 void Orbiter::Update()
 {
-    transform.scale = {0.7, 0.7, 0.7};
-    //transform_.rotate.y += ;
+    transform.position.y = 5.f;
+    XMVECTOR vParentPos = XMLoadFloat3(&pPlayer_->GetTransform()->position);
+    XMVECTOR vPos       = XMLoadFloat3(&transform.position);
+    XMVECTOR vOffset    = XMLoadFloat3(&posOffset_);
 
+    vPos = vParentPos + vOffset;
+
+    XMStoreFloat3(&transform.position, vPos);
+
+    transform.rotate.y++;
 }
 
 void Orbiter::Draw()
