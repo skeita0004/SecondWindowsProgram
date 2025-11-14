@@ -30,8 +30,8 @@ namespace
 	
 	const wchar_t* WIN_CLASS_NAME = L"SampleGame";
 
-	const int WINDOW_WIDTH  = 256;
-	const int WINDOW_HEIGHT = 256;
+	const int WINDOW_WIDTH  = 640;
+	const int WINDOW_HEIGHT = 480;
 
 	int winW;
 	int winH;
