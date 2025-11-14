@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\ClearScene.h" />
     <ClInclude Include="Engine\SafeCleaning.h" />
     <ClInclude Include="Engine\SphereCollider.h" />
     <ClInclude Include="Engine\Types\Vector3.h" />
@@ -161,11 +162,14 @@
     <ClInclude Include="Game\TeaTime.h" />
     <ClInclude Include="Game\TestLogo.h" />
     <ClInclude Include="Game\TestScene.h" />
+    <ClInclude Include="Game\OverScene.h" />
+    <ClInclude Include="Game\TitleLogo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Game\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SphereCollider.cpp" />
+    <ClCompile Include="Game\ClearScene.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
     <ClCompile Include="Engine\Direct3D.cpp" />
@@ -181,11 +185,13 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\Orbiter.cpp" />
+    <ClCompile Include="Game\OverScene.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\PlayScene.cpp" />
     <ClCompile Include="Game\TeaTime.cpp" />
     <ClCompile Include="Game\TestLogo.cpp" />
     <ClCompile Include="Game\TestScene.cpp" />
+    <ClCompile Include="Game\TitleLogo.cpp" />
     <ClCompile Include="Game\TitleScene.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>

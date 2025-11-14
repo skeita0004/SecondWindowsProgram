@@ -84,9 +84,6 @@
     <ClInclude Include="Engine\SphereCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Orbiter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SafeCleaning.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -96,10 +93,22 @@
     <ClInclude Include="Game\TitleScene.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game\ClearScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\OverScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
     <ClInclude Include="Game\TeaTime.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\TestLogo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Orbiter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TitleLogo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -161,16 +170,25 @@
     <ClCompile Include="Engine\SphereCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Orbiter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Game\TestLogo.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\TeaTime.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\TestLogo.cpp">
+    <ClCompile Include="Game\OverScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Orbiter.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\ClearScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TitleScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TitleLogo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
