@@ -76,7 +76,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 {
 	HRESULT hResult;
 	//頂点情報を入れる配列
-	VERTEX* vertices = new VERTEX[vertexCount_];
+	pVertexData_ = new VERTEX[vertexCount_];
 
 	//全ポリゴン
 	for (int poly = 0; poly < polygonCount_; poly++)
@@ -89,7 +89,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 
 			//頂点の位置
 			FbxVector4 pos = _mesh->GetControlPointAt(index);
-			vertices[index].position = XMVectorSet((float)pos[0], (float)pos[1], (float)pos[2], 0.0f);
+			pVertexData_[index].position = XMVectorSet((float)pos[0], (float)pos[1], (float)pos[2], 0.0f);
 
 #if false
 #define WRONG_CODE
@@ -133,7 +133,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 					}
 				}
 
-				vertices[index].uv = XMVectorSet((float)uv[0], 1.0f - (float)uv[1], 0.0f, 0.0f);
+				pVertexData_[index].uv = XMVectorSet((float)uv[0], 1.0f - (float)uv[1], 0.0f, 0.0f);
 			}
 			/*END GPTs CODE*/
 #endif
@@ -141,7 +141,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 			//頂点の法線
 			FbxVector4 Normal;
 			_mesh->GetPolygonVertexNormal(poly, vertex, Normal);	//ｉ番目のポリゴンの、ｊ番目の頂点の法線をゲット
-			vertices[index].normal = XMVectorSet((float)Normal[0], (float)Normal[1], (float)Normal[2], 0.0f);
+			pVertexData_[index].normal = XMVectorSet((float)Normal[0], (float)Normal[1], (float)Normal[2], 0.0f);
 		}
 	}
 
@@ -157,7 +157,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 
 
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = vertices;
+	data_vertex.pSysMem = pVertexData_;
 
 	hResult = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hResult))
@@ -165,7 +165,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* _mesh)
 		MessageBox(nullptr, L"頂点がなんか変です", L"エラー", MB_OK);
 	}
 
-	delete[] vertices;
+	//delete[] pVertexData_;
 }
 
 void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
@@ -219,7 +219,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* _mesh)
 		indexCount_[i] = count;
 	}
 
-	delete[] index;
+    SafeCleaning::SafeDeleteArray(index);
 }
 
 void Fbx::InitConstantBuffer()
@@ -296,6 +296,129 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* _pNode)
 			materialList_[i].diffuse = XMFLOAT4((float)diffuse[0], (float)diffuse[1], (float)diffuse[2], 1.0f);
 		}
 	}
+}
+
+void Fbx::InitSkelton(FbxMesh* _pMesh)
+{
+    const int ROOT_INDEX{0};
+
+    // デフォーマ情報を取得
+    FbxDeformer* pDeformer = _pMesh->GetDeformer(ROOT_INDEX);
+    if (pDeformer == nullptr)
+    {
+        return;
+    }
+
+    pSkinInfo_ = static_cast<FbxSkin*>(pDeformer);
+
+    struct PolyIndex
+    {
+        int* polyIndex;
+        int* vertexIndex;
+        int  numRef;
+    };
+
+    const int POLYGON_PER_VERTEX{3};
+    PolyIndex* polyTable = new PolyIndex[vertexCount_];
+    for (DWORD i = 0; i < vertexCount_; i++)
+    {
+        // 領域確保
+        polyTable[i].polyIndex   = new int[polygonCount_ * POLYGON_PER_VERTEX];
+        polyTable[i].vertexIndex = new int[polygonCount_ * POLYGON_PER_VERTEX];
+        polyTable[i].numRef      = 0;
+
+        ZeroMemory(polyTable[i].polyIndex,   sizeof(polyTable[i].polyIndex));
+        ZeroMemory(polyTable[i].vertexIndex, sizeof(polyTable[i].vertexIndex));
+
+        for (DWORD j = 0; j < polygonCount_; j++)
+        {
+            for (int k = 0; k < POLYGON_PER_VERTEX; k++)
+            {
+                if (_pMesh->GetPolygonVertex(j, k) == i)
+                {
+                    polyTable[i].polyIndex[polyTable[i].numRef]   = j;
+                    polyTable[i].vertexIndex[polyTable[i].numRef] = k;
+                    polyTable[i].numRef++;
+                }
+            }
+        }
+    }
+
+    numBone_ = pSkinInfo_->GetClusterCount();
+    ppCluster_ = new FbxCluster*[numBone_];
+    for (int i = 0; i < numBone_; i++)
+    {
+        ppCluster_[i] = pSkinInfo_->GetCluster(i);
+    }
+
+    // ボーン分のウェイト情報の準備
+    pWeight_ = new Weight[vertexCount_];
+    for (DWORD i = 0; i < vertexCount_; i++)
+    {
+        pWeight_[i].posOrigin = pVertexData_[i].position;
+        pWeight_[i].normalOrigin = pVertexData_[i].normal;
+        pWeight_[i].pBoneIndex = new int[numBone_];
+        pWeight_[i].pBoneWeight = new float[numBone_];
+        for (int j = 0; j < numBone_; j++)
+        {
+            pWeight_[i].pBoneIndex[j] = -1;
+            pWeight_[i].pBoneWeight[j] = 0.0f;
+        }
+    }
+
+    for (int i = 0; i < numBone_; i++)
+    {
+        int  numIndex = ppCluster_[i]->GetControlPointIndicesCount();
+        int* piIndex  = ppCluster_[i]->GetControlPointIndices();
+        double* pdWeight = ppCluster_[i]->GetControlPointWeights();
+
+        for (int j = 0; j < numIndex; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                if (k >= numBone_)
+                {
+                    break;
+                }
+
+                if (pdWeight[j] > pWeight_[piIndex[k]].pBoneWeight[k])
+                {
+                    for (int m = numBone_ - 1; m > k; m--)
+                    {
+                        pWeight_[piIndex[j]].pBoneIndex[m] = pWeight_[piIndex[j]].pBoneIndex[m - 1];
+                        pWeight_[piIndex[j]].pBoneWeight[m] = pWeight_[piIndex[j]].pBoneWeight[m - 1];
+                    }
+                    pWeight_[piIndex[j]].pBoneIndex[k] = i;
+                    pWeight_[piIndex[j]].pBoneWeight[k] = static_cast<float>(pdWeight[k]);
+                    break;
+                }
+            }
+        }
+    }
+
+    pBone_ = new Bone[numBone_];
+    for (int i = 0; i < numBone_; i++)
+    {
+        FbxAMatrix matrix;
+        ppCluster_[i]->GetTransformLinkMatrix(matrix);
+
+        XMFLOAT4X4 pose;
+        for (DWORD x = 0; x < 4; x++)
+        {
+            for (DWORD y = 0; y < 4; y++)
+            {
+                pose(x, y) = static_cast<float>(matrix.Get(x, y));
+            }
+        }
+        pBone_[i].mBindPose = XMLoadFloat4x4(&pose);
+    }
+
+    for (DWORD i = 0; i < vertexCount_; i++)
+    {
+        SafeCleaning::SafeDeleteArray(polyTable[i].polyIndex);
+        SafeCleaning::SafeDeleteArray(polyTable[i].vertexIndex);
+    }
+    SafeCleaning::SafeDeleteArray(polyTable);
 }
 
 void Fbx::Draw(Transform& _transform)

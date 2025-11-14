@@ -32,9 +32,9 @@ private:
 
 	struct VERTEX
 	{
-		XMVECTOR position;
-		XMVECTOR uv;
-		XMVECTOR normal;
+		XMFLOAT3 position;
+		XMFLOAT3 uv;
+		XMFLOAT3 normal;
 	};
 
 	struct MATERIAL
@@ -45,15 +45,40 @@ private:
 		//XMFLOAT4 ambient;
 	};
 
+    struct Bone
+    {
+        XMMATRIX mBindPose;
+        XMMATRIX mNewPose;
+        XMMATRIX mDiffPose;
+    };
+
+    struct Weight
+    {
+        XMFLOAT3 posOrigin;
+        XMFLOAT3 normalOrigin;
+        int*     pBoneIndex;
+        float*   pBoneWeight;
+    };
+
 	void    InitVertex(fbxsdk::FbxMesh* _mesh);
 	void    InitIndex (fbxsdk::FbxMesh* _mesh);
 	void    InitConstantBuffer();	//コンスタントバッファ準備
 	void    InitMaterial(fbxsdk::FbxNode* _pNode);
+    void    InitSkelton(FbxMesh* _pMesh); // スケルトン準備
 
-	int vertexCount_;   //頂点数
-	int polygonCount_;  //ポリゴン数
-	int* indexCount_;    //インデックス数
-	int materialCount_; //マテリアル数
+	DWORD vertexCount_;   //頂点数
+	DWORD polygonCount_;  //ポリゴン数
+	DWORD* indexCount_;    //インデックス数
+	DWORD materialCount_; //マテリアル数
+
+    VERTEX* pVertexData_;
+
+    FbxSkin*     pSkinInfo_;
+    FbxCluster** ppCluster_;
+    int          numBone_;
+    Bone*        pBone_;
+    Weight*      pWeight_;
+
 
 	ID3D11Buffer*         pVertexBuffer_;
 	ID3D11Buffer**        pIndexBuffer_;
