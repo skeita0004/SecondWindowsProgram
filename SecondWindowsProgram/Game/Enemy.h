@@ -14,5 +14,6 @@ public:
 	void Release() override;
 
 private:
+    void OnCollision(GameObject* _pTarget) override;
 	int       hModel_;
 };

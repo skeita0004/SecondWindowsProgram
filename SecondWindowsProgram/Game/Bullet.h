@@ -18,9 +18,10 @@ public:
     }
 
 private:
-	//Transform transform_;
-	int hModel_;
-	//SphereCollider* pSphereCollider_;
-    XMFLOAT3 velocity_;
+    void OnCollision(GameObject* _pTarget) override;
 
+	int hModel_;
+    XMFLOAT3 velocity_;
+    bool isHit_;
+    std::string targetName_;
 };

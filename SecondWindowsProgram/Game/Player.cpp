@@ -89,3 +89,16 @@ void Player::Draw()
 void Player::Release()
 {
 }
+
+void Player::OnCollision(GameObject* _pTarget)
+{
+    if (_pTarget->GetObjectName() == "Enemy")
+    {
+        _pTarget->KillMe();
+    }
+
+    if (_pTarget->GetObjectName() == "Bullet")
+    {
+        return;
+    }
+}

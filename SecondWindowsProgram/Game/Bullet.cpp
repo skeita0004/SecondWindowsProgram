@@ -3,6 +3,7 @@
 #include <string>
 #include "Model.h"
 #include "SphereCollider.h"
+#include "Enemy.h"
 
 namespace
 {
@@ -39,8 +40,6 @@ void Bullet::Update()
     XMStoreFloat3(&transform.position, vPos);
     XMStoreFloat3(&velocity_, vVelocity);
 
-    
-
 	if (deadCounter >= 60 * 3)
 	{
 		KillMe();
@@ -48,6 +47,12 @@ void Bullet::Update()
 	}
 
 	deadCounter++;
+
+    // そして、ここで当たった敵が死んでいることを確認できたら、サヨナラするといい。
+    if (isHit_ && FindGameObject<Enemy>(targetName_) == nullptr)
+    {
+        KillMe();
+    }
 }
 
 void Bullet::Draw()
@@ -58,4 +63,19 @@ void Bullet::Draw()
 
 void Bullet::Release()
 {
+}
+
+void Bullet::OnCollision(GameObject* _pTarget)
+{
+    isHit_ = false;
+    std::string targetName = _pTarget->GetObjectName();
+    std::string myName        = this->GetObjectName();
+
+    // ここで、当たった敵の名前をとっておく
+    if ((targetName == "Enemy"  and myName == "PlayerBullet") or
+        (targetName == "Player" and myName == "EnemyBullet"))
+    {
+        targetName_ = targetName;
+        isHit_ = true;
+    }
 }

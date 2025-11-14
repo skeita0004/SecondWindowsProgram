@@ -16,6 +16,7 @@ public:
 	void Release() override;
 
 private:
+    void OnCollision(GameObject* _pTarget) override;
 	int       hModel_;
 	//Transform transform_;
 	//SphereCollider* pSphereCollider_;
