@@ -57,3 +57,14 @@ const XMMATRIX Transform::GetNormalMatrix()
 
     return matRotate * XMMatrixInverse(nullptr, matScale);
 }
+
+const XMMATRIX Transform::GetTranslateMatrix()
+{
+    Calculation();
+    if (pParent)
+    {
+        return matTranslate * pParent->GetTranslateMatrix();
+    }
+
+    return matTranslate;
+}

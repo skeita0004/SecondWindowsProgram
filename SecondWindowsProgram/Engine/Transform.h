@@ -27,6 +27,8 @@ public:
 	const XMMATRIX GetWorldMatrix();
 	const XMMATRIX GetNormalMatrix();
 
+    const XMMATRIX GetTranslateMatrix();
+
 private:
     static inline XMMATRIX matTranslate{ XMMatrixIdentity() };
     static inline XMMATRIX matRotate{ XMMatrixIdentity() };
