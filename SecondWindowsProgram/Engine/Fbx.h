@@ -20,6 +20,12 @@ public:
 	void    Draw(Transform& _transform);
 	void    Release();
 
+    bool    GetBonePosition(std::string _boneName,
+                            XMFLOAT3*   _pPosition);
+
+    bool    GetBoneRotation(std::string _boneName,
+                            XMFLOAT3*   _pRotation);
+
 private:
 	struct CONSTANT_BUFFER // シェーダ側と合わせないと、おかしくなるよ！
 	{
@@ -35,7 +41,15 @@ private:
 		XMFLOAT3 position;
 		XMFLOAT3 uv;
 		XMFLOAT3 normal;
+        
 	};
+
+    struct VERT
+    {
+        XMVECTOR a1;
+        XMVECTOR a2;
+        XMVECTOR a3;
+    };
 
 	struct MATERIAL
 	{
