@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 class SceneManager;
+class Sprite;
 
 class ClearScene : public GameObject
 {
@@ -15,6 +16,8 @@ public:
     void Release() override;
 
 private:
-    SceneManager* pSceneManager_;
     int hModel_;
+    SceneManager* pSceneManager_;
+    Sprite*       pSprite_;
+    Transform     spriteTransform_;
 };
