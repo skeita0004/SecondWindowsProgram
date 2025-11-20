@@ -62,8 +62,7 @@ int Model::Load(const std::string& _path)
         .resourseIndex = resIndex,
         .transform     = nullptr
     };
-    //modelIns.resourseIndex = resIndex;
-    //modelIns.transform = {};
+
     instanceList.push_back(modelIns);
 
     return static_cast<int>(instanceList.size() - 1);
@@ -96,4 +95,21 @@ void Model::AllRelease()
     }
     resourseList.clear();
     instanceList.clear();
+}
+
+XMFLOAT3 Model::GetBonePosition(int _modelHandle, const std::string& _boneName)
+{
+    XMFLOAT3 pos{};
+    auto& instance = instanceList[_modelHandle];
+    auto& resourse = resourseList[instance.resourseIndex];
+
+    // 骨の座標を取得
+    resourse.pModel->GetBonePosition(_boneName, &pos);
+
+    // 骨の座標をモデルの平行移動成分で変形
+    XMVECTOR vTransformed{XMVector3TransformCoord(XMLoadFloat3(&pos),
+                                                  instance.transform->GetWorldMatrix())};
+
+    XMStoreFloat3(&pos, vTransformed);
+    return pos;
 }

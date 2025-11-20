@@ -23,4 +23,7 @@ namespace Model
     void Draw(int _modelHandle);
     void SetTransForm(int _modelHandle, Transform* _transform);
     void AllRelease();
+
+    XMFLOAT3 GetBonePosition(int _modelHandle,
+                             const std::string& _boneName);
 }
