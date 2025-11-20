@@ -67,15 +67,31 @@ void Bullet::Release()
 
 void Bullet::OnCollision(GameObject* _pTarget)
 {
-    isHit_ = false;
+    //isHit_ = false;
     std::string targetName = _pTarget->GetObjectName();
-    std::string myName        = this->GetObjectName();
+    std::string myName     = this->GetObjectName();
 
-    // ここで、当たった敵の名前をとっておく
-    if ((targetName == "Enemy"  and myName == "PlayerBullet") or
-        (targetName == "Player" and myName == "EnemyBullet"))
+    //// ここで、当たった敵の名前をとっておく
+    //if ((targetName == "Enemy"  and myName == "PlayerBullet") or
+    //    (targetName == "Player" and myName == "EnemyBullet"))
+    //{
+    //    targetName_ = targetName;
+    //    isHit_ = true;
+    //}
+
+    if (myName != targetName)
     {
-        targetName_ = targetName;
-        isHit_ = true;
+        if (myName == "EnemyBullet" and targetName == "Player")
+        {
+             KillMe();
+        }
+        if (myName == "PlayerBullet" and targetName == "Enemy")
+        {
+            KillMe();
+        }
+        if (myName == "PlayerBullet" and targetName == "EnemyBullet")
+        {
+            KillMe();
+        }
     }
 }
