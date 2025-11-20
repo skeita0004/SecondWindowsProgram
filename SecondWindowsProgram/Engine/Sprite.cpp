@@ -14,7 +14,7 @@ Sprite::Sprite(std::string _filePath, Transform _transform) :
 	pTexture_(nullptr),
 	imageFilePath_(_filePath)
 {
-	pTexture_ = new Texture();
+	//pTexture_ = new Texture();
 
 	XMFLOAT3 position = transform_.position;
 	XMFLOAT3 size = transform_.scale;

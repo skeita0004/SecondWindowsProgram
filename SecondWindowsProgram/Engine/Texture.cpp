@@ -20,7 +20,6 @@ Texture::~Texture()
 {
 }
 
-// 引数でwstringは、呼ぶときに支障をきたす！
 HRESULT Texture::Load(string _fileName)
 {
 	ScratchImage image;   //画像本体
