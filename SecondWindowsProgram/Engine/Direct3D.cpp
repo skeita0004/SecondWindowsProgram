@@ -195,6 +195,8 @@ HRESULT Direct3D::InitShader()
 //シェーダー準備
 HRESULT Direct3D::InitShader3D()
 {
+    DWORD vectorSize = sizeof(XMFLOAT3);
+
 	HRESULT hResult;
 	auto& shader = shaderBundle[SHADER_3D];
 
@@ -225,8 +227,8 @@ HRESULT Direct3D::InitShader3D()
 	D3D11_INPUT_ELEMENT_DESC layout[] = 
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(XMVECTOR), D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(XMVECTOR[2]), D3D11_INPUT_PER_VERTEX_DATA, 0}, // 法線
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, vectorSize, D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 2, D3D11_INPUT_PER_VERTEX_DATA, 0}, // 法線
 	};
 
 	hResult = pDevice->CreateInputLayout(layout,
@@ -275,6 +277,8 @@ HRESULT Direct3D::InitShader3D()
 
 HRESULT Direct3D::InitShader2D()
 {
+    DWORD vectorSize = sizeof(XMFLOAT3);
+
 	HRESULT hResult;
 	auto& shader = shaderBundle[SHADER_2D];
 	// 頂点シェーダの作成（コンパイル）
@@ -296,7 +300,7 @@ HRESULT Direct3D::InitShader2D()
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(XMVECTOR), D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, vectorSize, D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
 	};
 
 	hResult = pDevice->CreateInputLayout(layout,
