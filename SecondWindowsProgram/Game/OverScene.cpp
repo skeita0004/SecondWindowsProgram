@@ -1,6 +1,7 @@
 ﻿#include "OverScene.h"
 
-OverScene::OverScene(GameObject* _parent)
+OverScene::OverScene(GameObject* _parent) :
+    GameObject(_parent, "OverScene")
 {
 }
 
