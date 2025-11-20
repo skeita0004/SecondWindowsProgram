@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\ClearLogo.h" />
     <ClInclude Include="Game\ClearScene.h" />
     <ClInclude Include="Engine\SafeCleaning.h" />
     <ClInclude Include="Engine\SphereCollider.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SphereCollider.cpp" />
+    <ClCompile Include="Game\ClearLogo.cpp" />
     <ClCompile Include="Game\ClearScene.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />

@@ -22,6 +22,9 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{fa2df924-89ee-4abe-9acf-533d6a4d7afd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{e2992e95-038c-4bbc-b5f1-96f62ab34631}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -37,12 +40,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Player.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\PlayScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\TestScene.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameObject.h">
@@ -90,15 +87,6 @@
     <ClInclude Include="Engine\Types\Vector3.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Game\TitleScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\ClearScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\OverScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\TeaTime.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -109,6 +97,24 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\TitleLogo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TestScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TitleScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\PlayScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\OverScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ClearScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ClearLogo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -123,12 +129,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\PlayScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\TestScene.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GameObject.cpp">
@@ -176,19 +176,28 @@
     <ClCompile Include="Game\TeaTime.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\OverScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Orbiter.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\ClearScene.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="Game\TitleLogo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TestScene.cpp">
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Game\TitleScene.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Game\TitleLogo.cpp">
+    <ClCompile Include="Game\PlayScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\OverScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\ClearScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\ClearLogo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
