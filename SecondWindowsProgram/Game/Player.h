@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 class Orbiter;
+class SceneManager;
 
 class Player : public GameObject
 {
@@ -14,7 +15,6 @@ public:
 	void Update()  override;
 	void Draw()    override;
 	void Release() override;
-
 
 private:
     void OnCollision(GameObject* _pTarget) override;
@@ -28,4 +28,6 @@ private:
 	int       hModel_;
     Orbiter* pOrbiterLeft_;
     Orbiter* pOrbiterRight_;
+
+    SceneManager* pSceneManager_;
 };

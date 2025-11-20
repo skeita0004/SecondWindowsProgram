@@ -6,18 +6,20 @@
 #include "Orbiter.h"
 #include "Camera.h"
 #include "SphereCollider.h"
+#include "SceneManager.h"
 
 namespace
 {
     // ﾌｧｲﾙから読むようにしないとクビだぞ！
-	const std::string MODEL_PATH{"Assets/models/oden.fbx"};
+	const std::string MODEL_PATH{"Assets/models/odenwithbone.fbx"};
 }
 
 Player::Player(GameObject* _parent) :
     GameObject(_parent, "Player"),
 	hModel_(-1),
     pOrbiterLeft_(nullptr),
-    pOrbiterRight_(nullptr)
+    pOrbiterRight_(nullptr),
+    pSceneManager_(nullptr)
 {
 }
 
@@ -30,7 +32,7 @@ void Player::Init()
     transform.position = PLAYER_POSITION;
     transform.rotate   = PLAYER_ROTATE;
     transform.scale    = PLAYER_SCALE;
-	SphereCollider* pSphereCollider_ = new SphereCollider(0.5f);
+	SphereCollider* pSphereCollider_ = new SphereCollider(1.5f);
     AddCollider(pSphereCollider_);
 	hModel_ = Model::Load(MODEL_PATH);
     pOrbiterLeft_ = Instantiate<Orbiter>(this);
@@ -38,6 +40,8 @@ void Player::Init()
    
     pOrbiterLeft_->SetPosOffset(ORBITER_LEFT_OFFSET);
     pOrbiterRight_->SetPosOffset(ORBITER_RIGHT_OFFSET);
+
+    pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
 }
 
 void Player::Update()
@@ -49,10 +53,16 @@ void Player::Update()
     {
         Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
         pBullet->SetObjectName("PlayerBullet");
-        pBullet->SetPosition(transform.position);
-        pBullet->SetVelocity({0, 0, 1.f});
+
+        XMFLOAT3 bulletPos{};
+        XMVECTOR vBulletPos = XMLoadFloat3(&transform.position);
+        vBulletPos = XMVectorAdd(vBulletPos, XMVectorSet(0.f, 7.5f, 3.f, 0.f));
+        XMStoreFloat3(&bulletPos, vBulletPos);
+        pBullet->SetPosition(bulletPos);
+        pBullet->SetVelocity({0, 0.5f, 1.5f});
         // おでんの先端から発射できるようにしたい
         // ボーンの位置をとって、そこから発射できるように
+        // ↑ FBXSDKの深いところで例外発生するせいでできず。
 	}
     
     if (transform.position.x > -18.f)
@@ -93,9 +103,9 @@ void Player::OnCollision(GameObject* _pTarget)
     {
         _pTarget->KillMe();
     }
-
-    if (_pTarget->GetObjectName() == "Bullet")
+    if (_pTarget->GetObjectName() == "EnemyBullet")
     {
-        return;
+        KillMe();
+        pSceneManager_->ChangeScene(SceneManager::SceneID::SID_OVER);
     }
 }

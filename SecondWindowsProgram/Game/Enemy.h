@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "GameObject.h"
+#include "SceneManager.h"
 
 class Enemy : public GameObject
 {
@@ -16,4 +17,5 @@ public:
 private:
     void OnCollision(GameObject* _pTarget) override;
 	int       hModel_;
+    SceneManager* pSceneManager_;
 };
