@@ -12,10 +12,7 @@ namespace
 
 Orbiter::Orbiter(GameObject* _parent) :
     GameObject(_parent, "Orbiter"),
-    hModel_(-1),
-    pSphereCollider_(nullptr),
-    posOffset_(),
-    pPlayer_(nullptr)
+    hModel_(-1)
 {
 }
 
@@ -25,22 +22,12 @@ Orbiter::~Orbiter()
 
 void Orbiter::Init()
 {
-    pPlayer_ = static_cast<Player*>(GetParent());
     hModel_ = Model::Load(MODEL_PATH);
     transform.scale = {0.7, 0.7, 0.7};
 }
 
 void Orbiter::Update()
 {
-    transform.position.y = 5.f;
-    XMVECTOR vParentPos = XMLoadFloat3(&pPlayer_->GetTransform()->position);
-    XMVECTOR vPos       = XMLoadFloat3(&transform.position);
-    XMVECTOR vOffset    = XMLoadFloat3(&posOffset_);
-
-    vPos = vParentPos + vOffset;
-
-    XMStoreFloat3(&transform.position, vPos);
-
     transform.rotate.y++;
 }
 
