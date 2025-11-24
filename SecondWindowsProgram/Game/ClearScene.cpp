@@ -8,8 +8,7 @@
 
 ClearScene::ClearScene(GameObject* _parent) :
     GameObject(_parent, "ClearScene"),
-    pSceneManager_(),
-    pSprite_()
+    pSceneManager_()
 {
 }
 

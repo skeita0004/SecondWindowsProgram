@@ -1,8 +1,5 @@
 ﻿#include "ClearLogo.h"
 #include "Model.h"
-#include <timeapi.h>
-#include <algorithm>
-#undef max
 
 ClearLogo::ClearLogo(GameObject* _parent) :
     GameObject(_parent, "ClearLogo"),

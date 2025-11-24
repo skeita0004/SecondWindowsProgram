@@ -1,5 +1,4 @@
 ﻿#pragma once
-#pragma once
 #include "GameObject.h"
 
 class SceneManager;
@@ -17,5 +16,4 @@ public:
 
 private:
     SceneManager* pSceneManager_;
-    int hModel_;
 };

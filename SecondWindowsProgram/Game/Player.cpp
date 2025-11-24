@@ -30,19 +30,18 @@ Player::~Player()
 void Player::Init()
 {
     transform.position = PLAYER_POSITION;
-    transform.rotate   = PLAYER_ROTATE;
     transform.scale    = PLAYER_SCALE;
-	SphereCollider* pSphereCollider_ = new SphereCollider(1.5f);
+	SphereCollider* pSphereCollider_ = new SphereCollider(15.0f);
     AddCollider(pSphereCollider_);
 	hModel_ = Model::Load(MODEL_PATH);
     pOrbiterLeft_ = Instantiate<Orbiter>(this);
     pOrbiterRight_ = Instantiate<Orbiter>(this);
    
-    pOrbiterLeft_->SetPosOffset(ORBITER_LEFT_OFFSET);
-    pOrbiterRight_->SetPosOffset(ORBITER_RIGHT_OFFSET);
+    pOrbiterLeft_->SetPosition(-3.f, 3.f, 0.f);
+    pOrbiterRight_->SetPosition(3.f, 3.f, 0.f);
 
     pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
-}
+} 
 
 void Player::Update()
 {
@@ -53,24 +52,26 @@ void Player::Update()
     {
         Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
         pBullet->SetObjectName("PlayerBullet");
+        pBullet->SetOwner(this);
 
         XMFLOAT3 bulletPos{};
         XMVECTOR vBulletPos = XMLoadFloat3(&transform.position);
-        vBulletPos = XMVectorAdd(vBulletPos, XMVectorSet(0.f, 7.5f, 3.f, 0.f));
+        vBulletPos = XMVectorAdd(vBulletPos, XMVectorSet(0.f, 10.f, 1.5f, 0.f));
         XMStoreFloat3(&bulletPos, vBulletPos);
         pBullet->SetPosition(bulletPos);
-        pBullet->SetVelocity({0, 0.5f, 1.5f});
+        pBullet->SetVelocity({0, 0.0f, 1.5f});
         // おでんの先端から発射できるようにしたい
         // ボーンの位置をとって、そこから発射できるように
         // ↑ FBXSDKの深いところで例外発生するせいでできず。
 	}
     
+    // 移動範囲の制限
     if (transform.position.x > -18.f)
     {
+        // 移動処理
         if (Input::IsKey(DIK_A))
         {
             transform.position.x -= 0.2f;
-            transform.rotate.y = 30;
             transform.rotate.z = 15;
         }
     }
@@ -79,12 +80,9 @@ void Player::Update()
         if (Input::IsKey(DIK_D))
         {
             transform.position.x += 0.2f;
-            transform.rotate.y = -30;
             transform.rotate.z = -15;
         }
     }
-
-	//Camera::SetTarget(XMLoadFloat3(&transform_.position));
 }
 
 void Player::Draw()

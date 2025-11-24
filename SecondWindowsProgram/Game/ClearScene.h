@@ -16,8 +16,5 @@ public:
     void Release() override;
 
 private:
-    int hModel_;
     SceneManager* pSceneManager_;
-    Sprite*       pSprite_;
-    Transform     spriteTransform_;
 };

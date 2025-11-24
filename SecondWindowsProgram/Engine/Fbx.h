@@ -44,13 +44,6 @@ private:
         
 	};
 
-    struct VERT
-    {
-        XMVECTOR a1;
-        XMVECTOR a2;
-        XMVECTOR a3;
-    };
-
 	struct MATERIAL
 	{
 		Texture* pTexture;
