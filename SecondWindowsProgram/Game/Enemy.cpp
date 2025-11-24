@@ -17,12 +17,12 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-    SphereCollider* pSphereCollider = new SphereCollider(1.5f);
+    SphereCollider* pSphereCollider = new SphereCollider(3.f);
     AddCollider(pSphereCollider);
 	hModel_ = Model::Load("Assets/models/Enemy.fbx");
     transform.position.x = 0.f;
-    transform.position.y = 10.f;
-    transform.position.z = 20.f;
+    transform.position.y = 0.f;
+    transform.position.z = 50.f;
 	Model::SetTransForm(hModel_, &transform);
 
     pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
@@ -40,16 +40,19 @@ void Enemy::Update()
 	transform.scale.y = sinf(r) * 3;
 	transform.scale.z = sinf(r) * 3;
 
-    transform.position.x = sinf(x) * 19.5;
+    transform.position.x = sinf(x) * 30;
 
-    int shotRoulette = rand() % 5;
+    int shotRoulette = rand() % 50;
 
     // ランダムな間隔で撃つ
-    if (true)
+    // ルーレットで3が出たら撃つ（クソコードでは？）
+    if (/*shotRoulette == 3*/ true)
     {
          Bullet* pBullet = Instantiate<Bullet>(this->GetParent());
          pBullet->SetObjectName("EnemyBullet");
-         pBullet->SetVelocity(XMFLOAT3(0.f, -0.8f, -1.f)); // プレイヤーの方に撃てばいい
+         pBullet->SetOwner(this);
+         pBullet->SetVelocity(XMFLOAT3(0.f, 0.f, -1.f));
+
          pBullet->SetPosition(transform.position);
     }
 }
