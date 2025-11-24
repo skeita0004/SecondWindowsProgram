@@ -63,6 +63,11 @@ void Texture::Release()
     SafeCleaning::SafeRelease(pSRV_);
 }
 
+XMINT2 Texture::GetSize()
+{
+    return XMINT2(metadata_.width, metadata_.height);
+}
+
 XMFLOAT4 Texture::GetTextureAspectRatio()
 {
 	XMFLOAT4 aspectRatio{};
