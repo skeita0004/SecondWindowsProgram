@@ -68,6 +68,8 @@ namespace Direct3D
 	//解放
 	void Release();
 
+    void SetZBufferEnable(bool _isEnable);
+
 	extern ID3D11Device* pDevice;                     //デバイス
 	extern ID3D11DeviceContext* pContext;             //デバイスコンテキスト
 	extern IDXGISwapChain* pSwapChain;                //スワップチェイン

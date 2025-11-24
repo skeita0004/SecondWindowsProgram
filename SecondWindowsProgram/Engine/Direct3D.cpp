@@ -177,6 +177,18 @@ void Direct3D::Release()
     SafeCleaning::SafeRelease(pDevice);
 }
 
+void Direct3D::SetZBufferEnable(bool _isEnable)
+{
+    if (_isEnable)
+    {
+        pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
+    }
+    else
+    {
+        pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
+    }
+}
+
 HRESULT Direct3D::InitShader()
 {
 	if (FAILED(InitShader3D()))
@@ -277,7 +289,7 @@ HRESULT Direct3D::InitShader3D()
 
 HRESULT Direct3D::InitShader2D()
 {
-    DWORD vectorSize = sizeof(XMFLOAT3);
+    DWORD vectorSize = sizeof(XMFLOAT2);
 
 	HRESULT hResult;
 	auto& shader = shaderBundle[SHADER_2D];
@@ -299,7 +311,7 @@ HRESULT Direct3D::InitShader2D()
 	//頂点インプットレイアウト
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+		{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, vectorSize, D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
 	};
 
