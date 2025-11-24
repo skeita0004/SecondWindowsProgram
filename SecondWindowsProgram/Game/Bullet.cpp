@@ -8,12 +8,12 @@
 namespace
 {
 	const std::string MODEL_PATH{"Assets/models/mochi_kinchaku.fbx"};
-	int deadCounter = 0;
 }
 
 Bullet::Bullet(GameObject* _parent):
 	GameObject(_parent, "Bullet"),
-	hModel_(-1)
+	hModel_(-1),
+    deadCounter_(0)
 {
 }
 
@@ -40,19 +40,11 @@ void Bullet::Update()
     XMStoreFloat3(&transform.position, vPos);
     XMStoreFloat3(&velocity_, vVelocity);
 
-	if (deadCounter >= 60 * 3)
+    if (deadCounter_ >= 60 * 3)
 	{
 		KillMe();
-		deadCounter = 0;
 	}
-
-	deadCounter++;
-
-    // そして、ここで当たった敵が死んでいることを確認できたら、サヨナラするといい。
-    if (isHit_ && FindGameObject<Enemy>(targetName_) == nullptr)
-    {
-        KillMe();
-    }
+	deadCounter_++;
 }
 
 void Bullet::Draw()
@@ -67,31 +59,9 @@ void Bullet::Release()
 
 void Bullet::OnCollision(GameObject* _pTarget)
 {
-    //isHit_ = false;
-    std::string targetName = _pTarget->GetObjectName();
-    std::string myName     = this->GetObjectName();
-
-    //// ここで、当たった敵の名前をとっておく
-    //if ((targetName == "Enemy"  and myName == "PlayerBullet") or
-    //    (targetName == "Player" and myName == "EnemyBullet"))
+    //// 当たったやつが自分を発射したものでなければ消える
+    //if (_pTarget != owner_)
     //{
-    //    targetName_ = targetName;
-    //    isHit_ = true;
+    //    KillMe();
     //}
-
-    if (myName != targetName)
-    {
-        if (myName == "EnemyBullet" and targetName == "Player")
-        {
-             KillMe();
-        }
-        if (myName == "PlayerBullet" and targetName == "Enemy")
-        {
-            KillMe();
-        }
-        if (myName == "PlayerBullet" and targetName == "EnemyBullet")
-        {
-            KillMe();
-        }
-    }
 }

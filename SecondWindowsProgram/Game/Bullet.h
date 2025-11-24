@@ -4,17 +4,22 @@
 class Bullet : public GameObject
 {
 public:
-	Bullet(GameObject* _parent);
-	~Bullet();
+    Bullet(GameObject* _parent);
+    ~Bullet();
 
-	void Init()    override;
-	void Update()  override;
-	void Draw()    override;
-	void Release() override;
+    void Init()    override;
+    void Update()  override;
+    void Draw()    override;
+    void Release() override;
 
     void SetVelocity(const XMFLOAT3& _velocity)
     {
         velocity_ = _velocity;
+    }
+
+    void SetOwner(GameObject* _pOwner)
+    {
+        owner_ = _pOwner;
     }
 
 private:
@@ -24,4 +29,6 @@ private:
     XMFLOAT3 velocity_;
     bool isHit_;
     std::string targetName_;
+    int deadCounter_;
+    GameObject* owner_;
 };
