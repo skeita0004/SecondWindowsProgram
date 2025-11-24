@@ -10,13 +10,13 @@ namespace
         NOTFOUND = -1
     };
 
-    std::vector<Model::Resource> resourseList;
+    std::vector<Model::Resource> resourceList;
     std::vector<Model::Instance> instanceList;
 
     bool IsDuplicate(const std::string& _path, int* _index)
     {
         int i = 0;
-        for (auto& model : resourseList)
+        for (auto& model : resourceList)
         {
             i++;
             if (model.fileName == _path)
@@ -30,9 +30,9 @@ namespace
 
     int FindResource(const std::string& _path)
     {
-        for (int i = 0; i < resourseList.size(); i++)
+        for (int i = 0; i < resourceList.size(); i++)
         {
-            if (resourseList[i].fileName == _path)
+            if (resourceList[i].fileName == _path)
             {
                 return i;
             }
@@ -53,13 +53,13 @@ int Model::Load(const std::string& _path)
         modelRes.pModel = new Fbx();
         modelRes.pModel->Load(_path);
         modelRes.fileName = _path;
-        resourseList.push_back(modelRes);
-        resIndex = static_cast<int>(resourseList.size() - 1);
+        resourceList.push_back(modelRes);
+        resIndex = static_cast<int>(resourceList.size() - 1);
     }
 
     Instance modelIns
     {
-        .resourseIndex = resIndex,
+        .resourceIndex = resIndex,
         .transform     = nullptr
     };
 
@@ -71,7 +71,7 @@ int Model::Load(const std::string& _path)
 void Model::Draw(int _modelHandle)
 {
     auto& modelIns = instanceList[_modelHandle];
-    auto& modelRes = resourseList[modelIns.resourseIndex];
+    auto& modelRes = resourceList[modelIns.resourceIndex];
 
     modelRes.pModel->Draw(*modelIns.transform);
 }
@@ -87,13 +87,13 @@ void Model::SetTransForm(int _modelHandle, Transform* _transform)
 
 void Model::AllRelease()
 {
-    for (auto itr = resourseList.begin(); itr != resourseList.end();)
+    for (auto itr = resourceList.begin(); itr != resourceList.end();)
     {
         auto model = (*itr);
         SafeCleaning::SafeRelease(model.pModel);
-        itr = resourseList.erase(itr);
+        itr = resourceList.erase(itr);
     }
-    resourseList.clear();
+    resourceList.clear();
     instanceList.clear();
 }
 
@@ -101,7 +101,7 @@ XMFLOAT3 Model::GetBonePosition(int _modelHandle, const std::string& _boneName)
 {
     XMFLOAT3 pos{};
     auto& instance = instanceList[_modelHandle];
-    auto& resourse = resourseList[instance.resourseIndex];
+    auto& resourse = resourceList[instance.resourceIndex];
 
     // 骨の座標を取得
     resourse.pModel->GetBonePosition(_boneName, &pos);

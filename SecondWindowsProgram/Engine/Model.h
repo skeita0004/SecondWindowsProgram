@@ -15,7 +15,7 @@ namespace Model
 
     struct Instance
     {
-        int resourseIndex;
+        int resourceIndex;
         Transform* transform;
     };
 
