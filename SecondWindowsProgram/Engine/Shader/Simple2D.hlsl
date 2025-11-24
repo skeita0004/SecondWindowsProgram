@@ -1,53 +1,51 @@
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒeƒNƒXƒ`ƒƒ•ƒTƒ“ƒvƒ‰[ƒf[ƒ^‚ÌƒOƒ[ƒoƒ‹•Ï”’è‹`
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-Texture2D g_texture : register(t0); //ƒeƒNƒXƒ`ƒƒ[
-SamplerState g_sampler : register(s0); //ƒTƒ“ƒvƒ‰[
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ï¼†ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å®šç¾©
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+Texture2D g_texture : register(t0); //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
+SamplerState g_sampler : register(s0); //ã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@
-// DirectX ‘¤‚©‚ç‘—M‚³‚ê‚Ä‚­‚éAƒ|ƒŠƒSƒ“’¸“_ˆÈŠO‚Ì”î•ñ‚Ì’è‹`
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡
+// DirectX å´ã‹ã‚‰é€ä¿¡ã•ã‚Œã¦ãã‚‹ã€ãƒãƒªã‚´ãƒ³é ‚ç‚¹ä»¥å¤–ã®è«¸æƒ…å ±ã®å®šç¾©
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 cbuffer global
 {
-    float4x4 matWVP; // ƒ[ƒ‹ƒhEƒrƒ…[EƒvƒƒWƒFƒNƒVƒ‡ƒ“‚Ì‡¬s—ñ
-    float4x4 matNormal;
-    float4x4 matW; // ƒ[ƒ‹ƒhs—ñ
+    float4x4 matW;           // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+    float4x4 matUvTransform; // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åº§æ¨™å¤‰æ›
+    float4   color;          // è‰²
 };
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ’¸“_ƒVƒF[ƒ_[o—Í•ƒsƒNƒZƒ‹ƒVƒF[ƒ_[“ü—Íƒf[ƒ^\‘¢‘Ì
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å‡ºåŠ›ï¼†ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å…¥åŠ›ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 struct VS_OUT
 {
-    float4 pos : SV_POSITION; //ˆÊ’u
-    float2 uv : TEXCOORD; //UVÀ•W
-    float4 color : COLOR; //Fi–¾‚é‚³j
+    float4 pos : SV_POSITION; //ä½ç½®
+    float2 uv : TEXCOORD; //UVåº§æ¨™
 };
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ’¸“_ƒVƒF[ƒ_
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-VS_OUT VS(float4 pos : POSITION, float2 uv : TEXCOORD)
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+VS_OUT VS(float2 pos : POSITION, float2 uv : TEXCOORD)
 {
-	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö“n‚·î•ñ
+	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸æ¸¡ã™æƒ…å ±
     VS_OUT outData;
 
-	//ƒ[ƒJƒ‹À•W‚ÉAƒ[ƒ‹ƒhEƒrƒ…[EƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ð‚©‚¯‚Ä
-	//ƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·‚µAƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö
-    outData.pos = mul(pos, matWVP);
-    outData.uv = uv.xy;
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã«ã€ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒ»ãƒ“ãƒ¥ãƒ¼ãƒ»ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã‚’ã‹ã‘ã¦
+	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›ã—ã€ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¸
+    outData.pos = mul(float4(pos, 0.0f, 1.0f), matW);
+    outData.uv = mul(float4(uv, 0.0f, 1.0f), matUvTransform).xy;
     
-    outData.color = float4(1, 1, 1, 1);
-	//‚Ü‚Æ‚ß‚Äo—Í
+	//ã¾ã¨ã‚ã¦å‡ºåŠ›
     return outData;
 }
 
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_
-//„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
+//â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 float4 PS(VS_OUT inData) : SV_Target
 {
-    // ƒeƒNƒXƒ`ƒƒ‚©‚çF‚ðŽæ“¾‚µ‚Ä‚¢‚é
-    return g_texture.Sample(g_sampler, inData.uv) * inData.color;
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‹ã‚‰è‰²ã‚’å–å¾—ã—ã¦ã„ã‚‹
+    return color * g_texture.Sample(g_sampler, inData.uv);
 }
