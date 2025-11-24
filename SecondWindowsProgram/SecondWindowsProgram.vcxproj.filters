@@ -33,9 +33,6 @@
     <ClInclude Include="Resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Bullet.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -96,9 +93,6 @@
     <ClInclude Include="Game\Orbiter.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\TitleLogo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Game\TestScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
@@ -114,15 +108,27 @@
     <ClInclude Include="Game\ClearScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Screen.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Picture.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SceneManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\TitleLogo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\OverLogo.h">
+      <Filter>Game</Filter>
+    </ClInclude>
     <ClInclude Include="Game\ClearLogo.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Game\Bullet.cpp">
@@ -179,9 +185,6 @@
     <ClCompile Include="Game\Orbiter.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\TitleLogo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Game\TestScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
@@ -199,6 +202,18 @@
     </ClCompile>
     <ClCompile Include="Game\ClearLogo.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\OverLogo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Picture.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SceneManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\TitleLogo.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

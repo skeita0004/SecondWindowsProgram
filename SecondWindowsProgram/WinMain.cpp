@@ -11,9 +11,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "RootJob.h"
-
-//#include <cstdlib>
-
+#include "Screen.h"
 #include <timeapi.h>
 
 #pragma comment(lib, "d3d11.lib")
@@ -29,9 +27,6 @@ namespace
 	WCHAR szWindowClass[MAX_LOADSTRING];            // メイン ウィンドウ クラス名
 	
 	const wchar_t* WIN_CLASS_NAME = L"SampleGame";
-
-	const int WINDOW_WIDTH  = 640;
-	const int WINDOW_HEIGHT = 480;
 
 	int winW;
 	int winH;
@@ -67,7 +62,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 	LoadStringW(hInstance, IDC_SECONDWINDOWSPROGRAM, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
-	RECT winRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+	RECT winRect = { 0, 0, Screen::WIDTH, Screen::HEIGHT };
 	AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
 	winW = winRect.right - winRect.left; // ウィンドウ幅
 	winH = winRect.bottom - winRect.top; // ウィンドウ高
@@ -78,7 +73,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	if (FAILED(Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd)))
+	if (FAILED(Direct3D::Initialize(Screen::WIDTH, Screen::HEIGHT, hWnd)))
 	{
 		return -1;
 	}

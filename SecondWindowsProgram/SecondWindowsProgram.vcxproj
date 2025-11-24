@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Picture.h" />
     <ClInclude Include="Game\ClearLogo.h" />
     <ClInclude Include="Game\ClearScene.h" />
     <ClInclude Include="Engine\SafeCleaning.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game\Bullet.h" />
     <ClInclude Include="Game\Orbiter.h" />
+    <ClInclude Include="Game\OverLogo.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\PlayScene.h" />
     <ClInclude Include="Game\TeaTime.h" />
@@ -167,8 +169,10 @@
     <ClInclude Include="Game\TitleLogo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Game\TitleScene.h" />
+    <ClInclude Include="Engine\Screen.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Picture.cpp" />
     <ClCompile Include="Engine\SphereCollider.cpp" />
     <ClCompile Include="Game\ClearLogo.cpp" />
     <ClCompile Include="Game\ClearScene.cpp" />
@@ -187,6 +191,7 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\Orbiter.cpp" />
+    <ClCompile Include="Game\OverLogo.cpp" />
     <ClCompile Include="Game\OverScene.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\PlayScene.cpp" />
