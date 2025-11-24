@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Direct3D.h"
 #include <DirectXMath.h>
 #include "Texture.h"
@@ -8,31 +8,37 @@
 class Sprite
 {
 public:
-	Sprite(std::string _filePath, Transform _transform);
+	Sprite();
 	~Sprite();
-	HRESULT Initialize();
-	void Draw(Transform& _transform);
+
+    HRESULT Load(const std::string& _fileName);
+	void Draw(Transform& _transform, RECT _rect, float _alpha);
 	void Release();
 
-	void SetTransform(Transform _transform)
-	{
-		transform_ = _transform;
-	}
+    XMINT2 GetSize();
 
-	Transform GetTransform()
-	{
-		return transform_;
-	}
 private:
-	ID3D11Buffer* pVertexBuffer_;	//’¸“_ƒoƒbƒtƒ@
-	ID3D11Buffer* pIndexBuffer_;   // ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
-	ID3D11Buffer* pConstantBuffer_;	//ƒRƒ“ƒXƒ^ƒ“ƒgƒoƒbƒtƒ@
+    struct Vertex2D
+    {
+        XMFLOAT2 position;
+        XMFLOAT2 uv;
+    };
+
+    struct ConstantBuffer2D
+    {
+        XMMATRIX matW;
+        XMMATRIX matUvTransform;
+        XMFLOAT4 color;
+    };
+
+    HRESULT InitVertex();
+    HRESULT InitIndex();
+    HRESULT InitConstantBuffer();
+
+	ID3D11Buffer* pVertexBuffer_;	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+	ID3D11Buffer* pIndexBuffer_;   // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
+	ID3D11Buffer* pConstantBuffer_;	//ã‚³ãƒ³ã‚¹ã‚¿ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡
 
 	Texture* pTexture_;
-
-	std::vector<VERTEX> vertices_;
-	QuadFace spriteVertices_;
-	std::string imageFilePath_;
-
-	Transform transform_;
+	std::vector<Vertex2D> vertices_;
 };
