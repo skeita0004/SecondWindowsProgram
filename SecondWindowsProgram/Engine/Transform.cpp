@@ -68,3 +68,23 @@ const XMMATRIX Transform::GetTranslateMatrix()
 
     return matTranslate;
 }
+
+const XMMATRIX Transform::GetRotateMatrix()
+{
+    Calculation();
+    if (pParent)
+    {
+        return matRotate * pParent->GetRotateMatrix();
+    }
+    return matRotate;
+}
+
+const XMMATRIX Transform::GetScaleMatrix()
+{
+    Calculation();
+    if (pParent)
+    {
+        return matScale * pParent->GetScaleMatrix();
+    }
+    return matScale;
+}

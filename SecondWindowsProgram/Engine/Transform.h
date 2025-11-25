@@ -28,6 +28,8 @@ public:
 	const XMMATRIX GetNormalMatrix();
 
     const XMMATRIX GetTranslateMatrix();
+    const XMMATRIX GetRotateMatrix();
+    const XMMATRIX GetScaleMatrix();
 
 private:
     static inline XMMATRIX matTranslate{ XMMatrixIdentity() };
