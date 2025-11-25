@@ -59,7 +59,12 @@ void Sprite::Draw(Transform& _transform, RECT _rect, float _alpha)
                                    1.0f / Screen::HEIGHT,
                                    1.0f) };
     
-    XMMATRIX matWorld   {_transform.GetWorldMatrix() * matTrim * matView};
+    XMMATRIX matWorld{
+        matTrim * 
+        _transform.GetScaleMatrix() * 
+        _transform.GetRotateMatrix() * 
+        matView * 
+        _transform.GetTranslateMatrix()};
 
     XMFLOAT2 textureSize
     {
@@ -146,9 +151,7 @@ HRESULT Sprite::InitVertex()
 
     D3D11_SUBRESOURCE_DATA vertexData
     {
-        .pSysMem         {vertices},
-        .SysMemPitch     {0},
-        .SysMemSlicePitch{0}
+        .pSysMem         {vertices}
     };
 
     result = Direct3D::pDevice->CreateBuffer(&vertexBD, &vertexData, &pVertexBuffer_);
