@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 
+class Player;
+
 class Enemy : public GameObject
 {
 public:
@@ -16,6 +18,7 @@ public:
 
 private:
     void OnCollision(GameObject* _pTarget) override;
-	int       hModel_;
+	int           hModel_;
     SceneManager* pSceneManager_;
+    Player*       pPlayer_;
 };

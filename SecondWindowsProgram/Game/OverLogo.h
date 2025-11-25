@@ -14,4 +14,5 @@ public:
 
 private:
     int hPicture_;
+    int hModel_;
 };

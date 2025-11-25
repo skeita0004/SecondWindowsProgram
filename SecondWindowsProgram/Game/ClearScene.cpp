@@ -20,6 +20,7 @@ void ClearScene::Init()
 {
     Instantiate<Player>(this);
     Instantiate<ClearLogo>(this);
+    pSceneManager_ = FindGameObject<SceneManager>("SceneManager");
 }
 
 void ClearScene::Update()
