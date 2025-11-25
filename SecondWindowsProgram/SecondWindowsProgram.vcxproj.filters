@@ -200,12 +200,6 @@
     <ClCompile Include="Game\ClearScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Game\ClearLogo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\OverLogo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Picture.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -213,6 +207,12 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Game\TitleLogo.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\OverLogo.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\ClearLogo.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>

@@ -31,7 +31,7 @@ void Player::Init()
 {
     transform.position = PLAYER_POSITION;
     transform.scale    = PLAYER_SCALE;
-	SphereCollider* pSphereCollider_ = new SphereCollider(15.0f);
+	SphereCollider* pSphereCollider_ = new SphereCollider(2.0f);
     AddCollider(pSphereCollider_);
 	hModel_ = Model::Load(MODEL_PATH);
     pOrbiterLeft_ = Instantiate<Orbiter>(this);

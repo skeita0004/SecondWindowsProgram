@@ -22,11 +22,11 @@
 // ファイル内変数:
 namespace
 {
-	HINSTANCE hInst;                                // 現在のインターフェイス
-	WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
-	WCHAR szWindowClass[MAX_LOADSTRING];            // メイン ウィンドウ クラス名
+	HINSTANCE hInst;                     // 現在のインターフェイス
+	WCHAR szTitle[MAX_LOADSTRING];       // タイトル バーのテキスト
+	WCHAR szWindowClass[MAX_LOADSTRING]; // メイン ウィンドウ クラス名
 	
-	const wchar_t* WIN_CLASS_NAME = L"SampleGame";
+    const WCHAR WIN_CLASS_NAME[]{ L"SampleGame" };
 
 	int winW;
 	int winH;
