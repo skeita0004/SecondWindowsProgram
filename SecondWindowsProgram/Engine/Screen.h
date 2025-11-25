@@ -2,6 +2,6 @@
 
 namespace Screen
 {
-    const int WIDTH { 640 };
-    const int HEIGHT{ 480 };
+    const int WIDTH { 400};
+    const int HEIGHT{ 300 };
 }
